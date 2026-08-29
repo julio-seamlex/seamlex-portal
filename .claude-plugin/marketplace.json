@@ -1,0 +1,15 @@
+{
+  "name": "seamlex",
+  "owner": {
+    "name": "Seamlex",
+    "url": "https://seamlex.com"
+  },
+  "plugins": [
+    {
+      "name": "seamlex-portal",
+      "source": "./",
+      "description": "Your direct line to the Seamlex delivery team. Run a guided discovery session, turn ideas into epics and user stories, ask questions, and check the status of your Salesforce work — from inside Claude, backed by Jira and Confluence."
+    }
+  ],
+  "description": "Plugins from Seamlex, your Salesforce implementation partner — customer-facing tools for discovery, requirements, questions and delivery status."
+}
