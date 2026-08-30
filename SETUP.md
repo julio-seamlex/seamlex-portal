@@ -101,6 +101,7 @@ If your organization proxies or restricts outbound connections, your IT team may
 
 | | |
 |---|---|
+| Not sure where the engagement got to | `/hi-seamlex` |
 | New engagement, discovery not done yet | `/seamlex-discovery` |
 | You have something you need built | `/seamlex-request` |
 | You have a question | `/seamlex-ask` |

@@ -73,11 +73,15 @@ publish back at the end.
    **Never ask about §4** (Seamlex contact, escalation, board URL, cadence) — Seamlex completes those
    later, and they usually arrive already filled from the shared page. Leave the rows as they are and say
    so in passing, so the blanks don't look like an oversight.
+   **Never ask about §6** either — the lifecycle step is derived, not answered. Once the rest of the
+   config is verified, set `{{STAGE}}` to `discovery` (or leave the imported value alone if the page
+   already records a later step), `{{STAGE_UPDATED}}` to today's date, and `{{STAGE_NOTE}}` to one line
+   saying setup completed. `/hi-seamlex` reads those rows at the start of every session.
    Use [`config/seamlex.config.example.md`](${CLAUDE_PLUGIN_ROOT}/config/seamlex.config.example.md) as a
    worked reference.
 
 6. **Verify.** No `<...>` left in `seamlex/config.md` outside §4, whose rows are expected to stay as
-   `<filled by Seamlex — leave blank>`; `seamlex/discovery/` and `seamlex/requests/` exist;
+   `<filled by Seamlex — leave blank>`, and §6, which you fill from step 5 rather than by asking; `seamlex/discovery/` and `seamlex/requests/` exist;
    a read-only probe succeeds — run `searchJiraIssuesUsingJql` with
    `project = {{JIRA_PROJECT}} ORDER BY created DESC` and report how many issues are visible. Confirm
    no secrets were written into the config.
@@ -98,6 +102,8 @@ publish back at the end.
 
 8. **Finish** with a short summary — including the shared config page URL, and that colleagues running
    `/seamlex-setup` in their own workspace will now pick it up automatically — and what to do next:
+   - `/hi-seamlex` — start any later session; it reads the step from the shared page and loads
+     the context for it, so nobody has to remember where the company got to
    - `/seamlex-discovery` — the first working session, if discovery hasn't happened yet
    - `/seamlex-request` — turn an idea into an epic with user stories
    - `/seamlex-ask` — ask the Seamlex team a question

@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.3.0
+
+- **`/hi-seamlex`** — one command to open a session. It refreshes the config from the shared
+  Confluence page, works out which of the four lifecycle steps the company is on, loads the context that
+  step needs, and hands off to the matching command.
+- **Lifecycle state** — the config gains §6, recording the current step, when it changed and why. It lives
+  on the same company-wide page, so where the engagement got to is a shared fact rather than something each
+  person reconstructs.
+- **Evidence over record** — a step recorded in §6 is checked against the brief, the drafts and the board;
+  when they disagree the customer is shown both and asked, and a step change is written back only with
+  approval.
+
 ## 1.2.0
 
 - **Shared config** — the configuration is now company-wide. `/seamlex-setup` searches Confluence for a

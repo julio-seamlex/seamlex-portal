@@ -51,3 +51,11 @@
 | Write confirmation | `{{CONFIRM_WRITES}}` | always | |
 | Detail level | `{{DETAIL}}` | business | |
 | Local drafts | `{{DRAFTS_DIR}}` | seamlex | |
+
+## 6. Where you are in the lifecycle
+
+| Key | Placeholder | Value | Notes |
+|---|---|---|---|
+| Current step | `{{STAGE}}` | discovery | |
+| Step last set | `{{STAGE_UPDATED}}` | 2026-03-04 | |
+| Why | `{{STAGE_NOTE}}` | Setup complete, first discovery session booked | |

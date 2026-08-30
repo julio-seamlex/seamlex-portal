@@ -71,7 +71,21 @@
 | Detail level | `{{DETAIL}}` | <e.g. business> | `business` (plain language) or `technical` (Salesforce terms welcome). |
 | Local drafts | `{{DRAFTS_DIR}}` | `seamlex` | Folder in this workspace holding config, discovery notes and request drafts. |
 
-### What lives in your workspace
+## 6. Where you are in the lifecycle
+
+> **Maintained by the commands, not by you.** `/hi-seamlex` reads this section to work out which step
+> the company is on and what context to load; `/seamlex-setup` seeds it. The steps run in order —
+> `setup` → `discovery` → `requirement` → `status` — and a company sits on exactly one at a time.
+> Because this is published company-wide, changing it says "we have all moved on", so the commands ask
+> before writing it.
+
+| Key | Placeholder | Value | Notes |
+|---|---|---|---|
+| Current step | `{{STAGE}}` | `setup` | One of `setup`, `discovery`, `requirement`, `status`. |
+| Step last set | `{{STAGE_UPDATED}}` | <YYYY-MM-DD> | When the step last changed. A stale date is a hint the step is stale too. |
+| Why | `{{STAGE_NOTE}}` | <one line> | What moved it — e.g. "discovery brief published, taking requirements now". |
+
+## 7. What lives in your workspace
 
 ```
 seamlex/

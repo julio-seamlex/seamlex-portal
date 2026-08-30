@@ -12,10 +12,15 @@ Confluence space you share with Seamlex, so there is one record and no parallel 
 | Command | What it does |
 |---|---|
 | `/seamlex-setup` | Connect your workspace to Seamlex. **Run this first.** |
+| `/hi-seamlex` | Start a session. Works out where you are in the lifecycle and loads the context for it. |
 | `/seamlex-discovery` | A guided session that builds a full picture of your business, goals, actors and pains. |
 | `/seamlex-request` | Describe what you need; get back an epic with its key user stories. |
 | `/seamlex-ask` | Ask the Seamlex team a question. |
 | `/seamlex-status` | See what's in progress, what's waiting on you, and what's blocked. |
+
+`/hi-seamlex` is the one to reach for when you are not sure what to run: it reads the step your
+company is on from the shared config page — setup, discovery, requirements or status — pulls down just
+that step's context, and points you at the right command.
 
 You can also talk to the agents directly — "run discovery with me", "I have a new requirement",
 "what's the status of the quoting work" — without remembering a command.
@@ -58,7 +63,8 @@ seamlex/
 ```
 
 `config.md` is company-wide: `/seamlex-setup` publishes it to your Confluence space, so a colleague
-setting up their own workspace adopts your settings instead of filling the form again.
+setting up their own workspace adopts your settings instead of filling the form again. It also records which
+lifecycle step you are on, so `/hi-seamlex` opens every session from the same shared picture.
 
 ## Install
 
