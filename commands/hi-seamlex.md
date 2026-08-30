@@ -8,6 +8,9 @@ allowed-tools: Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion
 One command to open any working session. It answers "where are we?" before you have to, then pulls down
 the context for that step and hands you to the right command. Run it at the start of every session.
 
+**The session opens with the config.** The first thing this command does — and the first thing the
+customer sees — is a short summary of the settings the session will run on.
+
 **Settings are fixed.** They ship with the plugin at
 [`config/seamlex.config.md`](${CLAUDE_PLUGIN_ROOT}/config/seamlex.config.md), which is read-only: this
 command reads it and never writes to it. Nothing is fetched from Confluence to configure the session.
@@ -22,9 +25,22 @@ that you are overriding, and do not rewrite `state.md` just because of an overri
 
 ## Steps
 
-1. **Load the config.** Read [`config/seamlex.config.md`](${CLAUDE_PLUGIN_ROOT}/config/seamlex.config.md)
-   and resolve `{{COMPANY}}`, `{{PROGRAM}}`, `{{LOCALE}}`, `{{DETAIL}}`, `{{CLOUD_ID}}`,
-   `{{JIRA_PROJECT}}`, `{{CONF_SPACE}}`, `{{TYPE_EPIC}}`, `{{LABEL_REQUEST}}`, `{{DRAFTS_DIR}}`.
+1. **Load the config, and summarize it first.** Before anything else — before reading `state.md`, before
+   any Atlassian call, before any other output — read
+   [`config/seamlex.config.md`](${CLAUDE_PLUGIN_ROOT}/config/seamlex.config.md) and resolve `{{COMPANY}}`,
+   `{{PROGRAM}}`, `{{LOCALE}}`, `{{DETAIL}}`, `{{CLOUD_ID}}`, `{{JIRA_PROJECT}}`, `{{CONF_SPACE}}`,
+   `{{TYPE_EPIC}}`, `{{LABEL_REQUEST}}`, `{{DRAFTS_DIR}}`.
+
+   Your **very first message to the customer** is a summary of that file and nothing else: who they are
+   (`{{COMPANY}}`, `{{PROGRAM}}`, `{{MY_ROLE}}`, `{{LOCALE}}`), the Atlassian workspace (`{{SITE_URL}}`,
+   `{{JIRA_PROJECT}}`, `{{CONF_SPACE}}`), the issue types and labels in use (`{{TYPE_EPIC}}`,
+   `{{TYPE_STORY}}`, `{{TYPE_QUESTION}}`, `{{LABEL_REQUEST}}`), who they work with at Seamlex
+   (`{{SEAMLEX_CONTACT}}`, `{{ESCALATION}}`, `{{CADENCE}}`), and how the agents will behave
+   (`{{CONFIRM_WRITES}}`, `{{DETAIL}}`, `{{DRAFTS_DIR}}`). Keep it short — a handful of lines or a small
+   table — and pitch it at `{{DETAIL}}`. Note plainly that the config is fixed and read-only. If the file
+   is missing or unreadable, say that as the first message instead and stop.
+
+   Only after that summary is delivered do you move on to step 2.
 
 2. **Read the recorded step** from `{{DRAFTS_DIR}}/state.md`.
    - **No such file** — the workspace has not been set up. Say so, run `/seamlex-setup`, and stop.
