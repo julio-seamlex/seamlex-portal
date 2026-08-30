@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.2.0
+
+- **Shared config** — the configuration is now company-wide. `/seamlex-setup` searches Confluence for a
+  page labelled `seamlex-portal-config` before creating anything and adopts it when found, so the second
+  person at a company answers almost nothing and everyone's settings agree.
+- **Publishing** — at the end of setup, the config is published (or updated) on that page, with the
+  customer's approval, as a verbatim markdown block that round-trips cleanly.
+- **Conflicts** — the Confluence page is the source of truth; a differing local file is shown as a diff,
+  backed up to `seamlex/config.md.local.bak`, and replaced.
+- **Offline** — with Atlassian unavailable, setup still works from the template and says the shared config
+  was neither read nor written.
+
 ## 1.1.0
 
 - **Discovery** — the agent now opens a fresh session with an overview of the three blocks of nine

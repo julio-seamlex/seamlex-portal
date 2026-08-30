@@ -57,6 +57,9 @@ seamlex/
     └── <slug>.md               # requirement drafts, before they become Jira issues
 ```
 
+`config.md` is company-wide: `/seamlex-setup` publishes it to your Confluence space, so a colleague
+setting up their own workspace adopts your settings instead of filling the form again.
+
 ## Install
 
 See [SETUP.md](SETUP.md). Two commands and a browser sign-in.

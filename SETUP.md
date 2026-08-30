@@ -55,17 +55,27 @@ This will:
    opens your browser to sign in to Atlassian. You are signing in to *your own* Atlassian account —
    Seamlex never sees your credentials, and the plugin never stores them. You can revoke access any time
    from your Atlassian account settings.
-2. **Find your project.** It reads which Jira projects and Confluence spaces you can see and proposes the
-   right ones, rather than asking you to look up keys.
-3. **Read your real issue types.** Epic, Story and whatever your project uses for questions — taken from
+2. **Look for your company's config.** If someone at your company has already set this up, the
+   configuration is published in your Confluence space and Claude adopts it — you answer almost nothing,
+   and your settings match your colleagues' exactly.
+3. **Find your project.** If this is the first setup for your company, it reads which Jira projects and
+   Confluence spaces you can see and proposes the right ones, rather than asking you to look up keys.
+4. **Read your real issue types.** Epic, Story and whatever your project uses for questions — taken from
    the project itself, not assumed.
-4. **Ask the rest.** Your company, industry, program name, and how much detail you want in answers.
+5. **Ask the rest.** Your company, industry, program name, and how much detail you want in answers.
    A handful of questions. It never asks for delivery-side details like your Seamlex contact or the
    sprint cadence — Seamlex fills those in.
-5. **Verify.** It runs a read-only query against your project and reports what it can see.
+6. **Verify.** It runs a read-only query against your project and reports what it can see.
+7. **Publish the config**, with your approval, to a Confluence page labelled `seamlex-portal-config`, so
+   the next person at your company inherits it.
 
 The result is `seamlex/config.md` in your workspace. You can edit it by hand at any time, and it holds no
 secrets, so it is safe to commit.
+
+> **The config is company-wide, not personal.** The Confluence page is the source of truth: every
+> `/seamlex-setup` reads it first, and a local edit that differs is replaced by the published version
+> (your old file is kept as `seamlex/config.md.local.bak`). To make a change stick for everyone, edit
+> `seamlex/config.md` and run `/seamlex-setup` again to publish it.
 
 ## Connecting Atlassian
 
@@ -98,8 +108,17 @@ If your organization proxies or restricts outbound connections, your IT team may
 
 ## Troubleshooting
 
-**"Config missing or has unfilled placeholders"** — run `/seamlex-setup`. If `seamlex/config.md` exists,
-it will only fill the gaps, never overwrite what you've set.
+**"Config missing or has unfilled placeholders"** — run `/seamlex-setup`. If `seamlex/config.md` exists
+and your company has no published config page, it will only fill the gaps, never overwrite what you've set.
+
+**"My config keeps being replaced"** — the config is company-wide, and the Confluence page labelled
+`seamlex-portal-config` wins over your local file. Your previous version is saved as
+`seamlex/config.md.local.bak`. Make the edit, then run `/seamlex-setup` and approve the publish so the
+change becomes the shared one.
+
+**"My colleague's setup created a second config page"** — setup looks the page up by its
+`seamlex-portal-config` label, so a page missing that label is invisible to it. Add the label to the
+correct page and delete the duplicate.
 
 **An agent can't find the discovery brief** — that's fine; it will say so and carry on. Discovery makes
 requirements sharper but isn't a hard prerequisite.

@@ -6,6 +6,12 @@
 > You do not edit the agents — they are generic. You only fill this file in.
 > Run `/seamlex-setup` and Claude will fill it in with you; you can also edit it by hand at any time.
 >
+> **This config is company-wide, not personal.** It is published to your Confluence space on a page
+> labelled `seamlex-portal-config`, and that page is the source of truth: `/seamlex-setup` reads it before
+> creating anything, so a colleague setting up a new workspace inherits your settings instead of starting
+> from scratch. Edit this file freely — but run `/seamlex-setup` afterwards to publish a change you want
+> the rest of the company to get, or the next sync will replace it with the published version.
+>
 > Lives at `seamlex/config.md` in your workspace. Safe to commit — it holds no secrets.
 > Authentication to Jira and Confluence happens through the Atlassian MCP server's own browser login,
 > never through this file. **Never put an API token or password in here.**
