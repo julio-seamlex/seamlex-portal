@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.4.1
+
+- **`/hi-seamlex` opens with the config** — step 1 reads `config/seamlex.config.md` and summarizes it back
+  as the very first message, before `state.md`, before any Atlassian call, before any other output. If the
+  file cannot be read it says so and stops, rather than carrying on.
+
 ## 1.4.0
 
 - **Fixed configuration** — the config is no longer generated. It ships with the plugin at
