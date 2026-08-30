@@ -87,9 +87,11 @@ publish back at the end.
    space: this is a write, and `{{CONFIRM_WRITES}}` defaults to `always`.
    - **No page existed** — `createConfluencePage` in space `{{CONF_SPACE}}` under `{{CONF_PARENT}}`
      (the space root if unset), titled `Seamlex Portal Config — {{COMPANY}}`, passing `{{CLOUD_ID}}`.
-     Then apply the label `seamlex-portal-config`. **The label is what the next workspace searches on**,
-     so if no available tool can add a label, say so plainly and ask the customer to add it to the page
-     by hand before their colleagues run setup.
+     Then apply the label `seamlex-portal-config`. **The label is what the next workspace searches on.**
+     The Atlassian MCP server currently exposes no label-writing tool, so expect to end here: tell the
+     customer in plain terms to open the page, add the label `seamlex-portal-config`, and save — and that
+     until they do, nobody else's `/seamlex-setup` will find it. Include the page URL with that ask.
+     Also say the page body itself carries this reminder, so it survives the conversation.
    - **A page existed and something changed** — `updateConfluencePage` on that same page id. Never create
      a second page. If nothing changed, skip the write and say so.
    - Give the customer the page URL.
@@ -105,7 +107,10 @@ publish back at the end.
 
 The page holds the config file verbatim, so it round-trips without loss: one short intro line saying what
 the page is and that it is maintained by `/seamlex-setup`, then the entire contents of `seamlex/config.md`
-inside a fenced ` ```markdown ` code block. Publish it that way, and read that code block back on import.
+inside a code block opened with **four** backticks — ` ````markdown ` — since the config itself contains a
+three-backtick block and a three-backtick wrapper would be closed early by it. Publish with
+`contentFormat: markdown`; Confluence stores it as a code macro, and `getConfluencePage` with
+`contentFormat: markdown` returns the same fenced block for you to read back.
 
 If the code block is missing — someone edited the page into plain Confluence tables — reconstruct the rows
 from the rendered tables instead, and tell the customer the page will be re-normalised into a code block
