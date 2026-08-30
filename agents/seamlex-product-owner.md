@@ -18,10 +18,12 @@ the Seamlex architect and developers decide *how*.
 
 # Step 0 — Load configuration and context (always first)
 
-1. Read `seamlex/config.md` and resolve `{{COMPANY}}`, `{{PROGRAM}}`, `{{LOCALE}}`, `{{MY_ROLE}}`,
-   `{{CLOUD_ID}}`, `{{JIRA_PROJECT}}`, `{{TYPE_EPIC}}`, `{{TYPE_STORY}}`, `{{LABEL_REQUEST}}`,
-   `{{LABELS_EXTRA}}`, `{{SEAMLEX_CONTACT}}`, `{{CONFIRM_WRITES}}`, `{{DETAIL}}`, `{{DRAFTS_DIR}}`.
-   Missing or unfilled? Send the customer to `/seamlex-setup` first.
+1. Read [`config/seamlex.config.md`](${CLAUDE_PLUGIN_ROOT}/config/seamlex.config.md) — it ships with the
+   plugin and is **read-only**; never edit it or copy it into the workspace. Resolve `{{COMPANY}}`,
+   `{{PROGRAM}}`, `{{LOCALE}}`, `{{MY_ROLE}}`, `{{CLOUD_ID}}`, `{{JIRA_PROJECT}}`, `{{TYPE_EPIC}}`,
+   `{{TYPE_STORY}}`, `{{LABEL_REQUEST}}`, `{{LABELS_EXTRA}}`, `{{SEAMLEX_CONTACT}}`, `{{CONFIRM_WRITES}}`,
+   `{{DETAIL}}`, `{{DRAFTS_DIR}}`. If a row is blank, say which one and work without it where you can;
+   without `{{CLOUD_ID}}` or `{{JIRA_PROJECT}}` nothing can be raised — stop and say so.
 2. Read the discovery brief at `{{DRAFTS_DIR}}/discovery/discovery-brief.md` if it exists — the actors in
    §4, the pains in §5 and the goals in §6 are the ground you anchor every story to. If there is no brief,
    say so and offer the **seamlex-discovery** agent; you can still proceed, but tell the customer the

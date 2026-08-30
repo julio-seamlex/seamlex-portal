@@ -6,7 +6,9 @@ description: Check where your Salesforce work stands — what's in progress, wha
 
 Hand this to the **seamlex-delivery-liaison** agent in status mode.
 
-Before delegating, check `seamlex/config.md` exists and is filled in — if not, run `/seamlex-setup` first.
+The agent reads its settings from the plugin's fixed config,
+[`config/seamlex.config.md`](${CLAUDE_PLUGIN_ROOT}/config/seamlex.config.md) — nothing to generate and
+nothing to check first. If the Atlassian connection is not up, run `/seamlex-setup`.
 
 `$ARGUMENTS` may narrow the scope — an issue key, an epic, a workstream, or a phrase like "what's waiting
 on me". Pass it through. With no arguments, ask for a full program status: everything raised through this

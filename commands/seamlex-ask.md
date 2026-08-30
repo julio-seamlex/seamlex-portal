@@ -7,7 +7,9 @@ description: Ask the Seamlex team a question — answered from Jira and Confluen
 Hand this to the **seamlex-delivery-liaison** agent in question mode, passing `$ARGUMENTS` as the
 question.
 
-Before delegating, check `seamlex/config.md` exists and is filled in — if not, run `/seamlex-setup` first.
+The agent reads its settings from the plugin's fixed config,
+[`config/seamlex.config.md`](${CLAUDE_PLUGIN_ROOT}/config/seamlex.config.md) — nothing to generate and
+nothing to check first. If the Atlassian connection is not up, run `/seamlex-setup`.
 
 If `$ARGUMENTS` is empty, ask what they'd like to know.
 

@@ -6,7 +6,9 @@ description: Run the Seamlex discovery session — a guided conversation to buil
 
 Hand this to the **seamlex-discovery** agent.
 
-Before delegating, check `seamlex/config.md` exists and is filled in — if not, run `/seamlex-setup` first.
+The agent reads its settings from the plugin's fixed config,
+[`config/seamlex.config.md`](${CLAUDE_PLUGIN_ROOT}/config/seamlex.config.md) — nothing to generate and
+nothing to check first. If the Atlassian connection is not up, run `/seamlex-setup`.
 
 Then check `seamlex/discovery/discovery-brief.md`:
 - **It does not exist** — this is a first session. Tell the customer roughly what to expect: nine themed

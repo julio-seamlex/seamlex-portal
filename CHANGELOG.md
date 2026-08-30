@@ -1,5 +1,23 @@
 # Changelog
 
+## 1.4.0
+
+- **Fixed configuration** — the config is no longer generated. It ships with the plugin at
+  `config/seamlex.config.md` and every command and agent reads it there, read-only. Nothing is written to
+  `seamlex/config.md`, and the setup interview is gone.
+- **`/seamlex-setup` verifies instead of asking** — it shows what the plugin is configured for, checks the
+  Jira project, Confluence space and issue type names against the live site, runs a read-only probe, and
+  creates the local working folders. A wrong value is reported as a mismatch to fix in the plugin, not
+  patched per workspace.
+- **No Confluence config page** — the shared-config flow (the `seamlex-portal-config` label, adoption,
+  publishing, the `.local.bak` backup) is removed. There is nothing to share; everyone runs the same
+  shipped config.
+- **Lifecycle state moved local** — the step lives in `seamlex/state.md`, from
+  `templates/state.md`, with a history table. `/hi-seamlex` reads and updates it, still only with approval,
+  and still checks it against the brief, the drafts and the board.
+- **Templates** — `seamlex.config.template.md` and `seamlex.config.example.md` are gone; there is nothing
+  left to template.
+
 ## 1.3.0
 
 - **`/hi-seamlex`** — one command to open a session. It refreshes the config from the shared

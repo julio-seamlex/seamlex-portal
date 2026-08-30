@@ -37,13 +37,16 @@ What they need to know:
 
 # Step 0 — Load configuration (always first)
 
-Read `seamlex/config.md` in the workspace and resolve the placeholders used below: `{{COMPANY}}`,
-`{{INDUSTRY}}`, `{{PROGRAM}}`, `{{LOCALE}}`, `{{MY_ROLE}}`, `{{CLOUD_ID}}`, `{{CONF_SPACE}}`,
-`{{CONF_PARENT}}`, `{{DETAIL}}`, `{{CONFIRM_WRITES}}`, `{{DRAFTS_DIR}}`.
+Read [`config/seamlex.config.md`](${CLAUDE_PLUGIN_ROOT}/config/seamlex.config.md) — the config ships
+with the plugin, is the same for every session, and is **read-only**: never edit it and never write a copy
+into the workspace. Resolve the placeholders used below: `{{COMPANY}}`, `{{INDUSTRY}}`, `{{PROGRAM}}`,
+`{{LOCALE}}`, `{{MY_ROLE}}`, `{{CLOUD_ID}}`, `{{CONF_SPACE}}`, `{{CONF_PARENT}}`, `{{DETAIL}}`,
+`{{CONFIRM_WRITES}}`, `{{DRAFTS_DIR}}`.
 
-If the config is missing or still holds `<...>` placeholders, stop and run the user through
-[`/seamlex-setup`](${CLAUDE_PLUGIN_ROOT}/commands/seamlex-setup.md) first. Discovery without it will
-produce a brief nobody can file.
+If a row you need is blank or still holds a `<...>` placeholder, say which one and carry on without it
+where you can; if it is `{{CLOUD_ID}}` or `{{CONF_SPACE}}`, stop — nothing can be published without them.
+Run [`/seamlex-setup`](${CLAUDE_PLUGIN_ROOT}/commands/seamlex-setup.md) if the Atlassian connection itself
+is in doubt.
 
 Then check for an existing brief at `{{DRAFTS_DIR}}/discovery/discovery-brief.md`. **If one exists, this is
 a resumed session**: read it, tell the customer which sections are already covered and which are open, and

@@ -41,7 +41,7 @@ nothing.
 > granted access. Claude uses your existing GitHub credentials to fetch the plugin — from the machine
 > running Claude, so check `gh auth status` there and not on some other laptop.
 
-## 2. Connect Atlassian and configure
+## 2. Connect Atlassian
 
 Run:
 
@@ -49,33 +49,34 @@ Run:
 /seamlex-setup
 ```
 
+**There is nothing to fill in.** Seamlex ships the plugin already configured for your engagement — your
+company, program, Jira project, Confluence space and issue type names all live in the plugin's own
+`config/seamlex.config.md`. Setup does not ask you for them and does not create a config in your
+workspace; it confirms the connection works and that what the plugin expects matches what your Atlassian
+site actually has.
+
 This will:
 
 1. **Connect to Atlassian.** The first time, Claude asks you to approve the `atlassian` MCP server, then
    opens your browser to sign in to Atlassian. You are signing in to *your own* Atlassian account —
    Seamlex never sees your credentials, and the plugin never stores them. You can revoke access any time
    from your Atlassian account settings.
-2. **Look for your company's config.** If someone at your company has already set this up, the
-   configuration is published in your Confluence space and Claude adopts it — you answer almost nothing,
-   and your settings match your colleagues' exactly.
-3. **Find your project.** If this is the first setup for your company, it reads which Jira projects and
-   Confluence spaces you can see and proposes the right ones, rather than asking you to look up keys.
-4. **Read your real issue types.** Epic, Story and whatever your project uses for questions — taken from
-   the project itself, not assumed.
-5. **Ask the rest.** Your company, industry, program name, and how much detail you want in answers.
-   A handful of questions. It never asks for delivery-side details like your Seamlex contact or the
-   sprint cadence — Seamlex fills those in.
-6. **Verify.** It runs a read-only query against your project and reports what it can see.
-7. **Publish the config**, with your approval, to a Confluence page labelled `seamlex-portal-config`, so
-   the next person at your company inherits it.
+2. **Show you what the plugin is configured for** — company, program, Jira project, Confluence space — so
+   anything wrong is obvious immediately.
+3. **Check it against your site.** That the Jira project and Confluence space are visible to you, and that
+   the issue type names — Epic, Story, and whatever your project uses for questions — really exist.
+   Anything that doesn't match is reported as a mismatch to take back to Seamlex, not something for you
+   to patch locally.
+4. **Verify.** It runs a read-only query against your project and reports what it can see.
+5. **Create your working folders** — `seamlex/discovery/` and `seamlex/requests/` for drafts, and
+   `seamlex/state.md` recording which lifecycle step you are on.
 
-The result is `seamlex/config.md` in your workspace. You can edit it by hand at any time, and it holds no
-secrets, so it is safe to commit.
+Everything written to your workspace is your own work: drafts and the lifecycle step. No settings, no
+secrets, safe to commit.
 
-> **The config is company-wide, not personal.** The Confluence page is the source of truth: every
-> `/seamlex-setup` reads it first, and a local edit that differs is replaced by the published version
-> (your old file is kept as `seamlex/config.md.local.bak`). To make a change stick for everyone, edit
-> `seamlex/config.md` and run `/seamlex-setup` again to publish it.
+> **If a setting is wrong for you** — the wrong project key, an issue type that doesn't exist — tell your
+> Seamlex contact. The fix ships in the next version of the plugin, so it is right for everyone at once
+> rather than in one person's local file.
 
 ## Connecting Atlassian
 
@@ -109,23 +110,22 @@ If your organization proxies or restricts outbound connections, your IT team may
 
 ## Troubleshooting
 
-**"Config missing or has unfilled placeholders"** — run `/seamlex-setup`. If `seamlex/config.md` exists
-and your company has no published config page, it will only fill the gaps, never overwrite what you've set.
+**"Config missing or has unfilled placeholders"** — the config ships with the plugin, so this means the
+install is incomplete or out of date. Reinstall or update the plugin and restart Claude; if it persists,
+tell your Seamlex contact which rows are blank.
 
-**"My config keeps being replaced"** — the config is company-wide, and the Confluence page labelled
-`seamlex-portal-config` wins over your local file. Your previous version is saved as
-`seamlex/config.md.local.bak`. Make the edit, then run `/seamlex-setup` and approve the publish so the
-change becomes the shared one.
+**A setting is wrong** — the wrong Jira project, a Confluence space you can't see, an issue type that
+doesn't exist in your project. `/seamlex-setup` reports these as mismatches. They are fixed in the plugin
+by Seamlex, not in your workspace — send the mismatch to your Seamlex contact.
 
-**"My colleague's setup created a second config page"** — setup looks the page up by its
-`seamlex-portal-config` label, so a page missing that label is invisible to it. Add the label to the
-correct page and delete the duplicate.
+**"Which step am I on?"** — that lives in `seamlex/state.md` in your workspace, and `/hi-seamlex` keeps it
+current. Delete it and the next `/hi-seamlex` works the step out again from your brief and your board.
 
 **An agent can't find the discovery brief** — that's fine; it will say so and carry on. Discovery makes
 requirements sharper but isn't a hard prerequisite.
 
-**Wrong issue type when raising a requirement** — open `seamlex/config.md` §3 and set the type names to
-match your project exactly, then try again.
+**Wrong issue type when raising a requirement** — §3 of the plugin's config does not match your project.
+Run `/seamlex-setup` to see exactly which name is off, and send that to your Seamlex contact for a fix.
 
 **A write to Jira half-succeeded** — the agent will tell you exactly which issues were created and which
 weren't, and stop rather than retrying. Give that list to your Seamlex contact.

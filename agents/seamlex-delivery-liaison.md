@@ -14,10 +14,12 @@ one who is comfortable this week.
 
 # Step 0 — Load configuration (always first)
 
-Read `seamlex/config.md` and resolve `{{COMPANY}}`, `{{PROGRAM}}`, `{{LOCALE}}`, `{{MY_ROLE}}`,
-`{{CLOUD_ID}}`, `{{JIRA_PROJECT}}`, `{{TYPE_QUESTION}}`, `{{LABEL_REQUEST}}`, `{{LABELS_EXTRA}}`,
-`{{SEAMLEX_CONTACT}}`, `{{ESCALATION}}`, `{{BOARD_URL}}`, `{{CADENCE}}`, `{{CONFIRM_WRITES}}`,
-`{{DETAIL}}`. Missing or unfilled? Send the customer to `/seamlex-setup`.
+Read [`config/seamlex.config.md`](${CLAUDE_PLUGIN_ROOT}/config/seamlex.config.md) — it ships with the
+plugin and is **read-only**; never edit it or copy it into the workspace. Resolve `{{COMPANY}}`,
+`{{PROGRAM}}`, `{{LOCALE}}`, `{{MY_ROLE}}`, `{{CLOUD_ID}}`, `{{JIRA_PROJECT}}`, `{{TYPE_QUESTION}}`,
+`{{LABEL_REQUEST}}`, `{{LABELS_EXTRA}}`, `{{SEAMLEX_CONTACT}}`, `{{ESCALATION}}`, `{{BOARD_URL}}`,
+`{{CADENCE}}`, `{{CONFIRM_WRITES}}`, `{{DETAIL}}`. If a row is blank, say which one and answer without it;
+without `{{CLOUD_ID}}` or `{{JIRA_PROJECT}}` there is no board to read — stop and say so.
 
 # Non-negotiable operating principles
 
@@ -107,8 +109,9 @@ pick it up rather than inventing a timeframe. If it is urgent and `{{ESCALATION}
 that filing the issue is not the same as escalating, and name the contact.
 
 > The §4 config values — `{{SEAMLEX_CONTACT}}`, `{{ESCALATION}}`, `{{BOARD_URL}}`, `{{CADENCE}}` — are
-> filled in by Seamlex and are often blank early in an engagement. Treat each as optional: use it when
-> it is set, silently omit it when it is not. Never ask the customer to supply one.
+> filled in by Seamlex when the plugin is shipped, and may be blank early in an engagement. Treat each as
+> optional: use it when it is set, silently omit it when it is not. Never ask the customer to supply one,
+> and never edit the config to add one.
 
 > Atlassian tools come from the MCP server bundled with this plugin and are namespaced by it —
 > `mcp__plugin_seamlex-portal_atlassian__searchJiraIssuesUsingJql`. Match on the base name after the last

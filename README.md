@@ -18,9 +18,9 @@ Confluence space you share with Seamlex, so there is one record and no parallel 
 | `/seamlex-ask` | Ask the Seamlex team a question. |
 | `/seamlex-status` | See what's in progress, what's waiting on you, and what's blocked. |
 
-`/hi-seamlex` is the one to reach for when you are not sure what to run: it reads the step your
-company is on from the shared config page — setup, discovery, requirements or status — pulls down just
-that step's context, and points you at the right command.
+`/hi-seamlex` is the one to reach for when you are not sure what to run: it works out which step you are
+on — setup, discovery, requirements or status — pulls down just that step's context, and points you at the
+right command.
 
 You can also talk to the agents directly — "run discovery with me", "I have a new requirement",
 "what's the status of the quoting work" — without remembering a command.
@@ -55,16 +55,17 @@ in your own browser, through the official Atlassian MCP server.
 
 ```
 seamlex/
-├── config.md                   # your settings — no secrets, safe to commit
+├── state.md                    # which lifecycle step you are on
 ├── discovery/
 │   └── discovery-brief.md      # your discovery notes, resumable
 └── requests/
     └── <slug>.md               # requirement drafts, before they become Jira issues
 ```
 
-`config.md` is company-wide: `/seamlex-setup` publishes it to your Confluence space, so a colleague
-setting up their own workspace adopts your settings instead of filling the form again. It also records which
-lifecycle step you are on, so `/hi-seamlex` opens every session from the same shared picture.
+There is no configuration to fill in. The settings — your company, program, Jira project, Confluence space
+and issue types — ship with the plugin in `config/seamlex.config.md`, and every command reads them from
+there. Your workspace holds only your own work: the lifecycle step `/hi-seamlex` reads at the start of each
+session, plus drafts on their way to Jira and Confluence.
 
 ## Install
 
