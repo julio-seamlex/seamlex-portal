@@ -46,12 +46,16 @@
 
 ## 4. Working with Seamlex
 
+> **Leave this section blank — Seamlex fills it in.** These are delivery-side facts, not yours to
+> look up, and `/seamlex-setup` will not ask you for them. Everything works without them: questions
+> and requests are simply raised unassigned, and status answers skip the board link and the cadence.
+
 | Key | Placeholder | Value | Notes |
 |---|---|---|---|
-| Seamlex contact | `{{SEAMLEX_CONTACT}}` | <name / Atlassian account> | Default assignee for questions and new requests. |
-| Escalation contact | `{{ESCALATION}}` | <name / email, or "none"> | For anything urgent or blocked. |
-| Status board | `{{BOARD_URL}}` | <board or dashboard URL, or "none"> | Linked when reporting status. |
-| Sprint cadence | `{{CADENCE}}` | <e.g. 2-week sprints, Wed start> | Sets expectations in status answers. |
+| Seamlex contact | `{{SEAMLEX_CONTACT}}` | <filled by Seamlex — leave blank> | Default assignee for questions and new requests. Blank: they are raised unassigned. |
+| Escalation contact | `{{ESCALATION}}` | <filled by Seamlex — leave blank> | For anything urgent or blocked. Blank: no escalation route is offered. |
+| Status board | `{{BOARD_URL}}` | <filled by Seamlex — leave blank> | Linked when reporting status. Blank: no link is shown. |
+| Sprint cadence | `{{CADENCE}}` | <filled by Seamlex — leave blank> | Sets expectations in status answers. Blank: no delivery timing is quoted. |
 
 ## 5. How the agents should behave
 

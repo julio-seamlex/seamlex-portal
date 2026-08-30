@@ -101,9 +101,14 @@ assigned to `{{SEAMLEX_CONTACT}}` where `lookupJiraAccountId` resolves them. Use
 `${CLAUDE_PLUGIN_ROOT}/templates/question-template.md` for the body: the question, why it matters, what
 the customer already believes, what decision it unblocks, and by when an answer is needed.
 
-Show the exact text and get approval before writing. Afterwards give the customer the key and URL, and
-say when to expect a reply given `{{CADENCE}}`. If it is urgent and `{{ESCALATION}}` is set, tell them
+Show the exact text and get approval before writing. Afterwards give the customer the key and URL, and,
+if `{{CADENCE}}` is set, say when to expect a reply given it — if it is blank, say the Seamlex team will
+pick it up rather than inventing a timeframe. If it is urgent and `{{ESCALATION}}` is set, tell them
 that filing the issue is not the same as escalating, and name the contact.
+
+> The §4 config values — `{{SEAMLEX_CONTACT}}`, `{{ESCALATION}}`, `{{BOARD_URL}}`, `{{CADENCE}}` — are
+> filled in by Seamlex and are often blank early in an engagement. Treat each as optional: use it when
+> it is set, silently omit it when it is not. Never ask the customer to supply one.
 
 > Atlassian tools come from the MCP server bundled with this plugin and are namespaced by it —
 > `mcp__plugin_seamlex-portal_atlassian__searchJiraIssuesUsingJql`. Match on the base name after the last

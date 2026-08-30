@@ -34,6 +34,9 @@
 
 ## 4. Working with Seamlex
 
+> Filled in by Seamlex, not by the customer — shown here completed. In a fresh config these rows are
+> blank, and every agent works without them.
+
 | Key | Placeholder | Value | Notes |
 |---|---|---|---|
 | Seamlex contact | `{{SEAMLEX_CONTACT}}` | Ana Rivas (Delivery Lead) | |

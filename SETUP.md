@@ -13,12 +13,33 @@ In Claude, add the Seamlex marketplace and install the plugin:
 
 Then restart Claude so the plugin's agents, commands and Atlassian connection load.
 
+### Where to run this
+
+**Claude Code** (terminal CLI, the Claude Code desktop app, or the VS Code / JetBrains extension) — type
+the two commands above straight into the chat input. Typing just `/plugin` opens a menu that does the
+same thing from a list. "Restart Claude" means quitting the app fully and reopening it, not just closing
+the window; MCP servers only load at startup.
+
+**Claude desktop app / claude.ai** — install through the UI instead of the commands:
+
+1. **Customize** in the left sidebar → the **Plugins** tab
+2. Under **Personal plugins**, click **+** → **Add marketplace**
+3. Choose **Add from a repository** and paste `https://github.com/julio-seamlex/seamlex-portal`
+4. Install **seamlex-portal** once the marketplace syncs
+
+Then use the plugin from the **Cowork** tab, not the Chat tab. Sub-agents run only in Cowork, and every
+Seamlex command delegates to one of the three agents, so in plain chat the commands will appear but do
+nothing.
+
 > **This is a private repository.** Your Seamlex contact will grant your GitHub account read access
-> before you run the commands above. If `marketplace add` reports that the repository cannot be found,
+> before you install. Claude Code uses your existing GitHub credentials; the Claude desktop app's
+> "Add from a repository" may not be able to reach a private repo at all — if it fails to sync, install
+> through Claude Code instead. If `marketplace add` reports that the repository cannot be found,
 > that grant hasn't landed yet — tell your contact rather than retrying.
 >
 > If you authenticate to GitHub with the `gh` CLI, `gh auth status` should show the account that was
-> granted access. Claude uses your existing GitHub credentials to fetch the plugin.
+> granted access. Claude uses your existing GitHub credentials to fetch the plugin — from the machine
+> running Claude, so check `gh auth status` there and not on some other laptop.
 
 ## 2. Connect Atlassian and configure
 
@@ -38,8 +59,9 @@ This will:
    right ones, rather than asking you to look up keys.
 3. **Read your real issue types.** Epic, Story and whatever your project uses for questions — taken from
    the project itself, not assumed.
-4. **Ask the rest.** Your company, industry, program name, your Seamlex contact, sprint cadence, and how
-   much detail you want in answers. A handful of questions.
+4. **Ask the rest.** Your company, industry, program name, and how much detail you want in answers.
+   A handful of questions. It never asks for delivery-side details like your Seamlex contact or the
+   sprint cadence — Seamlex fills those in.
 5. **Verify.** It runs a read-only query against your project and reports what it can see.
 
 The result is `seamlex/config.md` in your workspace. You can edit it by hand at any time, and it holds no

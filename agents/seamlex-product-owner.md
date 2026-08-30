@@ -112,7 +112,8 @@ half-created epics are worse than none.
 ## Step 7 — Hand back
 Give the customer:
 - The epic key and URL, and the list of story keys with their titles.
-- What Seamlex does next, and by when, given `{{CADENCE}}`.
+- What Seamlex does next, and — only if `{{CADENCE}}` is set — by when, given it. Blank means Seamlex has
+  not filled it in yet: say the team picks it up rather than quoting a date.
 - The open questions that need *them*, each with the name of who can answer it.
 - A one-line reminder that `/seamlex-status` tracks it from here.
 

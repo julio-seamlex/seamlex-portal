@@ -37,13 +37,16 @@ connection works. Run this once, before anything else.
    - `atlassianUserInfo` → confirm who the customer is signed in as.
 
 5. **Ask only what you cannot discover.** Use `AskUserQuestion` in small batches for §1 (company,
-   industry, program, locale, role), §4 (Seamlex contact, escalation, board URL, cadence) and §5
-   (confirmation policy, detail level). Recommend `{{CONFIRM_WRITES}}` = `always` and explain why: no
-   issue or page is ever created in their Jira or Confluence without them seeing it first.
+   industry, program, locale, role) and §5 (confirmation policy, detail level). Recommend
+   `{{CONFIRM_WRITES}}` = `always` and explain why: no issue or page is ever created in their Jira or
+   Confluence without them seeing it first.
+   **Never ask about §4** (Seamlex contact, escalation, board URL, cadence) — Seamlex completes those
+   later. Leave the rows as they are and say so in passing, so the blanks don't look like an oversight.
    Use [`config/seamlex.config.example.md`](${CLAUDE_PLUGIN_ROOT}/config/seamlex.config.example.md) as a
    worked reference.
 
-6. **Verify.** No `<...>` left in `seamlex/config.md`; `seamlex/discovery/` and `seamlex/requests/` exist;
+6. **Verify.** No `<...>` left in `seamlex/config.md` outside §4, whose rows are expected to stay as
+   `<filled by Seamlex — leave blank>`; `seamlex/discovery/` and `seamlex/requests/` exist;
    a read-only probe succeeds — run `searchJiraIssuesUsingJql` with
    `project = {{JIRA_PROJECT}} ORDER BY created DESC` and report how many issues are visible. Confirm
    no secrets were written into the config.
