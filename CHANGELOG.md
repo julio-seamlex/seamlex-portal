@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.4.2
+
+- **`/hi-seamlex` no longer depends on a sibling file** — some environments load a command on its own,
+  without `config/` next to it, and the command was reporting a fixed config as a missing one and sending
+  the customer to `/seamlex-setup`. The values are now inlined in the command under **Configuration**, used
+  whenever `config/seamlex.config.md` is not reachable. The config file stays the source of truth; edit it
+  and copy the change across.
+
 ## 1.4.1
 
 - **`/hi-seamlex` opens with the config** — step 1 reads `config/seamlex.config.md` and summarizes it back
