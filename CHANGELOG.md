@@ -1,5 +1,21 @@
 # Changelog
 
+## 1.5.0
+
+- **One entry point** — `/seamlex-setup` is gone; `/hi-seamlex` absorbs it. The first run of `/hi-seamlex`
+  in a workspace finds no `state.md`, runs the connection check, the config verification against the live
+  site and the folder creation itself, then carries straight on into discovery. `/hi-seamlex setup` re-runs
+  just those checks.
+- **No lifecycle state file** — `seamlex/state.md` and its template are gone. `/hi-seamlex` infers the
+  step each session from the signals that cannot go stale: whether the workspace folders exist, whether the
+  Discovery Brief is complete, and whether labelled work is moving on the board. It says which signals it
+  read, and `/hi-seamlex <step>` overrides it. The plugin now writes nothing to the workspace but two empty
+  draft folders.
+- **One config, in one place** — `config/seamlex.config.md` is deleted. The full table, with its notes and
+  section headings, now lives in the **Configuration** section of `commands/hi-seamlex.md`, and every
+  command and agent resolves its placeholders from there. Nothing to keep in sync, and nothing to fail when
+  a command is loaded without its sibling files.
+
 ## 1.4.2
 
 - **`/hi-seamlex` no longer depends on a sibling file** — some environments load a command on its own,

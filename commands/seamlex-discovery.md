@@ -6,9 +6,9 @@ description: Run the Seamlex discovery session — a guided conversation to buil
 
 Hand this to the **seamlex-discovery** agent.
 
-The agent reads its settings from the plugin's fixed config,
-[`config/seamlex.config.md`](${CLAUDE_PLUGIN_ROOT}/config/seamlex.config.md) — nothing to generate and
-nothing to check first. If the Atlassian connection is not up, run `/seamlex-setup`.
+The agent reads its settings from the plugin's fixed config, the **Configuration** section of
+[`commands/hi-seamlex.md`](${CLAUDE_PLUGIN_ROOT}/commands/hi-seamlex.md) — nothing to generate and
+nothing to check first. If the Atlassian connection is not up, run `/hi-seamlex setup`.
 
 Then check `seamlex/discovery/discovery-brief.md`:
 - **It does not exist** — this is a first session. Tell the customer roughly what to expect: nine themed

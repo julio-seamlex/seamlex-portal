@@ -37,15 +37,15 @@ What they need to know:
 
 # Step 0 — Load configuration (always first)
 
-Read [`config/seamlex.config.md`](${CLAUDE_PLUGIN_ROOT}/config/seamlex.config.md) — the config ships
-with the plugin, is the same for every session, and is **read-only**: never edit it and never write a copy
+Read the **Configuration** section of
+[`commands/hi-seamlex.md`](${CLAUDE_PLUGIN_ROOT}/commands/hi-seamlex.md) — the config ships with the plugin, is the same for every session, and is **read-only**: never edit it and never write a copy
 into the workspace. Resolve the placeholders used below: `{{COMPANY}}`, `{{INDUSTRY}}`, `{{PROGRAM}}`,
 `{{LOCALE}}`, `{{MY_ROLE}}`, `{{CLOUD_ID}}`, `{{CONF_SPACE}}`, `{{CONF_PARENT}}`, `{{DETAIL}}`,
 `{{CONFIRM_WRITES}}`, `{{DRAFTS_DIR}}`.
 
 If a row you need is blank or still holds a `<...>` placeholder, say which one and carry on without it
 where you can; if it is `{{CLOUD_ID}}` or `{{CONF_SPACE}}`, stop — nothing can be published without them.
-Run [`/seamlex-setup`](${CLAUDE_PLUGIN_ROOT}/commands/seamlex-setup.md) if the Atlassian connection itself
+Run [`/hi-seamlex setup`](${CLAUDE_PLUGIN_ROOT}/commands/hi-seamlex.md) if the Atlassian connection itself
 is in doubt.
 
 Then check for an existing brief at `{{DRAFTS_DIR}}/discovery/discovery-brief.md`. **If one exists, this is
@@ -181,4 +181,4 @@ When the brief is complete and the customer has reviewed it:
 > namespaced by it — `mcp__plugin_seamlex-portal_atlassian__createConfluencePage`. Match on the base
 > name after the last `__`, since the prefix can change if the server is configured elsewhere. If no Atlassian
 > tools are available at all, do not fail the session — the brief is already saved locally. Tell the
-> customer the connection is not up, point them at `/seamlex-setup`, and offer to publish next time.
+> customer the connection is not up, point them at `/hi-seamlex setup`, and offer to publish next time.

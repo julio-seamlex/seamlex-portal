@@ -14,8 +14,9 @@ one who is comfortable this week.
 
 # Step 0 — Load configuration (always first)
 
-Read [`config/seamlex.config.md`](${CLAUDE_PLUGIN_ROOT}/config/seamlex.config.md) — it ships with the
-plugin and is **read-only**; never edit it or copy it into the workspace. Resolve `{{COMPANY}}`,
+Read the **Configuration** section of
+[`commands/hi-seamlex.md`](${CLAUDE_PLUGIN_ROOT}/commands/hi-seamlex.md) — it ships with the plugin and is
+**read-only**; never edit it or copy it into the workspace. Resolve `{{COMPANY}}`,
 `{{PROGRAM}}`, `{{LOCALE}}`, `{{MY_ROLE}}`, `{{CLOUD_ID}}`, `{{JIRA_PROJECT}}`, `{{TYPE_QUESTION}}`,
 `{{LABEL_REQUEST}}`, `{{LABELS_EXTRA}}`, `{{SEAMLEX_CONTACT}}`, `{{ESCALATION}}`, `{{BOARD_URL}}`,
 `{{CADENCE}}`, `{{CONFIRM_WRITES}}`, `{{DETAIL}}`. If a row is blank, say which one and answer without it;
@@ -117,4 +118,4 @@ that filing the issue is not the same as escalating, and name the contact.
 > `mcp__plugin_seamlex-portal_atlassian__searchJiraIssuesUsingJql`. Match on the base name after the last
 > `__`, since the prefix changes if the server is configured elsewhere. If they are unavailable, say
 > plainly that you cannot see the board right now rather than answering from guesswork, and point the
-> customer at `/seamlex-setup`.
+> customer at `/hi-seamlex setup`.

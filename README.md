@@ -11,8 +11,7 @@ Confluence space you share with Seamlex, so there is one record and no parallel 
 
 | Command | What it does |
 |---|---|
-| `/seamlex-setup` | Connect your workspace to Seamlex. **Run this first.** |
-| `/hi-seamlex` | Start a session. Works out where you are in the lifecycle and loads the context for it. |
+| `/hi-seamlex` | Start a session. **Run this first.** Sets the workspace up, then works out where you are in the lifecycle and loads the context for it. |
 | `/seamlex-discovery` | A guided session that builds a full picture of your business, goals, actors and pains. |
 | `/seamlex-request` | Describe what you need; get back an epic with its key user stories. |
 | `/seamlex-ask` | Ask the Seamlex team a question. |
@@ -55,7 +54,6 @@ in your own browser, through the official Atlassian MCP server.
 
 ```
 seamlex/
-├── state.md                    # which lifecycle step you are on
 ├── discovery/
 │   └── discovery-brief.md      # your discovery notes, resumable
 └── requests/
@@ -63,9 +61,10 @@ seamlex/
 ```
 
 There is no configuration to fill in. The settings — your company, program, Jira project, Confluence space
-and issue types — ship with the plugin in `config/seamlex.config.md`, and every command reads them from
-there. Your workspace holds only your own work: the lifecycle step `/hi-seamlex` reads at the start of each
-session, plus drafts on their way to Jira and Confluence.
+and issue types — ship with the plugin in the **Configuration** section of `commands/hi-seamlex.md`, and
+every command reads them from there. Your workspace holds only your own work: drafts on their way to Jira and Confluence. Which step of the
+lifecycle you are on isn't recorded anywhere — `/hi-seamlex` works it out each session from your brief and
+your board.
 
 ## Install
 

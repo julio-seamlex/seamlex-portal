@@ -46,14 +46,17 @@ nothing.
 Run:
 
 ```
-/seamlex-setup
+/hi-seamlex
 ```
+
+`/hi-seamlex` is the only command you need to start with: the first time you run it, it sets the workspace
+up before doing anything else. (`/hi-seamlex setup` re-runs just those checks later.)
 
 **There is nothing to fill in.** Seamlex ships the plugin already configured for your engagement — your
 company, program, Jira project, Confluence space and issue type names all live in the plugin's own
-`config/seamlex.config.md`. Setup does not ask you for them and does not create a config in your
-workspace; it confirms the connection works and that what the plugin expects matches what your Atlassian
-site actually has.
+`commands/hi-seamlex.md`, under **Configuration**. Setup does not ask you for them and does not create a
+config in your workspace; it confirms the connection works and that what the plugin expects matches what
+your Atlassian site actually has.
 
 This will:
 
@@ -68,10 +71,9 @@ This will:
    Anything that doesn't match is reported as a mismatch to take back to Seamlex, not something for you
    to patch locally.
 4. **Verify.** It runs a read-only query against your project and reports what it can see.
-5. **Create your working folders** — `seamlex/discovery/` and `seamlex/requests/` for drafts, and
-   `seamlex/state.md` recording which lifecycle step you are on.
+5. **Create your working folders** — `seamlex/discovery/` and `seamlex/requests/` for drafts.
 
-Everything written to your workspace is your own work: drafts and the lifecycle step. No settings, no
+Everything written to your workspace is your own work: drafts, and nothing else. No settings, no state, no
 secrets, safe to commit.
 
 > **If a setting is wrong for you** — the wrong project key, an issue type that doesn't exist — tell your
@@ -80,7 +82,7 @@ secrets, safe to commit.
 
 ## Connecting Atlassian
 
-The plugin ships with the official Atlassian MCP server configured. If `/seamlex-setup` reports that
+The plugin ships with the official Atlassian MCP server configured. If `/hi-seamlex` reports that
 Atlassian tools are unavailable:
 
 - **Restart Claude.** MCP servers load at startup; a freshly installed plugin's server won't be live until
@@ -88,21 +90,21 @@ Atlassian tools are unavailable:
 - **Approve the server.** Claude asks once, on first use, whether to trust the `atlassian` server from
   this plugin. If you declined, re-enable it in your MCP settings.
 - **Check you're signed in.** The connection uses a browser OAuth flow. If it expired, running
-  `/seamlex-setup` again will prompt you to sign in.
+  `/hi-seamlex setup` again will prompt you to sign in.
 - **Check your access.** You need access to the Jira project and Confluence space Seamlex shares with
-  you. If the setup command sees no projects, ask your Seamlex contact to confirm your invitation.
+  you. If the setup checks see no projects, ask your Seamlex contact to confirm your invitation.
 
 If your organization proxies or restricts outbound connections, your IT team may need to allow
 `mcp.atlassian.com`.
 
 > **On command names:** Claude also lists these fully qualified, as
-> `/seamlex-portal:seamlex-setup`. Both forms work — type the short one.
+> `/seamlex-portal:hi-seamlex`. Both forms work — type the short one.
 
 ## What to do next
 
 | | |
 |---|---|
-| Not sure where the engagement got to | `/hi-seamlex` |
+| First run, or not sure where the engagement got to | `/hi-seamlex` |
 | New engagement, discovery not done yet | `/seamlex-discovery` |
 | You have something you need built | `/seamlex-request` |
 | You have a question | `/seamlex-ask` |
@@ -115,17 +117,18 @@ install is incomplete or out of date. Reinstall or update the plugin and restart
 tell your Seamlex contact which rows are blank.
 
 **A setting is wrong** — the wrong Jira project, a Confluence space you can't see, an issue type that
-doesn't exist in your project. `/seamlex-setup` reports these as mismatches. They are fixed in the plugin
+doesn't exist in your project. `/hi-seamlex setup` reports these as mismatches. They are fixed in the plugin
 by Seamlex, not in your workspace — send the mismatch to your Seamlex contact.
 
-**"Which step am I on?"** — that lives in `seamlex/state.md` in your workspace, and `/hi-seamlex` keeps it
-current. Delete it and the next `/hi-seamlex` works the step out again from your brief and your board.
+**"Which step am I on?"** — nothing records it. `/hi-seamlex` works it out each session from your
+workspace, your Discovery Brief and your board, and tells you which signals it read. If it lands wrong,
+say so, or name the step yourself: `/hi-seamlex requirement`.
 
 **An agent can't find the discovery brief** — that's fine; it will say so and carry on. Discovery makes
 requirements sharper but isn't a hard prerequisite.
 
 **Wrong issue type when raising a requirement** — §3 of the plugin's config does not match your project.
-Run `/seamlex-setup` to see exactly which name is off, and send that to your Seamlex contact for a fix.
+Run `/hi-seamlex setup` to see exactly which name is off, and send that to your Seamlex contact for a fix.
 
 **A write to Jira half-succeeded** — the agent will tell you exactly which issues were created and which
 weren't, and stop rather than retrying. Give that list to your Seamlex contact.

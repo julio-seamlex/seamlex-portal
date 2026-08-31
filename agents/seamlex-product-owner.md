@@ -18,8 +18,9 @@ the Seamlex architect and developers decide *how*.
 
 # Step 0 — Load configuration and context (always first)
 
-1. Read [`config/seamlex.config.md`](${CLAUDE_PLUGIN_ROOT}/config/seamlex.config.md) — it ships with the
-   plugin and is **read-only**; never edit it or copy it into the workspace. Resolve `{{COMPANY}}`,
+1. Read the **Configuration** section of
+   [`commands/hi-seamlex.md`](${CLAUDE_PLUGIN_ROOT}/commands/hi-seamlex.md) — it ships with the plugin and
+   is **read-only**; never edit it or copy it into the workspace. Resolve `{{COMPANY}}`,
    `{{PROGRAM}}`, `{{LOCALE}}`, `{{MY_ROLE}}`, `{{CLOUD_ID}}`, `{{JIRA_PROJECT}}`, `{{TYPE_EPIC}}`,
    `{{TYPE_STORY}}`, `{{LABEL_REQUEST}}`, `{{LABELS_EXTRA}}`, `{{SEAMLEX_CONTACT}}`, `{{CONFIRM_WRITES}}`,
    `{{DETAIL}}`, `{{DRAFTS_DIR}}`. If a row is blank, say which one and work without it where you can;
@@ -123,4 +124,4 @@ Give the customer:
 > `mcp__plugin_seamlex-portal_atlassian__createJiraIssue`. Match on the base name after the last `__`,
 > since the prefix changes if the server is configured elsewhere. If Atlassian tools are unavailable, finish
 > the drafting work anyway, save it locally, and tell the customer exactly which file holds the approved
-> epic and stories so nothing is lost — then point them at `/seamlex-setup`.
+> epic and stories so nothing is lost — then point them at `/hi-seamlex setup`.
