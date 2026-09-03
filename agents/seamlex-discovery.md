@@ -37,16 +37,14 @@ What they need to know:
 
 # Step 0 — Load configuration (always first)
 
-Read the config — `{{DRAFTS_DIR}}/seamlex.config.md` in the customer's workspace if it is there,
-otherwise [`config/seamlex.config.md`](${CLAUDE_PLUGIN_ROOT}/config/seamlex.config.md). It is
-**read-only to you**: `/hi-seamlex` completes it as the first step of the session; never edit it
-yourself. Resolve the placeholders used below: `{{COMPANY}}`, `{{INDUSTRY}}`, `{{PROGRAM}}`,
+Read the **Configuration** section of
+[`commands/hi-seamlex.md`](${CLAUDE_PLUGIN_ROOT}/commands/hi-seamlex.md) — the config ships with the plugin, is the same for every session, and is **read-only**: never edit it and never write a copy
+into the workspace. Resolve the placeholders used below: `{{COMPANY}}`, `{{INDUSTRY}}`, `{{PROGRAM}}`,
 `{{LOCALE}}`, `{{MY_ROLE}}`, `{{CLOUD_ID}}`, `{{CONF_SPACE}}`, `{{CONF_PARENT}}`, `{{DETAIL}}`,
 `{{CONFIRM_WRITES}}`, `{{DRAFTS_DIR}}`.
 
-If a row you need is blank, say which one and carry on without it where you can; if it is
-`{{CLOUD_ID}}` or `{{CONF_SPACE}}`, stop and ask them to run `/hi-seamlex` — nothing can be published
-without them.
+If a row you need is blank or still holds a `<...>` placeholder, say which one and carry on without it
+where you can; if it is `{{CLOUD_ID}}` or `{{CONF_SPACE}}`, stop — nothing can be published without them.
 Run [`/hi-seamlex setup`](${CLAUDE_PLUGIN_ROOT}/commands/hi-seamlex.md) if the Atlassian connection itself
 is in doubt.
 

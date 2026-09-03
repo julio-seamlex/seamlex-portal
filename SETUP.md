@@ -52,11 +52,11 @@ Run:
 `/hi-seamlex` is the only command you need to start with: the first time you run it, it sets the workspace
 up before doing anything else. (`/hi-seamlex setup` re-runs just those checks later.)
 
-**The first run fills in the config.** The plugin ships `config/seamlex.config.md` blank, and step 1 of
-`/hi-seamlex` completes it before anything else: it reads your site, Jira project, Confluence space and
-issue type names off Atlassian, and asks you for the handful of things only you know — your company,
-programme, role and how you want the agents to behave. That happens once. Every later session reads the
-filled config and gets straight to work, and `/hi-seamlex config` changes a value later.
+**There is nothing to fill in.** Seamlex ships the plugin already configured for your engagement — your
+company, program, Jira project, Confluence space and issue type names all live in the plugin's own
+`commands/hi-seamlex.md`, under **Configuration**. Setup does not ask you for them and does not create a
+config in your workspace; it confirms the connection works and that what the plugin expects matches what
+your Atlassian site actually has.
 
 This will:
 
@@ -64,18 +64,17 @@ This will:
    opens your browser to sign in to Atlassian. You are signing in to *your own* Atlassian account —
    Seamlex never sees your credentials, and the plugin never stores them. You can revoke access any time
    from your Atlassian account settings.
-2. **Fill in and show you the config** — company, program, Jira project, Confluence space — asking only
-   for what it cannot read off your site, then summarizing it back so anything wrong is obvious
-   immediately.
+2. **Show you what the plugin is configured for** — company, program, Jira project, Confluence space — so
+   anything wrong is obvious immediately.
 3. **Check it against your site.** That the Jira project and Confluence space are visible to you, and that
    the issue type names — Epic, Story, and whatever your project uses for questions — really exist.
-   Anything that doesn't match is reported as a mismatch, with an offer to correct that row in the config
-   there and then.
+   Anything that doesn't match is reported as a mismatch to take back to Seamlex, not something for you
+   to patch locally.
 4. **Verify.** It runs a read-only query against your project and reports what it can see.
 5. **Create your working folders** — `seamlex/discovery/` and `seamlex/requests/` for drafts.
 
-Everything written to your workspace is your own work — drafts, plus the completed config where the plugin
-directory is read-only. No state, no secrets, safe to commit.
+Everything written to your workspace is your own work: drafts, and nothing else. No settings, no state, no
+secrets, safe to commit.
 
 > **If a setting is wrong for you** — the wrong project key, an issue type that doesn't exist — tell your
 > Seamlex contact. The fix ships in the next version of the plugin, so it is right for everyone at once
@@ -113,13 +112,13 @@ If your organization proxies or restricts outbound connections, your IT team may
 
 ## Troubleshooting
 
-**"Config missing or has unfilled rows"** — run `/hi-seamlex`; completing the config is the first thing it
-does. If the file itself is missing, the install is incomplete or out of date: reinstall or update the
-plugin and restart Claude.
+**"Config missing or has unfilled placeholders"** — the config ships with the plugin, so this means the
+install is incomplete or out of date. Reinstall or update the plugin and restart Claude; if it persists,
+tell your Seamlex contact which rows are blank.
 
 **A setting is wrong** — the wrong Jira project, a Confluence space you can't see, an issue type that
-doesn't exist in your project. `/hi-seamlex setup` reports these as mismatches and offers to fix the row;
-`/hi-seamlex config` reopens any of them on demand.
+doesn't exist in your project. `/hi-seamlex setup` reports these as mismatches. They are fixed in the plugin
+by Seamlex, not in your workspace — send the mismatch to your Seamlex contact.
 
 **"Which step am I on?"** — nothing records it. `/hi-seamlex` works it out each session from your
 workspace, your Discovery Brief and your board, and tells you which signals it read. If it lands wrong,
@@ -128,8 +127,8 @@ say so, or name the step yourself: `/hi-seamlex requirement`.
 **An agent can't find the discovery brief** — that's fine; it will say so and carry on. Discovery makes
 requirements sharper but isn't a hard prerequisite.
 
-**Wrong issue type when raising a requirement** — §3 of the config does not match your project. Run
-`/hi-seamlex setup` to see exactly which name is off, and let it correct the row.
+**Wrong issue type when raising a requirement** — §3 of the plugin's config does not match your project.
+Run `/hi-seamlex setup` to see exactly which name is off, and send that to your Seamlex contact for a fix.
 
 **A write to Jira half-succeeded** — the agent will tell you exactly which issues were created and which
 weren't, and stop rather than retrying. Give that list to your Seamlex contact.

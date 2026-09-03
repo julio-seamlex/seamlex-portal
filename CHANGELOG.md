@@ -1,19 +1,5 @@
 # Changelog
 
-## 1.6.0
-
-- **The config is a file again, and it ships blank** — `config/seamlex.config.md` holds the whole
-  parameter table; the **Configuration** section of `commands/hi-seamlex.md` is now just a pointer to it.
-  Every value is empty on delivery, so nothing is guessed at for a customer it was not written for.
-- **`/hi-seamlex` completes it as its very first step** — ahead of any lifecycle inference, any folder
-  check, any other output. Each row carries a **Source**: `atlassian` rows are read off the live site
-  (site, cloud ID, project, space, parent page, issue type names), `ask` rows are put to the customer in
-  two or three grouped questions, `default` rows are taken silently. Filled rows are never re-asked;
-  `/hi-seamlex config` reopens the ones the customer wants to change.
-- **Where the filled config lands** — written back into the plugin file when that directory is writable,
-  otherwise `seamlex/seamlex.config.md` in the workspace. Every command and agent checks the workspace
-  copy first.
-
 ## 1.5.0
 
 - **One entry point** — `/seamlex-setup` is gone; `/hi-seamlex` absorbs it. The first run of `/hi-seamlex`
