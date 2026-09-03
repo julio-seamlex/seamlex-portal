@@ -1,6 +1,6 @@
 {
   "name": "seamlex-portal",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "description": "Customer-facing front door to Seamlex, your Salesforce delivery partner. Three agents — Discovery, Product Owner, and Delivery Liaison — help you frame your business, raise requirements as epics and user stories, ask questions, and track delivery status. Everything lands in the shared Jira project and Confluence space via the Atlassian MCP server.",
   "author": {
     "name": "Seamlex"

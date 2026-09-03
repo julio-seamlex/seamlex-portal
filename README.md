@@ -54,17 +54,20 @@ in your own browser, through the official Atlassian MCP server.
 
 ```
 seamlex/
+├── seamlex.config.md           # your settings, when the plugin directory is read-only
 ├── discovery/
 │   └── discovery-brief.md      # your discovery notes, resumable
 └── requests/
     └── <slug>.md               # requirement drafts, before they become Jira issues
 ```
 
-There is no configuration to fill in. The settings — your company, program, Jira project, Confluence space
-and issue types — ship with the plugin in the **Configuration** section of `commands/hi-seamlex.md`, and
-every command reads them from there. Your workspace holds only your own work: drafts on their way to Jira and Confluence. Which step of the
-lifecycle you are on isn't recorded anywhere — `/hi-seamlex` works it out each session from your brief and
-your board.
+The settings — your company, program, Jira project, Confluence space and issue types — live in one file,
+`config/seamlex.config.md`. It ships blank, and the **first thing `/hi-seamlex` does** is fill it in: it
+reads what it can off your Atlassian site and asks you for the rest, once. After that every command reads
+it and nothing asks again; `/hi-seamlex config` changes any of it. Where the plugin directory is read-only,
+the completed copy lands at `seamlex/seamlex.config.md` in your workspace. Everything else in your
+workspace is your own work: drafts on their way to Jira and Confluence. Which step of the lifecycle you are
+on isn't recorded anywhere — `/hi-seamlex` works it out each session from your brief and your board.
 
 ## Install
 

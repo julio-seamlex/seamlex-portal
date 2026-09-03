@@ -14,9 +14,9 @@ one who is comfortable this week.
 
 # Step 0 — Load configuration (always first)
 
-Read the **Configuration** section of
-[`commands/hi-seamlex.md`](${CLAUDE_PLUGIN_ROOT}/commands/hi-seamlex.md) — it ships with the plugin and is
-**read-only**; never edit it or copy it into the workspace. Resolve `{{COMPANY}}`,
+Read the config — `{{DRAFTS_DIR}}/seamlex.config.md` in the customer's workspace if it is there,
+otherwise [`config/seamlex.config.md`](${CLAUDE_PLUGIN_ROOT}/config/seamlex.config.md). It is
+**read-only to you**: `/hi-seamlex` is the only thing that fills it in; never edit it yourself. Resolve `{{COMPANY}}`,
 `{{PROGRAM}}`, `{{LOCALE}}`, `{{MY_ROLE}}`, `{{CLOUD_ID}}`, `{{JIRA_PROJECT}}`, `{{TYPE_QUESTION}}`,
 `{{LABEL_REQUEST}}`, `{{LABELS_EXTRA}}`, `{{SEAMLEX_CONTACT}}`, `{{ESCALATION}}`, `{{BOARD_URL}}`,
 `{{CADENCE}}`, `{{CONFIRM_WRITES}}`, `{{DETAIL}}`. If a row is blank, say which one and answer without it;
