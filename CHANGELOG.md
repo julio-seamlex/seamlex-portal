@@ -1,6 +1,9 @@
 # Changelog
 
-## Unreleased
+## 1.6.0
+
+> Refinement now starts from the signed contract scope. `/seamlex-request` is gone; `/refine-project-scope`
+> takes its place, and two agents are renamed. See the migration note at the foot of this entry.
 
 - **`/seamlex-request` is replaced by `/refine-project-scope`** — the plugin no longer starts from a blank
   requirement. The new command works from the signed contract scope page (`{{CONF_SCOPE_PAGE}}`) and
@@ -58,6 +61,16 @@
 - **Signed scope page in the config** — a new `{{CONF_SCOPE_PAGE}}` row under **Atlassian workspace** points
   at the Confluence page holding the detail of the scope the customer signed, by page ID, the same way
   `{{CONF_PARENT}}` does. `/hi-seamlex setup` checks it is reachable alongside the other Confluence values.
+
+### Migrating from 1.5.x
+
+- `/seamlex-request` no longer exists. Use `/refine-project-scope`; it needs `{{CONF_SCOPE_PAGE}}` to point
+  at the signed scope page, which `/hi-seamlex setup` verifies.
+- Anything left in `seamlex/requests/` is not read by the plugin any more. Keep the folder if you want the
+  history; refinement drafts now live in `{{CONF_SPACE}}` as `Epic — <contract epic title>` pages.
+- Agents renamed: `seamlex-discovery` → `seamlex-discovery-agent`, `seamlex-delivery-liaison` →
+  `seamlex-project-manager`. If you call an agent by name in your own notes or hooks, update it. Every
+  command is unchanged apart from the one replacement above.
 
 ## 1.5.0
 
