@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.6.0
+## 1.7.0
 
 > Refinement now starts from the signed contract scope. `/seamlex-request` is gone; `/refine-project-scope`
 > takes its place, and two agents are renamed. See the migration note at the foot of this entry.
@@ -71,6 +71,11 @@
 - Agents renamed: `seamlex-discovery` → `seamlex-discovery-agent`, `seamlex-delivery-liaison` →
   `seamlex-project-manager`. If you call an agent by name in your own notes or hooks, update it. Every
   command is unchanged apart from the one replacement above.
+
+## 1.6.0
+
+Never shipped. Cut on 2026-09-02 and reverted the same day; the version number was retired rather than
+reused, so 1.5.0 is followed by 1.7.0.
 
 ## 1.5.0
 
