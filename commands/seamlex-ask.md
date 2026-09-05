@@ -4,7 +4,7 @@ description: Ask the Seamlex team a question — answered from Jira and Confluen
 
 # Ask Seamlex a question
 
-Hand this to the **seamlex-delivery-liaison** agent in question mode, passing `$ARGUMENTS` as the
+Hand this to the **seamlex-project-manager** agent in question mode, passing `$ARGUMENTS` as the
 question.
 
 The agent reads its settings from the plugin's fixed config, the **Configuration** section of

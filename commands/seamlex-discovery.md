@@ -4,18 +4,29 @@ description: Run the Seamlex discovery session — a guided conversation to buil
 
 # Discovery session
 
-Hand this to the **seamlex-discovery** agent.
+Hand this to the **seamlex-discovery-agent**.
 
 The agent reads its settings from the plugin's fixed config, the **Configuration** section of
 [`commands/hi-seamlex.md`](${CLAUDE_PLUGIN_ROOT}/commands/hi-seamlex.md) — nothing to generate and
 nothing to check first. If the Atlassian connection is not up, run `/hi-seamlex setup`.
 
-Then check `seamlex/discovery/discovery-brief.md`:
-- **It does not exist** — this is a first session. Tell the customer roughly what to expect: nine themed
-  sections, questions in small batches, sixty to ninety minutes if run end to end, and that they can stop
-  at any section boundary and resume later with nothing lost.
-- **It exists** — this is a resumed session. Summarize which sections are complete and which are open, and
-  offer to continue from the first incomplete one, or to revisit a specific section they name.
+The session exists to answer seven things about the customer: their company and business model, their
+industry and business context, the organization structure — the areas and roles that matter to this
+project, the business processes the project touches, the actors who will use the system, the pains, and
+the goals and expectations for the project. Everything else the agent asks serves those.
 
-$ARGUMENTS may name a section to focus on (for example "pains" or "actors"). If so, tell the agent to go
-straight there rather than starting from section 1.
+**Never start over.** Look for work already done, in both places:
+- `seamlex/discovery/discovery-brief.md` — the local draft.
+- The published Discovery Brief page in the Confluence space from the config, found by title. If the page
+  exists but the local draft does not, the agent reads the page back into the local draft and continues
+  from there — and publishes back to that same page rather than creating a second one.
+
+Then:
+- **Nothing found** — this is a first session. Tell the customer roughly what to expect: ten themed
+  sections, questions in small batches, seventy to ninety minutes if run end to end, and that they
+  can stop at any section boundary and resume later with nothing lost.
+- **Something found** — this is a resumed session. Summarize which sections are complete and which are
+  open, and offer to continue from the first incomplete one, or to revisit a specific section they name.
+
+$ARGUMENTS may name a section to focus on (for example "pains", "actors", "processes" or "org"). If so,
+tell the agent to go straight there rather than starting from section 1.

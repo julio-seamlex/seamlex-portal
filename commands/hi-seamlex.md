@@ -19,13 +19,13 @@ is ever written into the customer's workspace. To change how the plugin behaves 
 table and ship a new version of the plugin — never work around a wrong value locally. Nothing is fetched
 from Confluence to configure the session.
 
-**The lifecycle has four steps, in order:** `setup` → `discovery` → `requirement` → `status`. A company
+**The lifecycle has four steps, in order:** `setup` → `discovery` → `refinement` → `status`. A company
 sits at exactly one of them at a time. **Nothing records which one** — no state file is kept, and the
 plugin writes no settings into the workspace. The step is worked out fresh each session from what is
 actually there: the workspace folders, the Discovery Brief, and the board. Evidence cannot go stale the
 way a recorded step can.
 
-`$ARGUMENTS` may name a step (`setup`, `discovery`, `requirement`/`requerimiento`, `status`) to override
+`$ARGUMENTS` may name a step (`setup`, `discovery`, `refinement`/`alcance` — `requirement` also works, `status`) to override
 what you infer — use it when the customer wants to jump ahead or go back over something, or to re-run the
 setup checks after fixing an Atlassian connection. Say plainly that you are overriding.
 
@@ -49,11 +49,11 @@ setup checks after fixing an Atlassian connection. Say plainly that you are over
 2. **Work out which step they are on**, from the cheapest signal upward. Stop at the first that answers.
    - `{{DRAFTS_DIR}}/` does not exist → **`setup`**. The workspace has never been set up: go to step 3 and
      run it now, in this session. Do not send the customer off to another command.
-   - No `{{DRAFTS_DIR}}/discovery/discovery-brief.md`, or one whose nine sections are not all covered →
+   - No `{{DRAFTS_DIR}}/discovery/discovery-brief.md`, or one whose ten sections are not all covered →
      **`discovery`**.
    - The brief is complete and the board shows `{{JIRA_PROJECT}}` issues labelled `{{LABEL_REQUEST}}` in
      flight — assigned, in progress, or recently updated → **`status`**.
-   - The brief is complete and there is no such work moving yet → **`requirement`**.
+   - The brief is complete and there is no such work moving yet → **`refinement`**.
    Where the signals genuinely conflict — a complete brief and an empty board and a workspace full of
    request drafts, say — show what you saw and ask with `AskUserQuestion` rather than silently picking.
    Say which signals you read, so the customer can correct you in one line if you land wrong.
@@ -83,16 +83,17 @@ setup checks after fixing an Atlassian connection. Say plainly that you are over
         it, name the nearest available type the agents will fall back to, and say the row should be
         corrected in this file's Configuration table.
       - `getConfluenceSpaces` — confirm `{{CONF_SPACE}}` exists, and `getConfluencePage` on
-        `{{CONF_PARENT}}` that the discovery parent page is reachable.
+        `{{CONF_PARENT}}` that the discovery parent page is reachable, and on `{{CONF_SCOPE_PAGE}}` that
+        the signed scope page is reachable.
       - `searchJiraIssuesUsingJql` with `project = {{JIRA_PROJECT}} ORDER BY created DESC` — a read-only
         probe; report how many issues are visible.
       Report each check as pass or mismatch. A mismatch is a finding about the plugin's config, not
       something to ask the customer to fix locally.
 
    3. **Create the local working folders.**
-      `mkdir -p {{DRAFTS_DIR}}/discovery {{DRAFTS_DIR}}/requests`
-      These hold drafts only — discovery notes and requirement drafts, before they become Jira issues. No
-      config file is written here.
+      `mkdir -p {{DRAFTS_DIR}}/discovery`
+      This holds the discovery notes and nothing else. Scope refinement keeps its drafts on Confluence,
+      not here, and no config file is ever written into the workspace.
 
    Once the folders exist, setup is done and the step is `discovery` — carry on into step 4 with that,
    rather than ending the session on a bare setup report.
@@ -107,20 +108,20 @@ setup checks after fixing an Atlassian connection. Say plainly that you are over
    | Step | What to load |
    |---|---|
    | `setup` | Nothing further. The config *is* the context. |
-   | `discovery` | `{{DRAFTS_DIR}}/discovery/discovery-brief.md`, plus the published brief in `{{CONF_SPACE}}` if there is one. Note which of the nine sections are complete and which are open. |
-   | `requirement` | The Discovery Brief (the pains and actors every story anchors to), local drafts in `{{DRAFTS_DIR}}/requests/`, and open `{{TYPE_EPIC}}` issues in `{{JIRA_PROJECT}}` carrying `{{LABEL_REQUEST}}` — so a new requirement can be checked against them for duplicates. |
-   | `status` | Everything in `{{JIRA_PROJECT}}` labelled `{{LABEL_REQUEST}}` via `searchJiraIssuesUsingJql`, ordered by updated, with assignee and status. Do not summarize it here — that is the liaison's job. |
+   | `discovery` | `{{DRAFTS_DIR}}/discovery/discovery-brief.md`, plus the published brief in `{{CONF_SPACE}}` if there is one. Note which of the ten sections are complete and which are open. |
+   | `refinement` | The signed scope page `{{CONF_SCOPE_PAGE}}` (the epics to be delivered), the Discovery Brief (the areas, processes, actors and pains every statement anchors to), and the `Epic — <contract epic title>` pages in `{{CONF_SPACE}}` with their Status rows — the refinement drafts live there, not in the workspace, and they are what says which epics are ready for design and which are not. |
+   | `status` | Everything in `{{JIRA_PROJECT}}` labelled `{{LABEL_REQUEST}}` via `searchJiraIssuesUsingJql`, ordered by updated, with assignee and status. Do not summarize it here — that is the project manager's job. |
 
    Every read is read-only. Apart from creating the two empty folders in step 3, this command writes
    nothing — not to the workspace, not to Jira, not to Confluence. If the Atlassian tools are unavailable,
    do not fail: say clearly which signals could not be checked and carry on from the local files alone.
 
 5. **Report, then hand off.** Short and concrete: which step, the signals you read to land on it, what
-   context you loaded, and the one command to run next — `/seamlex-discovery`, `/seamlex-request` or
+   context you loaded, and the one command to run next — `/seamlex-discovery`, `/refine-project-scope` or
    `/seamlex-status`. If the customer already said what they came to do, run that command's agent now
    rather than making them type it.
 
-> The step is a statement about the engagement — "discovery is done, we are taking requirements now" — so
+> The step is a statement about the engagement — "discovery is done, we are refining the scope now" — so
 > when you name it, name it as a reading of the evidence rather than a fact. Going *back* a step is fine
 > and sometimes right; a second discovery round after a reorg is a real thing, not a mistake, and
 > `/hi-seamlex discovery` is all it takes.
@@ -162,6 +163,7 @@ MCP server's own browser login, never through this file.
 | Jira project key | `{{JIRA_PROJECT}}` | SCRUM | My Software Team. |
 | Confluence space key | `{{CONF_SPACE}}` | MST | |
 | Discovery parent page | `{{CONF_PARENT}}` | 327858 | My Software Team home. |
+| Signed scope page | `{{CONF_SCOPE_PAGE}}` | 327890 | Page in `{{CONF_SPACE}}` holding the detail of the scope the customer signed. Correct it by editing this table and shipping a new plugin version. |
 
 ### 3. Issue types and fields
 
@@ -196,17 +198,17 @@ MCP server's own browser login, never through this file.
 |---|---|---|---|
 | Write confirmation | `{{CONFIRM_WRITES}}` | `always` | `always` (recommended) or `summary`. Whether every Jira/Confluence write is shown for approval first. |
 | Detail level | `{{DETAIL}}` | business | `business` (plain language) or `technical` (Salesforce terms welcome). |
-| Local drafts | `{{DRAFTS_DIR}}` | `seamlex` | Folder in the customer's workspace holding discovery notes and request drafts. |
+| Local drafts | `{{DRAFTS_DIR}}` | `seamlex` | Folder in the customer's workspace holding the discovery notes. Scope-refinement drafts live in Confluence, not here. |
 
 ### What lives in your workspace
 
 ```
 seamlex/
-├── discovery/
-│   └── discovery-brief.md      # your discovery notes — resumable across sessions
-└── requests/
-    └── <slug>.md               # requirement drafts, before they become Jira issues
+└── discovery/
+    └── discovery-brief.md      # your discovery notes — resumable across sessions
 ```
 
-The configuration is not among them: it stays in the plugin. Nothing is written to Jira or Confluence
-until you approve it, and drafts stay local until then.
+That is all of it. The scope refinement leaves nothing here: each contract epic's page, and the
+features no identificados page, are drafted straight into `{{CONF_SPACE}}` as pages marked `Draft` until
+the customer approves them. The configuration is not in the workspace either — it stays in the plugin.
+Nothing is marked reviewed, and nothing reaches Jira, until you approve it.

@@ -4,7 +4,7 @@ description: Check where your Salesforce work stands — what's in progress, wha
 
 # Delivery status
 
-Hand this to the **seamlex-delivery-liaison** agent in status mode.
+Hand this to the **seamlex-project-manager** agent in status mode.
 
 The agent reads its settings from the plugin's fixed config, the **Configuration** section of
 [`commands/hi-seamlex.md`](${CLAUDE_PLUGIN_ROOT}/commands/hi-seamlex.md) — nothing to generate and

@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Epic** | <epic title / Jira key> |
-| **Persona** | <a real actor from discovery §4 — never "a user"> |
+| **Persona** | <a real actor from discovery §6 — never "a user"> |
 | **Priority** | Must / Should / Could / Won't |
 | **Raised by** | <name, role> |
 | **Jira key** | <filled after creation> |

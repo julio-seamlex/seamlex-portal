@@ -71,7 +71,7 @@ This will:
    Anything that doesn't match is reported as a mismatch to take back to Seamlex, not something for you
    to patch locally.
 4. **Verify.** It runs a read-only query against your project and reports what it can see.
-5. **Create your working folders** — `seamlex/discovery/` and `seamlex/requests/` for drafts.
+5. **Create your working folder** — `seamlex/discovery/` for your discovery notes. Scope refinement drafts live in Confluence, not in your workspace.
 
 Everything written to your workspace is your own work: drafts, and nothing else. No settings, no state, no
 secrets, safe to commit.
@@ -106,7 +106,7 @@ If your organization proxies or restricts outbound connections, your IT team may
 |---|---|
 | First run, or not sure where the engagement got to | `/hi-seamlex` |
 | New engagement, discovery not done yet | `/seamlex-discovery` |
-| You have something you need built | `/seamlex-request` |
+| You are ready to detail the epics you signed for | `/refine-project-scope` |
 | You have a question | `/seamlex-ask` |
 | You want to know where things stand | `/seamlex-status` |
 
@@ -122,12 +122,12 @@ by Seamlex, not in your workspace — send the mismatch to your Seamlex contact.
 
 **"Which step am I on?"** — nothing records it. `/hi-seamlex` works it out each session from your
 workspace, your Discovery Brief and your board, and tells you which signals it read. If it lands wrong,
-say so, or name the step yourself: `/hi-seamlex requirement`.
+say so, or name the step yourself: `/hi-seamlex refinement`.
 
 **An agent can't find the discovery brief** — that's fine; it will say so and carry on. Discovery makes
-requirements sharper but isn't a hard prerequisite.
+scope refinement sharper but isn't a hard prerequisite.
 
-**Wrong issue type when raising a requirement** — §3 of the plugin's config does not match your project.
+**Wrong issue type when raising an epic or story** — §3 of the plugin's config does not match your project.
 Run `/hi-seamlex setup` to see exactly which name is off, and send that to your Seamlex contact for a fix.
 
 **A write to Jira half-succeeded** — the agent will tell you exactly which issues were created and which

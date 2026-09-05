@@ -31,7 +31,7 @@ matter most, what success looks like, and the biggest risk. Written last, readab
 - **Growth stage and what's changing:**
 - **What differentiates them:**
 
-## 2. Industry and market context
+## 2. Industry and business context
 
 - **Sector dynamics:**
 - **Competitive pressure:**
@@ -39,7 +39,39 @@ matter most, what success looks like, and the biggest risk. Written last, readab
 - **Regulatory and compliance obligations:** <privacy, audit, retention, sector regulators, data residency>
 - **Where they sit against industry norms:**
 
-## 3. Current state
+## 3. Organization structure — areas and roles
+
+> Only the parts of the organization this project touches. Say so where the rest was deliberately left out.
+
+| Area / team | Leader | People (approx.) | Roles inside it | Internal / outsourced / partner | Relevance to {{PROGRAM}} |
+|---|---|---|---|---|---|
+| | | | | | |
+
+- **How the areas hand work to each other:**
+- **People who wear two hats:**
+- **Parts of the org deliberately out of scope:**
+
+## 4. Business processes related to the project
+
+> One block per process. In the customer's words, end to end.
+
+### BP1 — <name of process>
+- **In scope for phase 1?** <yes / adjacent, out of scope>
+- **Trigger:**
+- **Steps, and who performs each:**
+  1. <step — area / role>
+  2.
+- **Hand-offs:** <where work crosses an area boundary, and how it travels>
+- **Decisions and approvals:** <who decides, on what criteria, what happens on a no>
+- **Volume and cycle time:**
+- **Exceptions and how often:**
+- **Where it ends / definition of done:**
+- **Existing documentation:** <manual, flowchart, audit doc — or none>
+
+### BP2 — <name of process>
+<same structure>
+
+## 5. Current state
 
 ### Systems landscape
 
@@ -61,16 +93,16 @@ matter most, what success looks like, and the biggest risk. Written last, readab
 ### What runs on spreadsheets and email
 <Usually the highest-value target. Be specific about which process and who owns the file.>
 
-## 4. Actors and personas
+## 6. Actors who will use the system
 
-| Actor | Internal / partner / customer | Count | What they're trying to do | Tools today | Tech confidence | Champion or resistor |
-|---|---|---|---|---|---|---|
-| | | | | | | |
+| Actor | Area / role (§3) | Internal / partner / customer | Count | What they're trying to do | Process steps they perform (§4) | Tools today | Tech confidence | Champion or resistor |
+|---|---|---|---|---|---|---|---|---|
+| | | | | | | | | |
 
 **Often forgotten — check each:** report consumers, approvers, partner/portal users, the person who fixes
 data by hand at period end, support and back office, executives.
 
-## 5. Pains and friction
+## 7. Pains and friction
 
 > Ranked with the customer. This ranking drives epic priority.
 
@@ -85,7 +117,7 @@ data by hand at period end, support and back office, executives.
 ### P2 — <name of pain>
 <same structure>
 
-## 6. Goals and success measures
+## 8. Goals, expectations and success measures
 
 | Goal | Measure | Baseline today | Target | By when | Owner |
 |---|---|---|---|---|---|
@@ -95,7 +127,13 @@ data by hand at period end, support and back office, executives.
 - **Longer-term ambition:**
 - **What would make this a failure:**
 
-## 7. Scope, constraints and non-negotiables
+### Expectations, in the customer's words
+- **What they picture on day one:**
+- **What they expect of Seamlex as a partner:**
+- **What they assume is included:**
+- **Expectations that may be unrealistic:** <record as an open question, do not agree to them here>
+
+## 9. Scope, constraints and non-negotiables
 
 - **Timeline and fixed dates:**
 - **Explicitly out of scope:**
@@ -104,22 +142,7 @@ data by hand at period end, support and back office, executives.
 - **Hard constraints:** <security review, change freezes, languages, accessibility, data residency>
 - **Already decided, not up for debate:**
 
-## 8. Governance and ways of working
-
-| Role | Person | Decides on |
-|---|---|---|
-| Executive sponsor | | |
-| Decision maker | | |
-| Scope change approval | | |
-| Testing and acceptance | | |
-| Subject matter experts | | |
-
-- **Meeting cadence and demos:**
-- **SME availability:**
-- **Holiday and freeze periods:**
-- **Governance risks:** <e.g. no single decision maker>
-
-## 9. Risks and open questions
+## 10. Risks and open questions
 
 | # | Risk or open question | Impact | Owner | Needed by |
 |---|---|---|---|---|
