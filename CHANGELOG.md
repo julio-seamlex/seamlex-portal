@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 1.8.0
 
 > `/refine-project-scope` is replaced by `/seamlex-refinar`. Refinement now follows the Jira plan, one task
 > per session, and leaves three things behind: a Confluence page, the pending items as sub-tasks, and the
