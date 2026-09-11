@@ -235,10 +235,10 @@ When the brief is complete and the customer has reviewed it:
    - **Not found** — tell the customer plainly that the next step is to define the solution domains for
      `{{PROGRAM}}`, and that it is a working session **with their Seamlex consultant**, not something this
      workspace does for them. Explain why it matters: it is what turns the ranked pains into the domains
-     epics get filed under. `/refine-project-scope` still works without it, but epics will be harder to place.
+     epics get filed under. `/seamlex-refinar` still works without it, but epics will be harder to place.
    - **Atlassian tools unavailable** — do not fail. Say the check could not run, and mention the
      solution-domains step anyway so it is not missed.
-5. Hand off: tell them the next step is `/refine-project-scope` or the **seamlex-product-owner** agent,
+5. Hand off: tell them the next step is `/seamlex-refinar` or the **seamlex-product-owner** agent,
    which refines the epics of the signed contract scope into epic pages ready for design, anchored to the
    top-ranked pains from §7. Name the two or three pains you
    would start with, and why — do this even when the solution domains are missing, so that session has a

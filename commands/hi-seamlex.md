@@ -117,7 +117,7 @@ setup checks after fixing an Atlassian connection. Say plainly that you are over
    do not fail: say clearly which signals could not be checked and carry on from the local files alone.
 
 5. **Report, then hand off.** Short and concrete: which step, the signals you read to land on it, what
-   context you loaded, and the one command to run next — `/seamlex-discovery`, `/refine-project-scope` or
+   context you loaded, and the one command to run next — `/seamlex-discovery`, `/seamlex-refinar` or
    `/seamlex-status`. If the customer already said what they came to do, run that command's agent now
    rather than making them type it.
 

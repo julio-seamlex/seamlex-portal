@@ -1,5 +1,32 @@
 # Changelog
 
+## Unreleased
+
+> `/refine-project-scope` is replaced by `/seamlex-refinar`. Refinement now follows the Jira plan, one task
+> per session, and leaves three things behind: a Confluence page, the pending items as sub-tasks, and the
+> task's state.
+
+- **`/seamlex-refinar` replaces `/refine-project-scope`** — the session no longer opens with the contract
+  epic list. It reads the Jira plan as of today's date and takes the first open task in plan order (start
+  date, then due date, then rank; sub-tasks never), shows the pick and the two behind it, and asks the
+  customer to confirm. `/seamlex-refinar <KEY>` skips the plan order.
+  - **The task is read before the first question** — description, comments, sub-tasks, links, parent
+    epic, any existing refinement page — and reflected back in a few lines, so the session spends its time
+    on what Jira does not already settle. A task still in its initial state is moved to *In progress* when
+    the session starts.
+  - **Consultative, in the customer's language** — Salesforce terms in the task ("record type", "validation
+    rule", "flow", "permission set"…) are never put to the customer as questions. The command carries a
+    translation table: each platform term maps to the business question that actually gets the answer.
+  - **Three outputs, always** — one Confluence page `Relevamiento — <KEY> — <summary>` under
+    `{{CONF_PARENT}}` with the functional result of the conversation, saved as the session runs and linked
+    from the task with a comment; every open item as a sub-task under the task (type read from the project
+    metadata, `{{TYPE_QUESTION}}` under an epic that cannot carry sub-tasks), de-duplicated against what
+    already hangs there; and the task transitioned to done only after an explicit approval of the summary
+    with no blocking pending item — otherwise it stays in progress and the page says so.
+  - The parking rule is unchanged: what belongs to another task is noted against that key; what belongs to
+    no task goes to `Features no identificados`.
+- The lifecycle step `refinement` in `/hi-seamlex` now hands off to `/seamlex-refinar`.
+
 ## 1.7.0
 
 > Refinement now starts from the signed contract scope. `/seamlex-request` is gone; `/refine-project-scope`

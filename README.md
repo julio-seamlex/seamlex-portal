@@ -13,7 +13,7 @@ Confluence space you share with Seamlex, so there is one record and no parallel 
 |---|---|
 | `/hi-seamlex` | Start a session. **Run this first.** Sets the workspace up, then works out where you are in the lifecycle and loads the context for it. |
 | `/seamlex-discovery` | A guided session covering your business model, industry, areas and roles, business processes, actors, pains, goals and expectations. Resumes from an existing brief. |
-| `/refine-project-scope` | Refine the epics in your signed contract scope, one at a time, into Confluence epic pages ready to be designed and built. |
+| `/seamlex-refinar` | Refine the next task in the Jira plan — reads what Jira already says about it, runs a business-language session, and leaves one Confluence page, the pending items as sub-tasks, and the task marked in progress or done. |
 | `/seamlex-ask` | Ask the Seamlex team a question. |
 | `/seamlex-status` | See what's in progress, what's waiting on you, and what's blocked. |
 

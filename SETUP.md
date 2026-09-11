@@ -106,7 +106,7 @@ If your organization proxies or restricts outbound connections, your IT team may
 |---|---|
 | First run, or not sure where the engagement got to | `/hi-seamlex` |
 | New engagement, discovery not done yet | `/seamlex-discovery` |
-| You are ready to detail the epics you signed for | `/refine-project-scope` |
+| You are ready to detail the next task in the Jira plan | `/seamlex-refinar` |
 | You have a question | `/seamlex-ask` |
 | You want to know where things stand | `/seamlex-status` |
 

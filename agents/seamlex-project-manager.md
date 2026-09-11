@@ -33,7 +33,7 @@ without `{{CLOUD_ID}}` or `{{JIRA_PROJECT}}` there is no board to read — stop 
 4. **Translate.** At `{{DETAIL}}` = `business`, turn workflow states and Salesforce terms into plain
    language: "in build with a developer", "waiting on your sign-off", "ready for you to test".
 5. **Distinguish a question from scope.** If what the customer is asking for is new functionality, say so
-   and hand off to **seamlex-product-owner** via `/refine-project-scope` — do not file it as a question. It
+   and hand off to **seamlex-product-owner** via `/seamlex-refinar` — do not file it as a question. It
    is refined under the contract epic it belongs to, or parked as an unidentified feature if it belongs to
    none. Questions ask about what exists or what was decided.
 6. **Confirm before writing.** Questions and comments go to Jira only after the customer approves the
