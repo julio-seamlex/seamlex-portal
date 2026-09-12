@@ -13,7 +13,7 @@ Confluence space you share with Seamlex, so there is one record and no parallel 
 |---|---|
 | `/hi-seamlex` | Start a session. **Run this first.** Sets the workspace up, then works out where you are in the lifecycle and loads the context for it. |
 | `/seamlex-discovery` | A guided session covering your business model, industry, areas and roles, business processes, actors, pains, goals and expectations. Resumes from an existing brief. |
-| `/seamlex-refinar` | Refine the next task in the Jira plan — reads what Jira already says about it, runs a business-language session, and leaves one Confluence page, the pending items as sub-tasks, and the task marked in progress or done. |
+| `/seamlex-refinar` | Run a *relevamiento* with the Product Owner — takes a relevamiento task from the current sprint, gathers everything the client config points at, interviews you in business language only, and leaves a comment and the transcript on the task, a Confluence page "Minuta <task>", the pending items as tasks, and the task linked to the page. |
 | `/seamlex-ask` | Ask the Seamlex team a question. |
 | `/seamlex-status` | See what's in progress, what's waiting on you, and what's blocked. |
 
@@ -63,9 +63,9 @@ seamlex/
     └── discovery-brief.md      # your discovery notes, resumable
 ```
 
-Scope refinement leaves nothing here: each contract epic gets its own Confluence page — created as a draft
-on the first session, updated as you go, marked `Ready for design` when you approve it — and so does the
-list of unidentified features.
+Relevamientos leave nothing here: each one gets its own Confluence page — `Minuta <task>`, created on the
+first session, updated as you go, marked `Finalizado` when you approve it — plus the transcript and a
+comment on the Jira task, and so does the list of unidentified features.
 
 There is no configuration to fill in. The engagement settings — Jira project, issue types, the signed
 scope page, who to reach at Seamlex — live on a `claude-client-config` page in your Confluence space,

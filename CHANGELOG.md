@@ -1,5 +1,30 @@
 # Changelog
 
+## 1.11.0
+
+> `/seamlex-refinar` becomes a *relevamiento* of the current sprint, run by the Product Owner agent, in
+> business language only, and leaves five things behind on Jira and Confluence.
+
+- **`/seamlex-refinar` is executed by the `seamlex-product-owner` agent** and no longer follows the plan
+  by date: it queries the **open sprint** for tasks of type `{{TYPE_RELEVAMIENTO}}` (default
+  `Relevamiento`; a label when the config says so), takes the only one or asks which to run, and
+  `/seamlex-refinar <KEY>` goes straight to a task.
+- **Business language is the rule that overrides everything.** However technical the scope item — record
+  type, trigger, LWC, integration, data model — none of it reaches the customer; the translation table
+  grows and applies even at `{{DETAIL}}` = `technical`. Platform vocabulary is allowed only in the
+  minuta's *Para el equipo de delivery* section.
+- **The `claude-client-config` page is used as the index of the project's knowledge**: before the first
+  question the agent reads the task and its epic, every page the config links (scope, Discovery Brief,
+  process and reference pages), searches Confluence and Jira for related material, and reflects it back in
+  business terms. The interview aims at the functional understanding of the business around the task.
+- **Five outputs per session**: a comment on the task saying the Product Owner agent ran the
+  relevamiento; the verbatim conversation **transcript** as a dedicated comment (or a child page when too
+  long — the MCP server has no file upload); the pending items as `{{TYPE_TASK}}` issues (sub-tasks under
+  the relevamiento by default); a Confluence page titled **`Minuta <task summary>`** under
+  `{{CONF_PARENT}}`; and the Jira task **linked to the page** in both directions (page URL in the comment,
+  issue link in the minuta header, checked with `getJiraIssueRemoteIssueLinks`).
+- README describes the command and the relevamiento outputs.
+
 ## 1.10.0
 
 > The configuration moves out of the plugin and into Confluence. `/hi-seamlex` loads the customer's
