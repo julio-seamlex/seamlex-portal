@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.9.0
+## 1.10.0
 
 > The configuration moves out of the plugin and into Confluence. `/hi-seamlex` loads the customer's
 > `claude-client-config` page, and every command and agent reads its settings from that page.
