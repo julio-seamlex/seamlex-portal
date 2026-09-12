@@ -25,14 +25,17 @@ Seamlex architect and developers decide *how*.
 
 # Step 0 — Load configuration and context (always first)
 
-1. Read the **Configuration** section of
-   [`commands/hi-seamlex.md`](${CLAUDE_PLUGIN_ROOT}/commands/hi-seamlex.md) — it ships with the plugin and
-   is **read-only**; never edit it or copy it into the workspace. Resolve `{{COMPANY}}`, `{{PROGRAM}}`,
-   `{{LOCALE}}`, `{{MY_ROLE}}`, `{{CLOUD_ID}}`, `{{CONF_SPACE}}`, `{{CONF_PARENT}}`, `{{CONF_SCOPE_PAGE}}`,
-   `{{JIRA_PROJECT}}`, `{{TYPE_EPIC}}`, `{{TYPE_STORY}}`, `{{LABEL_REQUEST}}`, `{{LABELS_EXTRA}}`,
-   `{{SEAMLEX_CONTACT}}`, `{{CONFIRM_WRITES}}`, `{{DETAIL}}`, `{{DRAFTS_DIR}}`. If a row is blank, say
-   which one and work without it where you can; without `{{CLOUD_ID}}`, `{{CONF_SPACE}}` or
-   `{{CONF_SCOPE_PAGE}}` there is no contract scope to refine — stop and say so.
+1. Your settings are the **`claude-client-config` Confluence page** that `/hi-seamlex` loaded into the
+   session at its step 4 — never a file in the plugin or the workspace. If that page is not in context,
+   stop and ask the customer to run `/hi-seamlex` first. Resolve from it `{{CONF_PARENT}}`,
+   `{{CONF_SCOPE_PAGE}}`, `{{JIRA_PROJECT}}`, `{{TYPE_EPIC}}`, `{{TYPE_STORY}}`, `{{LABEL_REQUEST}}`,
+   `{{LABELS_EXTRA}}`, `{{SEAMLEX_CONTACT}}`, `{{CONFIRM_WRITES}}`, `{{DETAIL}}`, `{{DRAFTS_DIR}}`, and
+   `{{COMPANY}}` and `{{PROGRAM}}` when it names them. `{{CLOUD_ID}}` and `{{CONF_SPACE}}` are the cloud
+   id and space `/hi-seamlex` settled on; `{{LOCALE}}` and `{{USER_NAME}}` come from `atlassianUserInfo`,
+   and the scope page title (read in the next step anyway) and the brief fill in whatever the page leaves
+   out. If an entry is missing from the page, say which one and work without it where you can; without
+   `{{CLOUD_ID}}`, `{{CONF_SPACE}}` or `{{CONF_SCOPE_PAGE}}` there is no contract scope to refine — stop
+   and say so.
 2. Read the **signed contract scope** at `{{CONF_SCOPE_PAGE}}` with `getConfluencePage`, passing
    `{{CLOUD_ID}}`. This page is the authority on what is being delivered. Extract the list of epics
    exactly as the contract names them — do not rename, merge or split them to suit a conversation.
@@ -198,4 +201,4 @@ half-created work is worse than none.
 > the contract page, the draft, the states all live in Confluence and none of it is kept locally. If the
 > tools are unavailable, say so and stop; if they drop out mid-session, stop refining and show the customer
 > everything gathered since the last successful save so they can keep it themselves, then point them at
-> `/hi-seamlex setup`.
+> `/hi-seamlex`.

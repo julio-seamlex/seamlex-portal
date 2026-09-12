@@ -9,13 +9,15 @@ real actors from discovery, small batches with `AskUserQuestion`, nothing invent
 decided here, not by the agent's own opening step**: the Jira plan says which task is up today, so skip
 the agent's contract-epic list and follow the steps below.
 
-Settings come from the plugin's fixed config, the **Configuration** section of
-[`commands/hi-seamlex.md`](${CLAUDE_PLUGIN_ROOT}/commands/hi-seamlex.md) — nothing to generate and nothing
-to check first. Resolve `{{CLOUD_ID}}`, `{{JIRA_PROJECT}}`, `{{CONF_SPACE}}`, `{{CONF_PARENT}}`,
-`{{TYPE_EPIC}}`, `{{TYPE_QUESTION}}`, `{{SEAMLEX_CONTACT}}`, `{{CONFIRM_WRITES}}`, `{{DETAIL}}`,
-`{{LOCALE}}`, `{{DRAFTS_DIR}}`. If the Atlassian tools are not available, say so and stop — the plan, the
+Settings come from the **`claude-client-config` Confluence page** that `/hi-seamlex` loaded into the
+session — nothing to generate and nothing to check first; if the page is not in context, stop and ask the
+customer to run `/hi-seamlex`. Resolve from it `{{JIRA_PROJECT}}`, `{{CONF_PARENT}}`, `{{TYPE_EPIC}}`,
+`{{TYPE_QUESTION}}`, `{{SEAMLEX_CONTACT}}`, `{{CONFIRM_WRITES}}`, `{{DETAIL}}`, `{{DRAFTS_DIR}}`, and
+`{{PROGRAM}}` and `{{COMPANY}}` when it names them; `{{CLOUD_ID}}` and `{{CONF_SPACE}}` are the cloud id
+and space `/hi-seamlex` settled on, `{{LOCALE}}` comes from `atlassianUserInfo`, and the scope page title
+and the brief fill in the rest. If the Atlassian tools are not available, say so and stop — the plan, the
 task and every output live in Jira and Confluence, and there is nothing local to fall back on. Point at
-`/hi-seamlex setup`.
+`/hi-seamlex`.
 
 ## Step 1 — Pick the task from the plan, as of today
 
@@ -192,7 +194,7 @@ task the plan brings, from the same query as Step 1, so the customer can pick it
 If any write fails, stop, report exactly what succeeded and what did not, and do not retry blindly — a
 page without its sub-tasks is recoverable; a task marked done with nothing behind it is not. If the
 Atlassian tools drop out mid-session, stop refining and show the customer everything gathered since the
-last successful save so they can keep it themselves, then point them at `/hi-seamlex setup`.
+last successful save so they can keep it themselves, then point them at `/hi-seamlex`.
 
 > Atlassian tools come from the MCP server bundled with this plugin and are namespaced by it —
 > `mcp__plugin_seamlex-portal_atlassian__searchJiraIssuesUsingJql`. Match on the base name after the last

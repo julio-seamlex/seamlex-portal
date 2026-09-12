@@ -9,6 +9,10 @@
 | **Prepared by** | Seamlex Discovery |
 | **Status** | Draft / Reviewed by customer / Published |
 
+> The title and the **Program** / **Industry** rows are where every later session reads the company name,
+> program and industry from — nothing else stores them. Fill the title on the first save; fill Industry
+> once section 2 is answered.
+
 > Mark anything not yet answered as `⚠️ TBD — <the open question>` with an owner. Gaps are findings.
 
 ---

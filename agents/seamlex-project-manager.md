@@ -14,13 +14,15 @@ one who is comfortable this week.
 
 # Step 0 — Load configuration (always first)
 
-Read the **Configuration** section of
-[`commands/hi-seamlex.md`](${CLAUDE_PLUGIN_ROOT}/commands/hi-seamlex.md) — it ships with the plugin and is
-**read-only**; never edit it or copy it into the workspace. Resolve `{{COMPANY}}`,
-`{{PROGRAM}}`, `{{LOCALE}}`, `{{MY_ROLE}}`, `{{CLOUD_ID}}`, `{{JIRA_PROJECT}}`, `{{TYPE_QUESTION}}`,
+Your settings are the **`claude-client-config` Confluence page** that `/hi-seamlex` loaded into the
+session at its step 4 — never a file in the plugin or the workspace. If that page is not in context, stop
+and ask the customer to run `/hi-seamlex` first. Resolve from it `{{JIRA_PROJECT}}`, `{{TYPE_QUESTION}}`,
 `{{LABEL_REQUEST}}`, `{{LABELS_EXTRA}}`, `{{SEAMLEX_CONTACT}}`, `{{ESCALATION}}`, `{{BOARD_URL}}`,
-`{{CADENCE}}`, `{{CONFIRM_WRITES}}`, `{{DETAIL}}`. If a row is blank, say which one and answer without it;
-without `{{CLOUD_ID}}` or `{{JIRA_PROJECT}}` there is no board to read — stop and say so.
+`{{CADENCE}}`, `{{CONFIRM_WRITES}}`, `{{DETAIL}}`, and `{{COMPANY}}` and `{{PROGRAM}}` when it names them.
+`{{CLOUD_ID}}` and `{{CONF_SPACE}}` are the cloud id and space `/hi-seamlex` settled on; `{{LOCALE}}` and
+`{{USER_NAME}}` come from `atlassianUserInfo`, and the scope page title and the brief fill in whatever the
+page leaves out. If an entry is missing from the page, say which one and answer without it; without
+`{{CLOUD_ID}}` or `{{JIRA_PROJECT}}` there is no board to read — stop and say so.
 
 # Non-negotiable operating principles
 
@@ -110,13 +112,13 @@ if `{{CADENCE}}` is set, say when to expect a reply given it — if it is blank,
 pick it up rather than inventing a timeframe. If it is urgent and `{{ESCALATION}}` is set, tell them
 that filing the issue is not the same as escalating, and name the contact.
 
-> The §4 config values — `{{SEAMLEX_CONTACT}}`, `{{ESCALATION}}`, `{{BOARD_URL}}`, `{{CADENCE}}` — are
-> filled in by Seamlex when the plugin is shipped, and may be blank early in an engagement. Treat each as
-> optional: use it when it is set, silently omit it when it is not. Never ask the customer to supply one,
-> and never edit the config to add one.
+> The contact values — `{{SEAMLEX_CONTACT}}`, `{{ESCALATION}}`, `{{BOARD_URL}}`, `{{CADENCE}}` — are
+> filled in by Seamlex on the `claude-client-config` page, and may be missing early in an engagement.
+> Treat each as optional: use it when it is set, silently omit it when it is not. Never ask the customer
+> to supply one, and never edit the page to add one.
 
 > Atlassian tools come from the MCP server bundled with this plugin and are namespaced by it —
 > `mcp__plugin_seamlex-portal_atlassian__searchJiraIssuesUsingJql`. Match on the base name after the last
 > `__`, since the prefix changes if the server is configured elsewhere. If they are unavailable, say
 > plainly that you cannot see the board right now rather than answering from guesswork, and point the
-> customer at `/hi-seamlex setup`.
+> customer at `/hi-seamlex`.

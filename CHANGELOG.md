@@ -1,5 +1,27 @@
 # Changelog
 
+## 1.9.0
+
+> The configuration moves out of the plugin and into Confluence. `/hi-seamlex` loads the customer's
+> `claude-client-config` page, and every command and agent reads its settings from that page.
+
+- **`/hi-seamlex` is now a five-step session start**: authenticate to Atlassian, choose the Confluence
+  space (asking only when more than one is visible), find the `claude-client-config` page in it, load the
+  page into the session, and close with a two-line "setup finished, welcome to the Seamlex portal". It
+  writes nothing, creates nothing, and no longer echoes the page's contents back.
+- **The Configuration section of `commands/hi-seamlex.md` is gone.** The tables that shipped with the
+  plugin — Atlassian workspace, issue types, Seamlex contacts, agent behaviour — and the *Who you are*
+  rows all live on the customer's `claude-client-config` page now. Changing a setting is an edit to the
+  page, not a plugin release.
+- **Every agent and command resolves its `{{PLACEHOLDER}}` tokens from the loaded page** and stops with
+  "run `/hi-seamlex` first" when the page is not in the session. `{{CLOUD_ID}}` and `{{CONF_SPACE}}` come
+  from the cloud id and space `/hi-seamlex` settled on; `{{LOCALE}}` and `{{USER_NAME}}` from
+  `atlassianUserInfo`; `{{COMPANY}}`, `{{PROGRAM}}` and `{{INDUSTRY}}` from the page when it names them,
+  otherwise from the signed scope page title and the Discovery Brief. `{{MY_ROLE}}` is removed.
+- `/hi-seamlex setup` no longer exists as a separate mode; every reference now points at `/hi-seamlex`.
+- README, SETUP and the discovery-brief template describe the Confluence page as the source of settings;
+  SETUP's troubleshooting covers a missing `claude-client-config` page.
+
 ## 1.8.0
 
 > `/refine-project-scope` is replaced by `/seamlex-refinar`. Refinement now follows the Jira plan, one task

@@ -67,9 +67,12 @@ Scope refinement leaves nothing here: each contract epic gets its own Confluence
 on the first session, updated as you go, marked `Ready for design` when you approve it — and so does the
 list of unidentified features.
 
-There is no configuration to fill in. The settings — your company, program, Jira project, Confluence space
-and issue types — ship with the plugin in the **Configuration** section of `commands/hi-seamlex.md`, and
-every command reads them from there. Your workspace holds only your discovery notes. Which step of the
+There is no configuration to fill in. The engagement settings — Jira project, issue types, the signed
+scope page, who to reach at Seamlex — live on a `claude-client-config` page in your Confluence space,
+maintained by Seamlex; `/hi-seamlex` loads it at the start of each session and every command reads its
+settings from there. Who *you* are — the language you work in — comes from the Atlassian account you sign
+in with; your company and program from the config page, the signed scope page or your Discovery Brief; on
+the very first session, before there is a brief, the plugin asks for your company name once. Your workspace holds only your discovery notes. Which step of the
 lifecycle you are on isn't recorded anywhere — `/hi-seamlex` works it out each session from your brief and
 your board.
 

@@ -7,9 +7,10 @@ description: Ask the Seamlex team a question — answered from Jira and Confluen
 Hand this to the **seamlex-project-manager** agent in question mode, passing `$ARGUMENTS` as the
 question.
 
-The agent reads its settings from the plugin's fixed config, the **Configuration** section of
-[`commands/hi-seamlex.md`](${CLAUDE_PLUGIN_ROOT}/commands/hi-seamlex.md) — nothing to generate and
-nothing to check first. If the Atlassian connection is not up, run `/hi-seamlex setup`.
+The agent reads its settings from the **`claude-client-config` Confluence page** that `/hi-seamlex`
+loaded into the session — the workspace, issue types, labels and Seamlex contacts all live there; the
+signed-in user and their language come from `atlassianUserInfo`. Nothing to generate and nothing to
+check first. If that page is not in context, or the Atlassian connection is not up, run `/hi-seamlex`.
 
 If `$ARGUMENTS` is empty, ask what they'd like to know.
 

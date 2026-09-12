@@ -49,14 +49,15 @@ Run:
 /hi-seamlex
 ```
 
-`/hi-seamlex` is the only command you need to start with: the first time you run it, it sets the workspace
-up before doing anything else. (`/hi-seamlex setup` re-runs just those checks later.)
+`/hi-seamlex` is the only command you need to start with: run it at the start of every session.
 
-**There is nothing to fill in.** Seamlex ships the plugin already configured for your engagement — your
-company, program, Jira project, Confluence space and issue type names all live in the plugin's own
-`commands/hi-seamlex.md`, under **Configuration**. Setup does not ask you for them and does not create a
-config in your workspace; it confirms the connection works and that what the plugin expects matches what
-your Atlassian site actually has.
+**There is nothing to fill in.** Your engagement's settings — Jira project, issue type names, Seamlex
+contacts, the signed scope page — live on a Confluence page called `claude-client-config` in your space,
+maintained by Seamlex. `/hi-seamlex` finds that page and loads it into the session, and every other command
+reads its settings from there. Your language and who you are come from the Atlassian account you sign in
+with; your company and program come from the signed scope page and your Discovery Brief when the config
+page does not name them (the first time, before a brief exists, you are asked for your company name once).
+Nothing is written to your workspace.
 
 This will:
 
@@ -64,8 +65,9 @@ This will:
    opens your browser to sign in to Atlassian. You are signing in to *your own* Atlassian account —
    Seamlex never sees your credentials, and the plugin never stores them. You can revoke access any time
    from your Atlassian account settings.
-2. **Show you what the plugin is configured for** — company, program, Jira project, Confluence space — so
-   anything wrong is obvious immediately.
+2. **Show you what the session is running on** — who you are signed in as, your company and program as
+   read from the site, the Jira project, the Confluence space — each tagged with where it came from, so
+   anything wrong is obvious immediately and correctable in one line.
 3. **Check it against your site.** That the Jira project and Confluence space are visible to you, and that
    the issue type names — Epic, Story, and whatever your project uses for questions — really exist.
    Anything that doesn't match is reported as a mismatch to take back to Seamlex, not something for you
@@ -90,7 +92,7 @@ Atlassian tools are unavailable:
 - **Approve the server.** Claude asks once, on first use, whether to trust the `atlassian` server from
   this plugin. If you declined, re-enable it in your MCP settings.
 - **Check you're signed in.** The connection uses a browser OAuth flow. If it expired, running
-  `/hi-seamlex setup` again will prompt you to sign in.
+  `/hi-seamlex` again will prompt you to sign in.
 - **Check your access.** You need access to the Jira project and Confluence space Seamlex shares with
   you. If the setup checks see no projects, ask your Seamlex contact to confirm your invitation.
 
@@ -112,13 +114,18 @@ If your organization proxies or restricts outbound connections, your IT team may
 
 ## Troubleshooting
 
-**"Config missing or has unfilled placeholders"** — the config ships with the plugin, so this means the
-install is incomplete or out of date. Reinstall or update the plugin and restart Claude; if it persists,
-tell your Seamlex contact which rows are blank.
+**"No `claude-client-config` page"** — `/hi-seamlex` searched your space and found no page with that
+title. Seamlex creates and maintains it; tell your Seamlex contact which space you were in.
 
-**A setting is wrong** — the wrong Jira project, a Confluence space you can't see, an issue type that
-doesn't exist in your project. `/hi-seamlex setup` reports these as mismatches. They are fixed in the plugin
-by Seamlex, not in your workspace — send the mismatch to your Seamlex contact.
+**A setting is wrong or missing** — the wrong Jira project, an issue type that doesn't exist in your
+project, a blank entry an agent asks about. These live on the `claude-client-config` page in Confluence,
+not in your workspace or the plugin — send the entry to your Seamlex contact and they fix the page; the
+next `/hi-seamlex` picks it up.
+
+**The company, program or language is wrong** — these are read live, not shipped. The program is the
+title of the signed scope page, the language is your Atlassian profile's locale, the company comes from
+your Discovery Brief. Fix the source (rename the page, change your Atlassian language, correct the brief
+header) and the next session picks it up — or just tell the agent in one line for the current session.
 
 **"Which step am I on?"** — nothing records it. `/hi-seamlex` works it out each session from your
 workspace, your Discovery Brief and your board, and tells you which signals it read. If it lands wrong,
@@ -127,8 +134,8 @@ say so, or name the step yourself: `/hi-seamlex refinement`.
 **An agent can't find the discovery brief** — that's fine; it will say so and carry on. Discovery makes
 scope refinement sharper but isn't a hard prerequisite.
 
-**Wrong issue type when raising an epic or story** — §3 of the plugin's config does not match your project.
-Run `/hi-seamlex setup` to see exactly which name is off, and send that to your Seamlex contact for a fix.
+**Wrong issue type when raising an epic or story** — the issue types on the `claude-client-config` page do
+not match your project. Send the name that is off to your Seamlex contact for a fix on the page.
 
 **A write to Jira half-succeeded** — the agent will tell you exactly which issues were created and which
 weren't, and stop rather than retrying. Give that list to your Seamlex contact.

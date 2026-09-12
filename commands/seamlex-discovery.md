@@ -6,9 +6,10 @@ description: Run the Seamlex discovery session — a guided conversation to buil
 
 Hand this to the **seamlex-discovery-agent**.
 
-The agent reads its settings from the plugin's fixed config, the **Configuration** section of
-[`commands/hi-seamlex.md`](${CLAUDE_PLUGIN_ROOT}/commands/hi-seamlex.md) — nothing to generate and
-nothing to check first. If the Atlassian connection is not up, run `/hi-seamlex setup`.
+The agent reads its settings from the **`claude-client-config` Confluence page** that `/hi-seamlex`
+loaded into the session — the workspace, issue types, labels and Seamlex contacts all live there; the
+signed-in user and their language come from `atlassianUserInfo`. Nothing to generate and nothing to
+check first. If that page is not in context, or the Atlassian connection is not up, run `/hi-seamlex`.
 
 The session exists to answer seven things about the customer: their company and business model, their
 industry and business context, the organization structure — the areas and roles that matter to this
