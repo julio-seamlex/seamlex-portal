@@ -162,8 +162,8 @@ MCP server's own browser login, never through this file.
 | Cloud ID | `{{CLOUD_ID}}` | 87285af3-bdbc-4c75-bc0c-2ec7805668fb | Resolved once via `getAccessibleAtlassianResources`; cached here so agents skip the lookup. |
 | Jira project key | `{{JIRA_PROJECT}}` | SCRUM | My Software Team. |
 | Confluence space key | `{{CONF_SPACE}}` | MST | |
-| Discovery parent page | `{{CONF_PARENT}}` | 327858 | My Software Team home. |
-| Signed scope page | `{{CONF_SCOPE_PAGE}}` | 5373953 | Page in `{{CONF_SPACE}}` holding the detail of the scope the customer signed. Correct it by editing this table and shipping a new plugin version. |
+| Discovery parent page | `{{CONF_PARENT}}` | 7634946 | My Software Team home. |
+| Signed scope page | `{{CONF_SCOPE_PAGE}}` | 5373961 | Page in `{{CONF_SPACE}}` holding the detail of the scope the customer signed. Correct it by editing this table and shipping a new plugin version. |
 
 ### 3. Issue types and fields
 
