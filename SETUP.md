@@ -11,7 +11,7 @@ In Claude, add the Seamlex marketplace and install the plugin:
 /plugin install seamlex-portal@seamlex
 ```
 
-Then restart Claude so the plugin's agents, commands and Atlassian connection load.
+Then restart Claude so the plugin's commands, skills and Atlassian connection load.
 
 ### Where to run this
 
@@ -27,9 +27,7 @@ the window; MCP servers only load at startup.
 3. Choose **Add from a repository** and paste `https://github.com/julio-seamlex/seamlex-portal`
 4. Install **seamlex-portal** once the marketplace syncs
 
-Then use the plugin from the **Cowork** tab, not the Chat tab. Sub-agents run only in Cowork, and
-`/seamlex-refinar` delegates to the Product Owner agent, so in plain chat that command will appear but
-do nothing.
+The plugin works from both the **Chat** and the **Cowork** tab — nothing in it runs as a sub-agent.
 
 > **This is a private repository.** Your Seamlex contact will grant your GitHub account read access
 > before you install. Claude Code uses your existing GitHub credentials; the Claude desktop app's
@@ -116,25 +114,25 @@ If your organization proxies or restricts outbound connections, your IT team may
 title. Seamlex creates and maintains it; tell your Seamlex contact which space you were in.
 
 **A setting is wrong or missing** — the wrong Jira project, an issue type that doesn't exist in your
-project, a blank entry an agent asks about. These live on the `claude-client-config` page in Confluence,
+project, a blank entry a command asks about. These live on the `claude-client-config` page in Confluence,
 not in your workspace or the plugin — send the entry to your Seamlex contact and they fix the page; the
 next `/hi-seamlex` picks it up.
 
 **The company, program or language is wrong** — these are read live, not shipped. The program is the
 title of the signed scope page, the language is your Atlassian profile's locale, the company comes from
 your Discovery Brief. Fix the source (rename the page, change your Atlassian language, correct the brief
-header) and the next session picks it up — or just tell the agent in one line for the current session.
+header) and the next session picks it up — or just tell the command in one line for the current session.
 
 **"Which step am I on?"** — nothing records it. `/hi-seamlex` works it out each session from your
 workspace, your Discovery Brief and your board, and tells you which signals it read. If it lands wrong,
 say so, or name the step yourself: `/hi-seamlex refinement`.
 
-**An agent can't find the discovery brief** — that's fine; it will say so and carry on. The Discovery
+**A command can't find the discovery brief** — that's fine; it will say so and carry on. The Discovery
 Brief is prepared with your Seamlex consultant; it makes scope refinement sharper but isn't a hard
 prerequisite.
 
 **Wrong issue type when raising an epic or story** — the issue types on the `claude-client-config` page do
 not match your project. Send the name that is off to your Seamlex contact for a fix on the page.
 
-**A write to Jira half-succeeded** — the agent will tell you exactly which issues were created and which
+**A write to Jira half-succeeded** — the command will tell you exactly which issues were created and which
 weren't, and stop rather than retrying. Give that list to your Seamlex contact.

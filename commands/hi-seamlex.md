@@ -43,7 +43,7 @@ Confluence.
 
 4. **Download the page and keep it in the session.** Call `getConfluencePage` on that page id and read the
    whole body. Keep it in context for the rest of the session: it is the source of truth the other Seamlex
-   commands and agents read from, so do not summarize it away or drop it. Do not list the page's contents
+   commands and skills read from, so do not summarize it away or drop it. Do not list the page's contents
    back to the user.
 
 5. **Close the setup.** In two lines at most: say the setup has finished, naming the space and the config
@@ -51,7 +51,7 @@ Confluence.
 
 ## Where the configuration lives
 
-**The `claude-client-config` page is the configuration.** Every other Seamlex command and agent resolves
+**The `claude-client-config` page is the configuration.** Every other Seamlex command and skill resolves
 the `{{PLACEHOLDER}}` tokens in its instructions from the page loaded in step 4 — the Jira project, the
 Confluence space and parent pages, the signed scope page, issue types and labels, the Seamlex contacts,
 the write-confirmation and detail preferences, and whatever else the page indexes. Nothing is read from

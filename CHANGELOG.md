@@ -1,5 +1,23 @@
 # Changelog
 
+## 1.13.0
+
+> No agents. The Product Owner is the `business-analysis` skill, loaded by `/seamlex-refinar`.
+
+- **`seamlex-product-owner` is now the `business-analysis` skill** — `skills/business-analysis/SKILL.md`
+  carries the role, the *speak the customer's language* rule, the technical-term → business-question
+  table, *How you interview*, the closing and what is written, unchanged. The agent file is gone.
+- **`/seamlex-refinar` loads the skill with the `Skill` tool before Step 1** (or reads the file directly
+  when that tool is unavailable) instead of handing the session to a sub-agent resolved by name. Why: a
+  test in Cowork ran the 1.12.0 command against a cached 1.11.0 agent — the old "refine contract epics"
+  persona with no translation table — and the command could not do what it described. A skill loaded
+  in-process by the command cannot drift from it that way.
+- **Works from the Chat tab as well as Cowork** — nothing in the plugin runs as a sub-agent any more, so
+  SETUP no longer restricts it to Cowork.
+- The comment `/seamlex-refinar` leaves on the task (4b) says the relevamiento was run by the Seamlex
+  Product Owner (Claude) with the customer, no longer "the Product Owner agent". Nothing else changes in
+  behaviour or in what the command writes.
+
 ## 1.12.0
 
 > One agent, three commands. The Product Owner agent is behaviour only and `/seamlex-refinar` is the

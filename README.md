@@ -19,14 +19,12 @@ Confluence space you share with Seamlex, so there is one record and no parallel 
 on — setup, scope refinement or status — pulls down just that step's context, and points you at the
 right command.
 
-You can also talk to the Product Owner directly — "let's refine the quoting epic" — without
-remembering a command.
+## The Product Owner
 
-## The Product Owner agent
-
-**Product Owner** runs the *relevamientos* of your current sprint through `/seamlex-refinar`. It takes one
-relevamiento task at a time, reads everything the project already knows about it — the task, its epic,
-the Discovery Brief Seamlex prepared with you, earlier minutas — and then interviews you about your operation: the people, steps,
+`/seamlex-refinar` plays the **Seamlex Product Owner**, through the plugin's `business-analysis` skill —
+the interview method it loads before asking anything. It runs the *relevamientos* of your current sprint
+one task at a time, reads everything the project already knows about it — the task, its epic, the
+Discovery Brief Seamlex prepared with you, earlier minutas — and then interviews you about your operation: the people, steps,
 decisions, information and rules behind what the task asks for. However technically the task is written —
 record types, flows, integrations — none of that vocabulary reaches you; the questions are about how a
 shipment comes back damaged and who decides, not about which fields go where. Seamlex maps the answers to
@@ -35,14 +33,14 @@ on the task, and the open points as sub-tasks with an owner. Anything you raise 
 in the sprint is parked as an **unidentified feature** rather than quietly absorbed — Seamlex decides
 what happens to it.
 
-`/seamlex-status` needs no agent: the command itself plays the Seamlex project manager. It answers "where is my request" from the live board rather than from memory, tells you
+`/seamlex-status` plays the **Seamlex Project Manager**. It answers "where is my request" from the live board rather than from memory, tells you
 plainly what is stale or blocked, and leads with what is waiting on you. It also handles questions:
 searching Jira and Confluence for an existing answer first, and filing a tracked question when it
 genuinely needs the team.
 
 ## Nothing happens without your approval
 
-Every agent drafts locally and shows you the result before anything is written to Jira or Confluence. You
+Every command drafts locally and shows you the result before anything is written to Jira or Confluence. You
 approve the exact epic, story, comment or page — or you don't, and it stays a draft in your workspace.
 
 Your Atlassian credentials never pass through Seamlex or this plugin. You sign in to Atlassian yourself,

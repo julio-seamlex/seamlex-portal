@@ -4,12 +4,13 @@ description: Run a "relevamiento" from the current sprint with the Product Owner
 
 # Relevamiento of a sprint task
 
-**This command is executed by the `seamlex-product-owner` agent.** The split is simple: the agent decides
-**how the conversation goes** — business language no matter how technical the task is written, the need
-under the request, real actors from discovery, small batches with `AskUserQuestion`, a verbatim
-transcript, nothing invented — and this command decides **what it works on** (the current sprint says
-which relevamientos are up) and **what it leaves behind** (the five outputs in Step 4). Read the agent
-before the first question; its translation table is the rule every question here passes through.
+**Before Step 1, load the `seamlex-portal:business-analysis` skill with the `Skill` tool.** If the
+Skill tool is not available, read `${CLAUDE_PLUGIN_ROOT}/skills/business-analysis/SKILL.md` directly.
+The split is simple: the skill decides **how the conversation goes** — business language no matter how
+technical the task is written, the need under the request, real actors from discovery, small batches
+with `AskUserQuestion`, a verbatim transcript, nothing invented — and this command decides **what it
+works on** (the current sprint says which relevamientos are up) and **what it leaves behind** (the five
+outputs in Step 4). Its translation table is the rule every question here passes through.
 
 Settings come from the **`claude-client-config` Confluence page** that `/hi-seamlex` loaded into the
 session. If the page is not in context, stop and ask the customer to run `/hi-seamlex`. Resolve from it
@@ -22,10 +23,10 @@ sub-task type, used for pending items; default whatever the project calls it —
 say so and stop — the sprint, the task and every output live in Jira and Confluence, and there is nothing
 local to fall back on.
 
-## Business language is the agent's rule, not this command's option
+## Business language is the skill's rule, not this command's option
 
 The *speak the customer's language* rule and its technical-term → business-question table live in the
-`seamlex-product-owner` agent. Nothing in the steps below relaxes it: however a task is written — record
+`business-analysis` skill. Nothing in the steps below relaxes it: however a task is written — record
 type, flow, LWC, integration — the customer only ever hears questions about their operation, and platform
 vocabulary appears in exactly one place, the minuta's closing *Para el equipo de delivery* section.
 
@@ -81,11 +82,11 @@ never be asked something a page already answers.
 5. If the task is still in its initial state, move it to **In progress** now — `getTransitionsForJiraIssue`,
    then `transitionJiraIssue`; ask once when `{{CONFIRM_WRITES}}` is `always`.
 
-## Step 3 — Interview, the way the agent does
+## Step 3 — Interview, the way the skill says
 
 How the interview runs — the business-language rule, the need under the request, real actors, small
 batches, follow the energy, what design needs covered in business terms, `⚠️ TBD` with an owner — is the
-agent's *How you interview*. What this command adds is where its inputs and outputs connect to the steps
+skill's *How you interview*. What this command adds is where its inputs and outputs connect to the steps
 around it:
 
 - Options for each `AskUserQuestion` batch come from the discovery brief and the material gathered in
@@ -94,9 +95,9 @@ around it:
   that belongs to no task goes to the `Features no identificados — {{PROGRAM}}` page in `{{CONF_SPACE}}`,
   created from `${CLAUDE_PLUGIN_ROOT}/templates/unidentified-features.md` if needed, and is routed to
   `{{SEAMLEX_CONTACT}}`.
-- The verbatim transcript the agent keeps — question, answer, time of each batch — is what 4c attaches to
+- The verbatim transcript the skill keeps — question, answer, time of each batch — is what 4c attaches to
   the task.
-- The interview ends with the agent's closing summary and the customer's explicit yes. Step 4 does not
+- The interview ends with the skill's closing summary and the customer's explicit yes. Step 4 does not
   start on silence.
 
 ## Step 4 — Leave five things behind
@@ -130,10 +131,10 @@ conversation — the title is how the minuta is found from the board.
   link to the issue (`https://<site>/browse/<KEY>`), so Confluence renders it as a Jira link and Jira lists
   the page under the issue's Confluence content. This is half of the link in 4e.
 
-### 4b. A comment on the task saying the agent ran the relevamiento
+### 4b. A comment on the task saying the relevamiento was run
 
 `addCommentToJiraIssue`, one comment, in `{{LOCALE}}`, that says: the relevamiento was run by the Seamlex
-Product Owner agent with `{{USER_NAME}}` on `<date>`; a three-line summary of what was settled; the URL
+Product Owner (Claude) with `{{USER_NAME}}` on `<date>`; a three-line summary of what was settled; the URL
 of the minuta; the keys of the pending tasks created (fill after 4d); and whether the task was left
 `Finalizado` or `En progreso`. Anyone opening the task in Jira finds the whole result from that one
 comment.
@@ -149,7 +150,7 @@ actually said.
 - If the transcript is too long for one comment (the site rejects it), create a child page of the minuta
   titled `Transcript — Minuta <task summary>` with `createConfluencePage`, put the transcript there, and
   leave a comment on the task with that page's URL instead. Say which of the two you did.
-- The transcript is never summarized, edited or cleaned up beyond fixing typos in the agent's own
+- The transcript is never summarized, edited or cleaned up beyond fixing typos in its own
   questions; the customer's words stay as given.
 
 ### 4d. The pending items, as sub-tasks of the relevamiento
