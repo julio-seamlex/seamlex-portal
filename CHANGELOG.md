@@ -1,5 +1,35 @@
 # Changelog
 
+## 1.12.0
+
+> One agent, three commands. The Product Owner agent is behaviour only and `/seamlex-refinar` is the
+> workflow; the discovery session leaves the plugin, and the Project Manager is folded into
+> `/seamlex-status`, which now also takes questions.
+
+- **`seamlex-product-owner` describes only how the Product Owner behaves**: the goal is the functional
+  understanding of the business behind a task, and the customer is spoken to in business language no
+  matter how technically the task is written. The *speak the customer's language* rule and its
+  technical-term → business-question table move from the command into the agent, so they live in one
+  place.
+- **The agent's own contract-epic refinement is removed** — no epic list with states, no
+  `Epic — <title>` pages, no *Ready for design* gate, no Jira epic + stories offer. `/seamlex-refinar`
+  is the only way the agent runs; the command decides what task is worked on and what is left behind.
+- `/seamlex-refinar` Step 3 no longer restates the interview guidance; it points at the agent and keeps
+  only where the interview's inputs and outputs connect to the other steps. `{{DETAIL}}` is now listed
+  among the settings the command resolves.
+- README and the hand-off from the Project Manager agent describe the relevamiento of the sprint
+  instead of contract-epic refinement. `templates/user-story-template.md` is no longer referenced.
+- **The discovery session is removed from the plugin** — `seamlex-discovery-agent` and
+  `/seamlex-discovery` are gone. The Discovery Brief is prepared with your Seamlex consultant and
+  published to Confluence; the Product Owner and Project Manager keep reading it from there (and from
+  `seamlex/discovery/discovery-brief.md` when a local copy exists). `templates/discovery-brief.md` stays
+  as the document's format.
+- **`seamlex-project-manager` is folded into `/seamlex-status`** — the agent file is gone; its role,
+  configuration step, operating principles and both modes now live in the command.
+- **`/seamlex-ask` is removed.** Questions to Seamlex go through `/seamlex-status`: a question in its
+  arguments runs Mode B — searched on the board and in Confluence first, filed as a tracked question
+  only when the team's answer is needed.
+
 ## 1.11.0
 
 > `/seamlex-refinar` becomes a *relevamiento* of the current sprint, run by the Product Owner agent, in

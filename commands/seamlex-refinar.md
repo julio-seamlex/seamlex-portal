@@ -1,71 +1,33 @@
 ---
-description: Run a "relevamiento" from the current sprint with the Product Owner — finds the relevamiento tasks in the open sprint, gathers everything the client config points at, interviews the customer in business language only, and leaves a comment and the transcript on the task, one Confluence page "Minuta <task>", the pending items as tasks, and the task linked to the page.
+description: Run a "relevamiento" from the current sprint with the Product Owner — finds the relevamiento tasks in the open sprint, gathers everything the client config points at, interviews the customer in business language only, and leaves a comment and the transcript on the task, one Confluence page "Minuta <task>", the pending items as sub-tasks of the task, and the task linked to the page.
 ---
 
 # Relevamiento of a sprint task
 
-**This command is executed by the `seamlex-product-owner` agent.** Hand the whole session to it: it
-interviews the way that agent does — the need under the request, real actors from discovery, small
-batches with `AskUserQuestion`, nothing invented. **What it works on is decided here, not by the agent's
-own opening step**: the current sprint says which relevamientos are up, so skip the agent's contract-epic
-list and follow the steps below.
+**This command is executed by the `seamlex-product-owner` agent.** The split is simple: the agent decides
+**how the conversation goes** — business language no matter how technical the task is written, the need
+under the request, real actors from discovery, small batches with `AskUserQuestion`, a verbatim
+transcript, nothing invented — and this command decides **what it works on** (the current sprint says
+which relevamientos are up) and **what it leaves behind** (the five outputs in Step 4). Read the agent
+before the first question; its translation table is the rule every question here passes through.
 
 Settings come from the **`claude-client-config` Confluence page** that `/hi-seamlex` loaded into the
 session. If the page is not in context, stop and ask the customer to run `/hi-seamlex`. Resolve from it
 `{{JIRA_PROJECT}}`, `{{CONF_PARENT}}`, `{{TYPE_RELEVAMIENTO}}` (the issue type — or, if the page says
-so, the label — that marks a relevamiento; default `Relevamiento`), `{{TYPE_TASK}}` (the type used for
-pending items; default the project's sub-task type), `{{LABEL_REQUEST}}`, `{{LABELS_EXTRA}}`,
-`{{SEAMLEX_CONTACT}}`, `{{CONFIRM_WRITES}}`, `{{DRAFTS_DIR}}`, and `{{PROGRAM}}` and `{{COMPANY}}` when
-it names them. `{{CLOUD_ID}}` and `{{CONF_SPACE}}` are the cloud id and space `/hi-seamlex` settled on;
+so, the label — that marks a relevamiento; default `Relevamiento`), `{{TYPE_TASK}}` (the project's
+sub-task type, used for pending items; default whatever the project calls it — `Subtarea`, `Sub-task`),
+`{{LABEL_REQUEST}}`, `{{LABELS_EXTRA}}`, `{{SEAMLEX_CONTACT}}`, `{{CONFIRM_WRITES}}`, `{{DETAIL}}`,
+`{{DRAFTS_DIR}}`, and `{{PROGRAM}}` and `{{COMPANY}}` when it names them. `{{CLOUD_ID}}` and `{{CONF_SPACE}}` are the cloud id and space `/hi-seamlex` settled on;
 `{{LOCALE}}` and `{{USER_NAME}}` come from `atlassianUserInfo`. If the Atlassian tools are not available,
 say so and stop — the sprint, the task and every output live in Jira and Confluence, and there is nothing
 local to fall back on.
 
-## The one rule that overrides everything: speak the customer's language
+## Business language is the agent's rule, not this command's option
 
-A relevamiento is a conversation with a business person about how their operation works. It is **never**
-a configuration questionnaire, no matter how the task is written. Scope items arrive written by the
-delivery team — "record type", "validation rule", "flow", "permission set", "Apex trigger", "REST
-integration", "LWC", "data model". **None of those words reach the customer.** The more technical the
-item, the more work the Product Owner does to translate it *before* asking, and the more the questions
-sound like "when a shipment comes back damaged, who decides what happens to it?" rather than "which
-fields go on the Case?".
-
-- Every question is about **people, steps, decisions, information and rules** of the business — what
-  happens, who does it, when, with what, what goes wrong, what must never happen.
-- The delivery team maps the answers back to the platform later. That mapping is not the customer's job
-  and is not discussed with them; if they ask, say plainly that Seamlex decides the mechanism.
-- If the customer uses a Salesforce term themselves, follow them, but still ask what it means for their
-  operation — their word may not mean what the platform means.
-- Everything written for the customer — questions, reflections, the minuta, the Jira comment, the pending
-  items — is in `{{LOCALE}}` and in the vocabulary of `{{COMPANY}}`'s business. The one exception is the
-  short *Para el equipo de delivery* closing section of the minuta, which is the only place platform
-  vocabulary may appear.
-
-This is not a `{{DETAIL}}` preference to honour when convenient. Even at `technical`, the business
-question is asked first and the platform is never the subject of the conversation.
-
-| If the task says… | Never ask | Ask instead |
-|---|---|---|
-| record type | "Which record types?" | "Are there kinds of *<order / case / account>* that are handled differently — different information, different steps, different people? Walk me through one of each." |
-| field / custom field / data model | "Which fields?" | "What do you need to know about a *<thing>* to do your job? Who looks at it, and what do they decide with it?" |
-| custom object | "Do you need a custom object?" | "What is the thing you keep track of here — one per customer, one per shipment, one per contract? What happens to it over time?" |
-| validation rule | "What validations?" | "What should never be allowed to be saved or move forward? What mistakes cost you time today because they slip through?" |
-| flow / automation / trigger / Apex | "Which automations?" | "After *<event>* happens, what does someone do by hand that is always the same? Who, how long does it take, what goes wrong when they forget?" |
-| approval process | "What approval steps?" | "Who has to say yes before this goes ahead, above what limit, and what happens when they are away or say no?" |
-| page layout / LWC / screen | "What should the screen show?" | "When *<actor>* is doing this, what do they need in front of them, and what do they go looking for somewhere else today?" |
-| profile / permission set / sharing | "Who gets which permission set?" | "Who must be able to see this, who must not, and who can change it versus only read it?" |
-| picklist | "What picklist values?" | "What are the valid options here, who decides them, and how often do they change?" |
-| queue / assignment rule | "What assignment rules?" | "How do you decide today who takes this — by region, by workload, by who is on shift — and who overrides it?" |
-| report / dashboard | "What reports?" | "What questions do you need answered every week or month about this, who asks them, and what do they do with the answer?" |
-| integration / API / sync / middleware | "Which systems to integrate?" | "Where does this information live today, who copies it across, and how do you know when it is wrong?" |
-| email template / notification | "What notifications?" | "Who needs to be told when this happens, how soon, and what do they need to know to act?" |
-| status / stage | "What statuses?" | "What steps does this go through from start to finished, who moves it to the next one, and where does it get stuck?" |
-| SLA / entitlement | "What SLA levels?" | "What have you promised customers about how fast this gets handled, and what happens when you miss it?" |
-| migration / data load | "What data to migrate?" | "What from today's records do you still need on day one, who owns it, and what is safe to leave behind?" |
-
-Anything not in the table gets the same treatment: find the business situation the term describes, and
-ask about that.
+The *speak the customer's language* rule and its technical-term → business-question table live in the
+`seamlex-product-owner` agent. Nothing in the steps below relaxes it: however a task is written — record
+type, flow, LWC, integration — the customer only ever hears questions about their operation, and platform
+vocabulary appears in exactly one place, the minuta's closing *Para el equipo de delivery* section.
 
 ## Step 1 — Find the relevamiento tasks in the current sprint
 
@@ -119,38 +81,23 @@ never be asked something a page already answers.
 5. If the task is still in its initial state, move it to **In progress** now — `getTransitionsForJiraIssue`,
    then `transitionJiraIssue`; ask once when `{{CONFIRM_WRITES}}` is `always`.
 
-## Step 3 — Interview for the functional understanding of the business
+## Step 3 — Interview, the way the agent does
 
-The goal of the conversation is **functional understanding of the business around this task** — not a
-list of features. When the session ends, the Product Owner should be able to explain to an architect how
-this part of `{{COMPANY}}`'s operation works today, what has to change and why, in the customer's own
-words. The mechanism comes later, from Seamlex.
+How the interview runs — the business-language rule, the need under the request, real actors, small
+batches, follow the energy, what design needs covered in business terms, `⚠️ TBD` with an owner — is the
+agent's *How you interview*. What this command adds is where its inputs and outputs connect to the steps
+around it:
 
-- **Interview in small batches** with `AskUserQuestion` — two to four questions, options drawn from the
-  discovery brief and the material gathered in Step 2, always with an "I don't know / someone else owns
-  that" way out. An unknown with an owner is a finding, and becomes a pending task in Step 4.
-- **Ask what it is for before how it works.** Every request gets "what would you do with that", "what
-  breaks today without it", "who benefits". Write down the need, not the solution.
-- **Every actor is a real role** from discovery §3/§6. "A user" makes the statement untestable.
-- **Follow the energy.** When the customer gets specific and animated, stay there and ask three more.
-- **Cover what design needs, in business terms** — the actors; the process today and after; what starts
-  it and what "done" looks like; the rules, thresholds and exceptions; the steps and who moves them; who
-  is told and when; how many and how often; the information involved and where it comes from today; who
-  may see it and who may not; what will be measured; and what is explicitly *not* part of this task.
-  Anything that would send an architect back to the customer later is asked now.
-- **Park what is not this task.** Something that belongs to another task in the sprint or the plan is
-  noted against that key and left there. Something that belongs to no task at all goes to the
-  `Features no identificados — {{PROGRAM}}` page in `{{CONF_SPACE}}` (created from
-  `${CLAUDE_PLUGIN_ROOT}/templates/unidentified-features.md` if needed), is told plainly to sit outside the
-  signed scope, and is routed to `{{SEAMLEX_CONTACT}}`. Never folded in, never dropped.
-- **Keep the transcript as you go.** Every question asked and every answer given, in order, with the
-  time of each batch — this is attached to the task in Step 4 and is what lets someone who was not in the
-  room trust the minuta. Keep it verbatim, not summarized.
-
-Close the interview with a summary — what this task delivers in three to six sentences, the actors and
-the process it changes, the rules and exceptions captured, what is explicitly out, and every pending item
-with its owner — and ask directly whether it describes what they need. Iterate until they say yes. Do not
-proceed on silence.
+- Options for each `AskUserQuestion` batch come from the discovery brief and the material gathered in
+  Step 2. An unknown with an owner becomes a pending sub-task in 4d.
+- Something that belongs to another task in the sprint or the plan is noted against that key. Something
+  that belongs to no task goes to the `Features no identificados — {{PROGRAM}}` page in `{{CONF_SPACE}}`,
+  created from `${CLAUDE_PLUGIN_ROOT}/templates/unidentified-features.md` if needed, and is routed to
+  `{{SEAMLEX_CONTACT}}`.
+- The verbatim transcript the agent keeps — question, answer, time of each batch — is what 4c attaches to
+  the task.
+- The interview ends with the agent's closing summary and the customer's explicit yes. Step 4 does not
+  start on silence.
 
 ## Step 4 — Leave five things behind
 
@@ -205,29 +152,36 @@ actually said.
 - The transcript is never summarized, edited or cleaned up beyond fixing typos in the agent's own
   questions; the customer's words stay as given.
 
-### 4d. The pending items, as tasks
+### 4d. The pending items, as sub-tasks of the relevamiento
 
-Everything the session left open goes into Jira, one item each, so it shows on the board and has an
-owner:
+Everything the session left open goes into Jira, one item each, **as a sub-task of the relevamiento
+task**, so it shows on the board under its parent, has an owner, and is found from the task itself
+without following a link:
 
 - **What becomes a task**: every `⚠️ TBD` in the minuta; every decision the customer deferred to someone
   else; every document or example they offered to send; every point that needs a Seamlex decision (a
   parked feature, a conflict with another task). Not the things that were answered — those live on the
   page.
-- **Type**: `{{TYPE_TASK}}` from the config. By default that is the project's sub-task type, read once
-  with `getJiraProjectIssueTypesMetadata` (`Subtarea`, `Sub-task`, whatever the project calls it), created
-  with the relevamiento as parent. If the config names a standard type instead (`Task`, `Tarea`), create
-  it in `{{JIRA_PROJECT}}` and link it to the relevamiento with `createIssueLink` (`relates to`) — say
-  which you used. Leave the sprint field alone; putting pending items into the sprint is the PM's call.
+- **Type and parent**: always a **sub-task** with the relevamiento task as `parent` — never a standalone
+  issue linked with `relates to`. Read the project's types once with `getJiraProjectIssueTypesMetadata`
+  and use `{{TYPE_TASK}}` from the config, or, if the config does not name one, the type the project
+  flags as a sub-task (`Subtarea`, `Sub-task`, whatever it is called); if `{{TYPE_TASK}}` names a type
+  that is not a sub-task type, say so and use the project's sub-task type anyway. Pass the parent key in
+  `createJiraIssue` (`parent`), and confirm with `getJiraIssue` on the relevamiento that the new keys show
+  under its sub-tasks. If the project has no sub-task type at all, stop and say so before creating
+  anything — the customer decides whether to add one or accept linked tasks instead. Sub-tasks inherit
+  the sprint from their parent; do not set the sprint field yourself.
 - **Shape**: summary `Pendiente: <the question in one line>`, in business terms; description in the shape
   of `${CLAUDE_PLUGIN_ROOT}/templates/question-template.md` — why it matters, what it unblocks, who can
   answer, needed by, and a link to the minuta section it comes from. Assign to the owner when
   `lookupJiraAccountId` resolves them; otherwise leave it unassigned and name them in the description.
   Label `{{LABEL_REQUEST}}` plus `{{LABELS_EXTRA}}`.
-- **Check first** against the sub-tasks and links read in Step 2 — a resumed session must not create the
-  same pending item twice. Close, with a comment, any existing pending task the session answered.
+- **Check first** against the relevamiento's existing sub-tasks read in Step 2 — a resumed session must
+  not create the same pending item twice. Close, with a comment, any existing pending sub-task the session
+  answered.
 - Show the full list — new, still open, closed today — get the approval, then `createJiraIssue` each one
-  and write the keys back into the minuta's *Pendientes* table and into the comment from 4b.
+  under the relevamiento and write the keys back into the minuta's *Pendientes* table and into the
+  comment from 4b.
 
 ### 4e. The Jira task linked to the Confluence page
 
@@ -256,14 +210,14 @@ The task and the minuta must point at each other:
 When `{{CONFIRM_WRITES}}` is `always`, the transition to done is a separate, explicit yes; never infer it
 from approval of the summary.
 
-Close by showing what was left behind — the minuta URL, the two comment links, the pending task keys, the
-task's state — and the other relevamientos still open in the sprint, from the same query as Step 1, so
+Close by showing what was left behind — the minuta URL, the two comment links, the pending sub-task keys,
+the task's state — and the other relevamientos still open in the sprint, from the same query as Step 1, so
 the customer can pick the next one up with `/seamlex-refinar` or `/seamlex-refinar <KEY>`.
 
 ## Failure handling
 
 If any write fails, stop, report exactly what succeeded and what did not, and do not retry blindly — a
-minuta without its pending tasks is recoverable; a task marked done with nothing behind it is not. If the
+minuta without its pending sub-tasks is recoverable; a task marked done with nothing behind it is not. If the
 Atlassian tools drop out mid-session, stop the relevamiento and show the customer everything gathered
 since the last successful save — the transcript included — so they can keep it themselves, then point
 them at `/hi-seamlex`.

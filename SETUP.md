@@ -27,9 +27,9 @@ the window; MCP servers only load at startup.
 3. Choose **Add from a repository** and paste `https://github.com/julio-seamlex/seamlex-portal`
 4. Install **seamlex-portal** once the marketplace syncs
 
-Then use the plugin from the **Cowork** tab, not the Chat tab. Sub-agents run only in Cowork, and every
-Seamlex command delegates to one of the three agents, so in plain chat the commands will appear but do
-nothing.
+Then use the plugin from the **Cowork** tab, not the Chat tab. Sub-agents run only in Cowork, and
+`/seamlex-refinar` delegates to the Product Owner agent, so in plain chat that command will appear but
+do nothing.
 
 > **This is a private repository.** Your Seamlex contact will grant your GitHub account read access
 > before you install. Claude Code uses your existing GitHub credentials; the Claude desktop app's
@@ -107,10 +107,8 @@ If your organization proxies or restricts outbound connections, your IT team may
 | | |
 |---|---|
 | First run, or not sure where the engagement got to | `/hi-seamlex` |
-| New engagement, discovery not done yet | `/seamlex-discovery` |
 | You are ready to detail the next task in the Jira plan | `/seamlex-refinar` |
-| You have a question | `/seamlex-ask` |
-| You want to know where things stand | `/seamlex-status` |
+| You have a question, or want to know where things stand | `/seamlex-status` |
 
 ## Troubleshooting
 
@@ -131,8 +129,9 @@ header) and the next session picks it up — or just tell the agent in one line 
 workspace, your Discovery Brief and your board, and tells you which signals it read. If it lands wrong,
 say so, or name the step yourself: `/hi-seamlex refinement`.
 
-**An agent can't find the discovery brief** — that's fine; it will say so and carry on. Discovery makes
-scope refinement sharper but isn't a hard prerequisite.
+**An agent can't find the discovery brief** — that's fine; it will say so and carry on. The Discovery
+Brief is prepared with your Seamlex consultant; it makes scope refinement sharper but isn't a hard
+prerequisite.
 
 **Wrong issue type when raising an epic or story** — the issue types on the `claude-client-config` page do
 not match your project. Send the name that is off to your Seamlex contact for a fix on the page.

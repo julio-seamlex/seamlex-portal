@@ -12,37 +12,30 @@ Confluence space you share with Seamlex, so there is one record and no parallel 
 | Command | What it does |
 |---|---|
 | `/hi-seamlex` | Start a session. **Run this first.** Sets the workspace up, then works out where you are in the lifecycle and loads the context for it. |
-| `/seamlex-discovery` | A guided session covering your business model, industry, areas and roles, business processes, actors, pains, goals and expectations. Resumes from an existing brief. |
-| `/seamlex-refinar` | Run a *relevamiento* with the Product Owner — takes a relevamiento task from the current sprint, gathers everything the client config points at, interviews you in business language only, and leaves a comment and the transcript on the task, a Confluence page "Minuta <task>", the pending items as tasks, and the task linked to the page. |
-| `/seamlex-ask` | Ask the Seamlex team a question. |
-| `/seamlex-status` | See what's in progress, what's waiting on you, and what's blocked. |
+| `/seamlex-refinar` | Run a *relevamiento* with the Product Owner — takes a relevamiento task from the current sprint, gathers everything the client config points at, interviews you in business language only, and leaves a comment and the transcript on the task, a Confluence page "Minuta <task>", the pending items as sub-tasks of the task, and the task linked to the page. |
+| `/seamlex-status` | See what's in progress, what's waiting on you, and what's blocked — or ask the Seamlex team a question. |
 
 `/hi-seamlex` is the one to reach for when you are not sure what to run: it works out which step you are
-on — setup, discovery, scope refinement or status — pulls down just that step's context, and points you at the
+on — setup, scope refinement or status — pulls down just that step's context, and points you at the
 right command.
 
-You can also talk to the agents directly — "run discovery with me", "let's refine the quoting epic",
-"what's the status of the quoting work" — without remembering a command.
+You can also talk to the Product Owner directly — "let's refine the quoting epic" — without
+remembering a command.
 
-## The three agents
+## The Product Owner agent
 
-**Discovery** runs the first working session of an engagement. Ten themed sections, questions in small
-batches, covering your business model, industry, how you are organised, the processes this project
-touches, your current systems, the people involved, what hurts today, and what success looks like. It produces a Discovery Brief published to Confluence — the document every
-Seamlex architect and developer reads before touching your org. Sessions are resumable; stop whenever you
-like and nothing is lost.
+**Product Owner** runs the *relevamientos* of your current sprint through `/seamlex-refinar`. It takes one
+relevamiento task at a time, reads everything the project already knows about it — the task, its epic,
+the Discovery Brief Seamlex prepared with you, earlier minutas — and then interviews you about your operation: the people, steps,
+decisions, information and rules behind what the task asks for. However technically the task is written —
+record types, flows, integrations — none of that vocabulary reaches you; the questions are about how a
+shipment comes back damaged and who decides, not about which fields go where. Seamlex maps the answers to
+the platform afterwards. Each session leaves a Confluence minuta, a comment and the verbatim transcript
+on the task, and the open points as sub-tasks with an owner. Anything you raise that belongs to no task
+in the sprint is parked as an **unidentified feature** rather than quietly absorbed — Seamlex decides
+what happens to it.
 
-**Product Owner** refines your signed contract scope, drafting straight into Confluence. It opens with every epic in the contract and where
-its refinement stands — sin comenzar, en progreso, finalizado — then takes one epic at a time and works it
-into its own Confluence page, titled exactly as the contract names it: real actors, the process delta,
-rules, statuses and edge cases, data, visibility, reporting, what is explicitly out of scope, and the user
-stories that carry the value. When an epic is done you get a summary to check, and the page moves to
-**Ready for design** — a checklist it must pass, so nothing bounces back from the architect later. The
-contract epic, its page and the Jira key that comes out of it all carry the same title, so the work traces
-back to what you signed. Anything you raise that fits no epic in the contract is parked as an
-**unidentified feature** rather than quietly absorbed — Seamlex decides what happens to it.
-
-**Project Manager** answers "where is my request" from the live board rather than from memory, tells you
+`/seamlex-status` needs no agent: the command itself plays the Seamlex project manager. It answers "where is my request" from the live board rather than from memory, tells you
 plainly what is stale or blocked, and leads with what is waiting on you. It also handles questions:
 searching Jira and Confluence for an existing answer first, and filing a tracked question when it
 genuinely needs the team.
@@ -60,7 +53,7 @@ in your own browser, through the official Atlassian MCP server.
 ```
 seamlex/
 └── discovery/
-    └── discovery-brief.md      # your discovery notes, resumable
+    └── discovery-brief.md      # a local copy of your Discovery Brief, if you keep one
 ```
 
 Relevamientos leave nothing here: each one gets its own Confluence page — `Minuta <task>`, created on the
@@ -71,10 +64,9 @@ There is no configuration to fill in. The engagement settings — Jira project, 
 scope page, who to reach at Seamlex — live on a `claude-client-config` page in your Confluence space,
 maintained by Seamlex; `/hi-seamlex` loads it at the start of each session and every command reads its
 settings from there. Who *you* are — the language you work in — comes from the Atlassian account you sign
-in with; your company and program from the config page, the signed scope page or your Discovery Brief; on
-the very first session, before there is a brief, the plugin asks for your company name once. Your workspace holds only your discovery notes. Which step of the
-lifecycle you are on isn't recorded anywhere — `/hi-seamlex` works it out each session from your brief and
-your board.
+in with; your company and program from the config page, the signed scope page or your Discovery Brief.
+Your workspace holds only your discovery notes. Which step of the lifecycle you are on isn't recorded
+anywhere — `/hi-seamlex` works it out each session from your brief and your board.
 
 ## Install
 
