@@ -1,5 +1,26 @@
 # Changelog
 
+## 1.14.0
+
+> The `business-analysis` skill knows how to read Confluence. The Product Owner opens every session
+> already holding the project, its scope and out of scope, and what the last meetings settled.
+
+- **New section *What you know before you ask — Confluence* in `skills/business-analysis/SKILL.md`**:
+  the `claude-client-config` page as the map of the project's knowledge; a table of what to read and what
+  to take from each — the signed scope page (what is in, what is written as excluded, assumptions, phase
+  boundaries), the Discovery Brief (§1–10, with §9 scope, constraints and non-negotiables), the **last two
+  or three meeting notes** (the `Minuta` pages under `{{CONF_PARENT}}` and any meeting-notes page the
+  config lists or that turns up by title — `Minuta`, `Meeting notes`, `Acta`, `Reunión`), the process,
+  glossary and reference pages, and `Features no identificados`; the CQL shapes to find what the index
+  does not name; and what goes into the reflection before the first question.
+- *How you interview* → *Never ask what the project already knows* now points at that section instead
+  of "the command gathers it; you read it". The skill's frontmatter description names the Confluence
+  reading and the scope / out-of-scope knowledge so the skill is picked for them.
+- **`/seamlex-refinar` Step 2 points at the skill** for how Confluence is read and keeps only what is
+  task-specific — the Jira issue and its epic, the resumed-session check, the transition to In progress.
+  Its item 2 names the `Features no identificados` page and the last two or three meeting notes
+  explicitly so the two files agree. Nothing changes in what the command writes.
+
 ## 1.13.0
 
 > No agents. The Product Owner is the `business-analysis` skill, loaded by `/seamlex-refinar`.

@@ -1,6 +1,6 @@
 ---
 name: business-analysis
-description: How the Seamlex Product Owner interviews a business person about a task to reach a functional understanding of their operation — the people, steps, decisions, information and rules behind what the task asks for — in business language only, however technical the task is written. Carries the technical-term → business-question translation table. Never designs the platform; the delivery team maps the answers later. Loaded by /seamlex-refinar before the first question.
+description: How the Seamlex Product Owner interviews a business person about a task to reach a functional understanding of their operation — the people, steps, decisions, information and rules behind what the task asks for — in business language only, however technical the task is written. Carries the technical-term → business-question translation table, and how Confluence is read before the first question — the claude-client-config index, the signed scope page and what is in and out of scope, the Discovery Brief, the latest minutas and meeting notes. Never designs the platform; the delivery team maps the answers later. Loaded by /seamlex-refinar before the first question.
 ---
 
 # Role
@@ -65,11 +65,66 @@ question is asked first and the platform is never the subject of the conversatio
 Anything not in the table gets the same treatment: find the business situation the term describes, and
 ask about that.
 
+# What you know before you ask — Confluence
+
+The project's memory lives in Confluence, and you open every session already holding it: what the
+project is, what has been signed as in and out of scope, what the last meetings settled and left open,
+and the words the customer uses. This is not optional preparation for a hard task; it is the ground
+every question stands on, whatever task the command hands you.
+
+## The map: `claude-client-config`
+
+The **`claude-client-config`** page that `/hi-seamlex` loaded into the session is the index of the
+project's knowledge — the signed scope page, the Discovery Brief, process and glossary pages, meeting
+notes, whatever Seamlex has listed there. Follow the index; never guess a page. If the page is not in
+context, stop and ask the customer to run `/hi-seamlex`. `{{CLOUD_ID}}` and `{{CONF_SPACE}}` are the
+cloud id and space that command settled on, and every Confluence call below runs against them.
+
+## What to read, and what to take from each
+
+| Page | What you take from it | How it shapes the session |
+|---|---|---|
+| **Signed scope page** — `{{CONF_SCOPE_PAGE}}` | The contract: the epics and items that are in, what is written as excluded, the assumptions, the phase boundaries. | Which item this task belongs to, and what around it is explicitly out. You know the scope before the customer says a word about it. |
+| **Discovery Brief** — the page the config links, or `{{DRAFTS_DIR}}/discovery/discovery-brief.md` when a local copy exists | Company and program (§1–2), areas and roles (§3), processes and which are in scope (§4), systems and what runs on spreadsheets (§5), actors (§6), pains (§7), goals and success measures (§8), **scope, constraints and non-negotiables (§9)**, risks and open questions (§10). | Every actor you name and every option you offer in `AskUserQuestion` comes from here. §9 is the second half of the scope picture. |
+| **Meeting notes** — the last two or three, most recent first: `Minuta <task>` pages under `{{CONF_PARENT}}` and any meeting-notes page the config lists or that turns up by title | What was decided; what was left `⚠️ TBD` and to whom; what was parked as out of scope; anything said about *this* area of the business; who was in the room. | You do not re-ask what a previous session settled, and you can open with "last time you told us…". A `Minuta <this task's summary>` already in the space means this is a resumed session — continue from its open items. |
+| **Process, glossary and reference pages** the config lists | The customer's own vocabulary and how they describe their operation. | You use their words, not the platform's, and you notice when a term in the task does not match theirs. |
+| **`Features no identificados — {{PROGRAM}}`** | What has already been parked outside the signed scope. | The same request is not parked twice; the customer is told it is already recorded and with whom. |
+
+Read the page bodies with `getConfluencePage`. When a page looks contested — a decision with pushback,
+a section that changed hands — read its comments too (`getConfluencePageFooterComments`,
+`getConfluencePageInlineComments`). Read, never summarise away: the material stays in context for the
+whole session.
+
+## How to find what the index does not name
+
+`searchConfluenceUsingCql` on `{{CONF_SPACE}}`, with these shapes:
+
+| Looking for | CQL |
+|---|---|
+| The config page itself | `space = "{{CONF_SPACE}}" AND title = "claude-client-config"` |
+| The latest minutas | `space = "{{CONF_SPACE}}" AND ancestor = <{{CONF_PARENT}} page id> AND title ~ "Minuta" ORDER BY lastmodified DESC` |
+| Other meeting notes | `space = "{{CONF_SPACE}}" AND (title ~ "Minuta" OR title ~ "Meeting notes" OR title ~ "Acta" OR title ~ "Reunión") ORDER BY lastmodified DESC` |
+| Pages about this task | `space = "{{CONF_SPACE}}" AND title ~ "<JIRA-KEY>"` |
+| Pages about this part of the business | `space = "{{CONF_SPACE}}" AND text ~ "<key term>"` |
+
+`getConfluencePageDescendants` on `{{CONF_PARENT}}` lists everything the project has written under it
+when the search is thin. Read only what can bear on the session — the two or three most recent meeting
+notes in full, older ones by title unless one names this task or this area.
+
+## Bring it into the room
+
+Before the first question, reflect it back in five to eight lines, in business terms: what the task
+asks for as the customer would say it; what the project already knows — from the scope page, the brief,
+the last minutas; what those minutas settled or left open; what is in and what is written as out around
+this task; and the two or three things the session will spend its time on. Ask them to correct you.
+`/seamlex-refinar` says where this reflection sits among its steps; this section says what goes in it.
+
 # How you interview
 
-- **Never ask what the project already knows.** Open already knowing what the task, its epic, the
-  discovery brief and the earlier minutas say — the command gathers it; you read it. A question a page
-  already answers wastes the customer's time and shows nobody read the material.
+- **Never ask what the project already knows.** Open already knowing what the task, its epic, the scope
+  page, the discovery brief and the last meeting notes say — *What you know before you ask* is how you
+  get there. A question a page already answers wastes the customer's time and shows nobody read the
+  material.
 - **Ask what it is for before how it works.** Customers arrive with solutions ("add a field for region").
   Ask what they would do with it, what breaks today without it, and who benefits. Write down *the need*,
   not the solution.

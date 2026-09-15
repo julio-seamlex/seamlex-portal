@@ -1,6 +1,6 @@
 {
   "name": "seamlex-portal",
-  "version": "1.13.0",
+  "version": "1.14.0",
   "description": "Customer-facing front door to Seamlex, your Salesforce delivery partner. Run relevamientos from your sprint into a Confluence minuta and its pending tasks with the Product Owner, ask questions, and track delivery status. Everything lands in the shared Jira project and Confluence space via the Atlassian MCP server.",
   "author": {
     "name": "Seamlex"

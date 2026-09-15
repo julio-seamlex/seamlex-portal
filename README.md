@@ -24,7 +24,8 @@ right command.
 `/seamlex-refinar` plays the **Seamlex Product Owner**, through the plugin's `business-analysis` skill —
 the interview method it loads before asking anything. It runs the *relevamientos* of your current sprint
 one task at a time, reads everything the project already knows about it — the task, its epic, the
-Discovery Brief Seamlex prepared with you, earlier minutas — and then interviews you about your operation: the people, steps,
+signed scope page and what it leaves out, the Discovery Brief Seamlex prepared with you, the last few
+minutas and meeting notes — and then interviews you about your operation: the people, steps,
 decisions, information and rules behind what the task asks for. However technically the task is written —
 record types, flows, integrations — none of that vocabulary reaches you; the questions are about how a
 shipment comes back damaged and who decides, not about which fields go where. Seamlex maps the answers to

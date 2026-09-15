@@ -58,22 +58,24 @@ go on anyway.
 The `claude-client-config` page is an **index of the project's knowledge** — the signed scope page, the
 Discovery Brief, process documents, previous minutas, glossaries, whatever Seamlex has listed there. Use
 it as the map: the relevamiento must open already knowing what the project knows, and the customer must
-never be asked something a page already answers.
+never be asked something a page already answers. **How** Confluence is read — which pages, what to take
+from each, including what is in and out of scope, the last meeting notes, the CQL shapes — is the
+skill's *What you know before you ask*; this step keeps only what is specific to the task.
 
 1. **Read the task**: `getJiraIssue` with description, comments, sub-tasks, issue links, attachments list
    and parent; `getJiraIssueRemoteIssueLinks` for pages already attached. If it hangs off an epic, read
    the epic — that is usually where the contract wording lives.
-2. **Walk the config page** and read every entry that can bear on this task — with `getConfluencePage`
-   for the pages it links (`{{CONF_SCOPE_PAGE}}`, the Discovery Brief page, any process, glossary or
-   reference page it lists) and with the local `{{DRAFTS_DIR}}/discovery/discovery-brief.md` if it
-   exists. From the brief, the areas and roles (§3), processes (§4), actors (§6) and pains (§7) are the
-   ground every question stands on.
+2. **Walk the config page** the way the skill says — `getConfluencePage` on `{{CONF_SCOPE_PAGE}}`, the
+   Discovery Brief page (or the local `{{DRAFTS_DIR}}/discovery/discovery-brief.md` if it exists), any
+   process, glossary or reference page it lists, the `Features no identificados` page, and the **last
+   two or three meeting notes** — the `Minuta` pages under `{{CONF_PARENT}}` and any meeting-notes page
+   the config names — most recent first.
 3. **Search for what the config does not list by name**: `searchConfluenceUsingCql` in `{{CONF_SPACE}}`
-   with the task's key and its key terms (`title ~ "<KEY>"`, `text ~ "<term>"`), and
-   `searchJiraIssuesUsingJql` with `project = {{JIRA_PROJECT}} AND text ~ "<key terms>"` for related
-   tasks, earlier relevamientos and open questions. A page titled `Minuta <this task's summary>` already
-   in the space means this is a **resumed session** — read it and continue from its open items rather
-   than starting over.
+   with the task's key and its key terms (`title ~ "<KEY>"`, `text ~ "<term>"`) and the skill's
+   meeting-notes shapes, and `searchJiraIssuesUsingJql` with
+   `project = {{JIRA_PROJECT}} AND text ~ "<key terms>"` for related tasks, earlier relevamientos and
+   open questions. A page titled `Minuta <this task's summary>` already in the space means this is a
+   **resumed session** — read it and continue from its open items rather than starting over.
 4. **Reflect it back in five to eight lines, in business terms, before the first question**: what the
    task asks for as the customer would say it, what the project already knows (from the config's pages,
    the brief, earlier comments), what is still open, and the two or three things the session will spend
