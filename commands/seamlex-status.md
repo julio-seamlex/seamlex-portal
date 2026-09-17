@@ -113,8 +113,8 @@ If the question is about a specific issue, add it as a comment with `addCommentT
 If it stands alone, create it with `createJiraIssue`: project `{{JIRA_PROJECT}}`, type
 `{{TYPE_QUESTION}}`, summary starting `Question: `, labels `{{LABEL_REQUEST}}` plus `{{LABELS_EXTRA}}`,
 assigned to `{{SEAMLEX_CONTACT}}` where `lookupJiraAccountId` resolves them. Use
-`${CLAUDE_PLUGIN_ROOT}/templates/question-template.md` for the body: the question, why it matters, what
-the customer already believes, what decision it unblocks, and by when an answer is needed.
+`../skills/business-analysis/references/question-template.md` for the body: the question, why it
+matters, what the customer already believes, what decision it unblocks, and by when an answer is needed.
 
 Show the exact text and get approval before writing. Afterwards give the customer the key and URL, and,
 if `{{CADENCE}}` is set, say when to expect a reply given it — if it is blank, say the Seamlex team will

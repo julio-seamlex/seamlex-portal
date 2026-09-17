@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.15.0
+
+> The templates move under the `business-analysis` skill, as its `references/`, and are used from there.
+
+- **`templates/` is now `skills/business-analysis/references/`** — `epic-template.md`,
+  `question-template.md`, `unidentified-features.md`, `discovery-brief.md` and `user-story-template.md`
+  live next to the skill that shapes what is written with them.
+- **New section *References* in `skills/business-analysis/SKILL.md`** names the directory and what each
+  file shapes — the minuta body, the pending items and questions, the `Features no identificados` page,
+  the Discovery Brief format the skill reads, the user story.
+- Paths are relative to the file that names them — `references/<file>.md` from the skill,
+  `../skills/business-analysis/references/<file>.md` (and `../skills/business-analysis/SKILL.md`) from
+  the commands — instead of `${CLAUDE_PLUGIN_ROOT}/…`. Nothing changes in what either command writes.
+
 ## 1.14.0
 
 > The `business-analysis` skill knows how to read Confluence. The Product Owner opens every session

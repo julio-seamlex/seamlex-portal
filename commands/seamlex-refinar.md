@@ -5,7 +5,7 @@ description: Run a "relevamiento" from the current sprint with the Product Owner
 # Relevamiento of a sprint task
 
 **Before Step 1, load the `seamlex-portal:business-analysis` skill with the `Skill` tool.** If the
-Skill tool is not available, read `${CLAUDE_PLUGIN_ROOT}/skills/business-analysis/SKILL.md` directly.
+Skill tool is not available, read `../skills/business-analysis/SKILL.md` directly.
 The split is simple: the skill decides **how the conversation goes** — business language no matter how
 technical the task is written, the need under the request, real actors from discovery, small batches
 with `AskUserQuestion`, a verbatim transcript, nothing invented — and this command decides **what it
@@ -95,8 +95,8 @@ around it:
   Step 2. An unknown with an owner becomes a pending sub-task in 4d.
 - Something that belongs to another task in the sprint or the plan is noted against that key. Something
   that belongs to no task goes to the `Features no identificados — {{PROGRAM}}` page in `{{CONF_SPACE}}`,
-  created from `${CLAUDE_PLUGIN_ROOT}/templates/unidentified-features.md` if needed, and is routed to
-  `{{SEAMLEX_CONTACT}}`.
+  created from `../skills/business-analysis/references/unidentified-features.md` if needed, and is
+  routed to `{{SEAMLEX_CONTACT}}`.
 - The verbatim transcript the skill keeps — question, answer, time of each batch — is what 4c attaches to
   the task.
 - The interview ends with the skill's closing summary and the customer's explicit yes. Step 4 does not
@@ -120,11 +120,12 @@ conversation — the title is how the minuta is found from the board.
   never create a second one for the same task.
 - **Shape**: a header table — **Tarea Jira** (key, as a link to the issue), **Sprint**, **Épica** if
   any, **Relevado con** (name, role, per person), **Fecha(s)**, **Estado** (`En progreso` /
-  `Finalizado`) — followed by the body from `${CLAUDE_PLUGIN_ROOT}/templates/epic-template.md` adapted to
-  the task: what this task delivers, the pain it resolves, the actors, the processes today and after,
-  the functional detail with its rules and exceptions, the information involved, who sees what, what will
-  be measured, what is explicitly out, what was raised here but belongs elsewhere, and a **Pendientes**
-  table (question, owner, Jira key once created). Everything in `{{LOCALE}}` and in business terms.
+  `Finalizado`) — followed by the body from `../skills/business-analysis/references/epic-template.md`
+  adapted to the task: what this task delivers, the pain it resolves, the actors, the processes today and
+  after, the functional detail with its rules and exceptions, the information involved, who sees what,
+  what will be measured, what is explicitly out, what was raised here but belongs elsewhere, and a
+  **Pendientes** table (question, owner, Jira key once created). Everything in `{{LOCALE}}` and in
+  business terms.
 - The only place platform vocabulary may appear is a short closing section **Para el equipo de
   delivery**, and only where the delivery team genuinely needs the mapping.
 - **Never leave a section blank.** What was not answered is `⚠️ TBD — <the question> — <owner>` in the
@@ -175,8 +176,8 @@ without following a link:
   anything — the customer decides whether to add one or accept linked tasks instead. Sub-tasks inherit
   the sprint from their parent; do not set the sprint field yourself.
 - **Shape**: summary `Pendiente: <the question in one line>`, in business terms; description in the shape
-  of `${CLAUDE_PLUGIN_ROOT}/templates/question-template.md` — why it matters, what it unblocks, who can
-  answer, needed by, and a link to the minuta section it comes from. Assign to the owner when
+  of `../skills/business-analysis/references/question-template.md` — why it matters, what it unblocks,
+  who can answer, needed by, and a link to the minuta section it comes from. Assign to the owner when
   `lookupJiraAccountId` resolves them; otherwise leave it unassigned and name them in the description.
   Label `{{LABEL_REQUEST}}` plus `{{LABELS_EXTRA}}`.
 - **Check first** against the relevamiento's existing sub-tasks read in Step 2 — a resumed session must

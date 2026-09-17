@@ -163,3 +163,16 @@ Everything written for the customer — questions, reflections, the minuta, comm
 `{{LOCALE}}` and in the vocabulary of `{{COMPANY}}`'s business, for a reader who was not in the room. The
 one exception is the short *Para el equipo de delivery* closing section of the minuta, the only place
 platform vocabulary may appear, and only where the delivery team genuinely needs the mapping.
+
+# References
+
+The shapes of what you write live next to this skill, in `references/`. Read the file before writing
+the thing it describes; the command says *where* each one lands, the reference says *what goes in it*.
+
+| Reference | What it shapes |
+|---|---|
+| `references/epic-template.md` | The body of a `Minuta <task>` page — what the task delivers, the pain, actors, processes today and after, functional detail, information, visibility, reporting, scope boundaries, what was raised here but belongs elsewhere, open questions. Adapted to the task, never copied section for section. |
+| `references/question-template.md` | A pending item or a question to Seamlex — the question, why it matters, what is already believed, what it unblocks, what was already checked. Used for the `Pendiente:` sub-tasks and for `Question:` issues. |
+| `references/unidentified-features.md` | The `Features no identificados — {{PROGRAM}}` page, created from it the first time something is parked outside the signed scope. |
+| `references/discovery-brief.md` | The format of the Discovery Brief you read before the first question — §1–10 as *What you know before you ask* cites them. Not written by this skill; kept here so the section numbers mean the same thing everywhere. |
+| `references/user-story-template.md` | The shape of a user story with Given/When/Then acceptance criteria, for when the delivery team asks for one from a minuta. |
