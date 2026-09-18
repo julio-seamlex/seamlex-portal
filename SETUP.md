@@ -133,5 +133,9 @@ prerequisite.
 **Wrong issue type when raising an epic or story** — the issue types on the `claude-client-config` page do
 not match your project. Send the name that is off to your Seamlex contact for a fix on the page.
 
+**The minuta has no labels in Confluence** — expected. The Atlassian MCP server cannot set labels on a
+page, so the plugin does not use them; the page is found by the Jira key in its title
+(`Minuta ABC-12 — …`). Nothing to fix.
+
 **A write to Jira half-succeeded** — the command will tell you exactly which issues were created and which
 weren't, and stop rather than retrying. Give that list to your Seamlex contact.

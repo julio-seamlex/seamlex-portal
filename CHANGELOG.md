@@ -1,5 +1,35 @@
 # Changelog
 
+## 1.17.0
+
+> The Atlassian MCP server cannot set labels on a Confluence page — `createConfluencePage` and
+> `updateConfluencePage` have no label parameter — so 1.16.0 promised labels it could never set.
+> Confluence labels are gone from the convention altogether: the Jira key lives in the page title and
+> every page is found by title and by its place under a parent. Jira labels are unchanged.
+
+- **Page titles carry the Jira key**: `Minuta <KEY> — <exact Jira summary>` and
+  `Transcript <KEY> — <summary>` (was `Minuta <summary>` / `Transcript — Minuta <summary>`), the same
+  `<Type> <KEY>` shape the delivery team already uses. `title ~ "ABC-12"` finds every page of a task;
+  the prefix tells the kinds apart. No fallback for the old titles — spaces created before this
+  version are renamed by Seamlex.
+- **No Confluence labels.** The *Labels* section of `atlassian-how-to` is now *Labels — Jira only*:
+  the Jira table stays (`{{LABEL_REQUEST}}`, `{{LABELS_EXTRA}}`, `relevamiento`, `pendiente`,
+  `no-identificado`, set in `createJiraIssue`'s `additional_fields.labels`); the Confluence table is
+  removed, and the skill says plainly that nothing is written, read, promised or checked on a page
+  label. The structure rule *Pages carry their labels* becomes *No Confluence labels*; the index page
+  loses its *Labels* / *Etiquetas* column; *Before any write* no longer says "labels in the call".
+- **Retrieval order is index → key in the title → title prefix under an ancestor → text.** Every CQL
+  shape in the skill, the index template and the `business-analysis` skill is by `title` and
+  `ancestor`; *the one minuta of a task* is `title ~ "<KEY>" AND title ~ "Minuta"`, then the exact
+  title, then the task's `getJiraIssueRemoteIssueLinks`. Same order in `/seamlex-refinar` step 3
+  (resumed-session detection) and 4a.
+- `references/jira-task-checklist.md` — the *Confluence page* block asks for the keyed title and
+  drops the labels line. `references/index-page-template.md` — keyed example titles, no label
+  column, title/ancestor CQL only. README and SETUP explain the limitation in one paragraph and one
+  troubleshooting entry.
+- **For the delivery team**: `seamlex-deliver-team` (`/gate-funcional`, `/high-level-design`) finds
+  minutas with `label = "minuta" AND label = "<key>"` — it has to switch to `title ~ "<KEY>"`.
+
 ## 1.16.0
 
 > The plugin does one thing: the relevamiento. `/seamlex-status` and questions to Seamlex are gone, and

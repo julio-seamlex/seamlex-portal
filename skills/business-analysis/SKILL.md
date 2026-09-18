@@ -77,7 +77,7 @@ every question stands on, whatever task the command hands you.
 The **`claude-client-config`** page that `/hi-seamlex` loaded into the session is the index of the
 project's knowledge — the signed scope page, the Discovery Brief, process and glossary pages, meeting
 notes, whatever Seamlex has listed there. Its shape — settings table, one row per page with its exact
-title, type, labels and what to take from it — is the root instance of the index page the
+title, type and what to take from it — is the root instance of the index page the
 `atlassian-how-to` skill defines, and the space around it follows that skill's structure. Follow the
 index; never guess a page. If the page is not in context, stop and ask the customer to run
 `/hi-seamlex`. `{{CLOUD_ID}}` and `{{CONF_SPACE}}` are the
@@ -89,7 +89,7 @@ cloud id and space that command settled on, and every Confluence call below runs
 |---|---|---|
 | **Signed scope page** — `{{CONF_SCOPE_PAGE}}` | The contract: the epics and items that are in, what is written as excluded, the assumptions, the phase boundaries. | Which item this task belongs to, and what around it is explicitly out. You know the scope before the customer says a word about it. |
 | **Discovery Brief** — the page the config links, or `{{DRAFTS_DIR}}/discovery/discovery-brief.md` when a local copy exists | Company and program (§1–2), areas and roles (§3), processes and which are in scope (§4), systems and what runs on spreadsheets (§5), actors (§6), pains (§7), goals and success measures (§8), **scope, constraints and non-negotiables (§9)**, risks and open questions (§10). | Every actor you name and every option you offer in `AskUserQuestion` comes from here. §9 is the second half of the scope picture. |
-| **Meeting notes** — the last two or three, most recent first: `Minuta <task>` pages under `{{CONF_PARENT}}` and any meeting-notes page the config lists or that turns up by title | What was decided; what was left `⚠️ TBD` and to whom; what was parked as out of scope; anything said about *this* area of the business; who was in the room. | You do not re-ask what a previous session settled, and you can open with "last time you told us…". A `Minuta <this task's summary>` already in the space means this is a resumed session — continue from its open items. |
+| **Meeting notes** — the last two or three, most recent first: `Minuta <KEY> — <task>` pages under `{{CONF_PARENT}}` and any meeting-notes page the config lists or that turns up by title | What was decided; what was left `⚠️ TBD` and to whom; what was parked as out of scope; anything said about *this* area of the business; who was in the room. | You do not re-ask what a previous session settled, and you can open with "last time you told us…". A `Minuta <this task's KEY> — …` already in the space means this is a resumed session — continue from its open items. |
 | **Process, glossary and reference pages** the config lists | The customer's own vocabulary and how they describe their operation. | You use their words, not the platform's, and you notice when a term in the task does not match theirs. |
 | **`Features no identificados — {{PROGRAM}}`** | What has already been parked outside the signed scope. | The same request is not parked twice; the customer is told it is already recorded and with whom. |
 
@@ -110,9 +110,10 @@ whole session.
 | Pages about this task | `space = "{{CONF_SPACE}}" AND title ~ "<JIRA-KEY>"` |
 | Pages about this part of the business | `space = "{{CONF_SPACE}}" AND text ~ "<key term>"` |
 
-On a space labelled the way `atlassian-how-to` says, `label = "minuta"` and `label = "<jira-key>"` find
-the same pages without a title to get wrong; the full cookbook — labels, ancestor, text, and the Jira
-side — is that skill's *Retrieval patterns*. `getConfluencePageDescendants` on `{{CONF_PARENT}}` lists
+*Pages about this task* is the query to trust — every page tied to a task carries its Jira key in the
+title (`Minuta <KEY> — <summary>`); Confluence labels are not used. The full cookbook — key in the
+title, title prefix, ancestor, text, and the Jira side — is the `atlassian-how-to` skill's *Retrieval
+patterns*. `getConfluencePageDescendants` on `{{CONF_PARENT}}` lists
 everything the project has written under it when the search is thin. Read only what can bear on the session — the two or three most recent meeting
 notes in full, older ones by title unless one names this task or this area.
 
@@ -176,7 +177,7 @@ the thing it describes; the command says *where* each one lands, the reference s
 
 | Reference | What it shapes |
 |---|---|
-| `references/epic-template.md` | The body of a `Minuta <task>` page — what the task delivers, the pain, actors, processes today and after, functional detail, information, visibility, reporting, scope boundaries, what was raised here but belongs elsewhere, open questions. Adapted to the task, never copied section for section. |
+| `references/epic-template.md` | The body of a `Minuta <KEY> — <task>` page — what the task delivers, the pain, actors, processes today and after, functional detail, information, visibility, reporting, scope boundaries, what was raised here but belongs elsewhere, open questions. Adapted to the task, never copied section for section. |
 | `references/pendiente-template.md` | A pending item — where it was raised, the owner, needed by, whether it blocks design, what is open, why it matters, what is already believed, what was offered, when it is done. The description of every `Pendiente:` sub-task. |
 | `references/unidentified-features.md` | The `Features no identificados — {{PROGRAM}}` page, created from it the first time something is parked outside the signed scope. |
 | `references/discovery-brief.md` | The format of the Discovery Brief you read before the first question — §1–10 as *What you know before you ask* cites them. Not written by this skill; kept here so the section numbers mean the same thing everywhere. |

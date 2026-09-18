@@ -12,7 +12,7 @@ Confluence space you share with Seamlex, so there is one record and no parallel 
 | Command | What it does |
 |---|---|
 | `/hi-seamlex` | Start a session. **Run this first.** Signs you in to Atlassian, picks your Confluence space, loads the project's `claude-client-config` page and the house rules for Jira and Confluence. |
-| `/seamlex-refinar` | Run a *relevamiento* with the Product Owner — takes a relevamiento task from the current sprint, gathers everything the client config points at, interviews you in business language only, and leaves a comment and the transcript on the task, a Confluence page "Minuta <task>", the pending items as sub-tasks of the task, and the task linked to the page. |
+| `/seamlex-refinar` | Run a *relevamiento* with the Product Owner — takes a relevamiento task from the current sprint, gathers everything the client config points at, interviews you in business language only, and leaves a comment and the transcript on the task, a Confluence page "Minuta <KEY> — <task>", the pending items as sub-tasks of the task, and the task linked to the page. |
 
 Two commands, one workflow: `/hi-seamlex` sets the session up, `/seamlex-refinar` does the work. Status
 reports and questions to the Seamlex team are not part of this plugin — your Seamlex contact and the
@@ -39,9 +39,14 @@ Everything the commands read and write in Jira and Confluence follows one set of
 plugin's `atlassian-how-to` skill, which `/hi-seamlex` loads at the start of each session. It fixes the
 structure of your Confluence space, the shape of an index page written so Claude can find things later
 (your `claude-client-config` page is the root one), what a well-completed Jira task looks like — summary,
-description, status, comments, labels, linked to its Confluence page — the labels on both sides, and the
-queries used to find pages and tasks by label, title, key or text. You do not have to know any of it;
-it is what makes a minuta from last month findable from the task it belongs to.
+description, status, comments, labels, linked to its Confluence page — the Jira labels, and the queries
+used to find pages by title and tasks by key. You do not have to know any of it; it is what makes a
+minuta from last month findable from the task it belongs to.
+
+One detail is worth knowing: the official Atlassian MCP server can set labels on a Jira issue but
+**not on a Confluence page**, so the plugin does not use Confluence labels at all. Every page it
+creates carries its Jira key in the title (`Minuta ABC-12 — …`), and that title is how the page is
+found — from the task, from the index, from a search.
 
 ## Nothing happens without your approval
 
@@ -59,7 +64,7 @@ seamlex/
     └── discovery-brief.md      # a local copy of your Discovery Brief, if you keep one
 ```
 
-Relevamientos leave nothing here: each one gets its own Confluence page — `Minuta <task>`, created on the
+Relevamientos leave nothing here: each one gets its own Confluence page — `Minuta <KEY> — <task>`, created on the
 first session, updated as you go, marked `Finalizado` when you approve it — plus the transcript and a
 comment on the Jira task, and so does the list of unidentified features.
 

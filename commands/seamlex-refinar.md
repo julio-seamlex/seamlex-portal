@@ -1,5 +1,5 @@
 ---
-description: Run a "relevamiento" from the current sprint with the Product Owner — finds the relevamiento tasks in the open sprint, gathers everything the client config points at, interviews the customer in business language only, and leaves a comment and the transcript on the task, one Confluence page "Minuta <task>", the pending items as sub-tasks of the task, and the task linked to the page.
+description: Run a "relevamiento" from the current sprint with the Product Owner — finds the relevamiento tasks in the open sprint, gathers everything the client config points at, interviews the customer in business language only, and leaves a comment and the transcript on the task, one Confluence page "Minuta <KEY> — <task>", the pending items as sub-tasks of the task, and the task linked to the page.
 ---
 
 # Relevamiento of a sprint task
@@ -15,8 +15,8 @@ outputs in Step 4). Its translation table is the rule every question here passes
 **The house rules for Jira and Confluence are the `seamlex-portal:atlassian-how-to` skill**, which
 `/hi-seamlex` loaded at the start of the session. If it is not in context, load it now with the `Skill`
 tool (or read `../skills/atlassian-how-to/SKILL.md`). Where a page goes, what it is titled, which
-labels it carries, how the task and the page link, how a task is left and how it is found later all
-come from there; Step 4 names what it writes and points at the skill for the how.
+Jira labels a task carries, how the task and the page link, how a task is left and how it is found
+later all come from there; Step 4 names what it writes and points at the skill for the how.
 
 Settings come from the **`claude-client-config` Confluence page** that `/hi-seamlex` loaded into the
 session. If the page is not in context, stop and ask the customer to run `/hi-seamlex`. Resolve from it
@@ -80,8 +80,10 @@ skill's *What you know before you ask*; this step keeps only what is specific to
    with the task's key and its key terms (`title ~ "<KEY>"`, `text ~ "<term>"`) and the skill's
    meeting-notes shapes, and `searchJiraIssuesUsingJql` with
    `project = {{JIRA_PROJECT}} AND text ~ "<key terms>"` for related tasks, earlier relevamientos and
-   open questions. A page titled `Minuta <this task's summary>` already in the space means this is a
-   **resumed session** — read it and continue from its open items rather than starting over.
+   open questions. A page titled `Minuta <KEY> — <this task's summary>` already in the space (the
+   skill's *the one minuta of a task* pattern: `title ~ "<KEY>" AND title ~ "Minuta"`, then the task's
+   remote links) means this is a **resumed session** — read it and continue from its open items rather
+   than starting over.
 4. **Reflect it back in five to eight lines, in business terms, before the first question**: what the
    task asks for as the customer would say it, what the project already knows (from the config's pages,
    the brief, earlier comments), what is still open, and the two or three things the session will spend
@@ -114,21 +116,23 @@ Every session ends with exactly these outputs, in Jira and Confluence. Show the 
 when `{{CONFIRM_WRITES}}` is `always`, then write in this order — the page first, because everything else
 points at it.
 
-### 4a. The Confluence page `Minuta <task summary>`
+### 4a. The Confluence page `Minuta <KEY> — <task summary>`
 
 One page per relevamiento, in `{{CONF_SPACE}}` under `{{CONF_PARENT}}`, titled exactly
-`Minuta <task summary as it reads in Jira>`. Keep the Jira wording even if a better title came up in
-conversation — the title is how the minuta is found from the board.
+`Minuta <KEY> — <task summary as it reads in Jira>` — e.g. `Minuta ABC-12 — Devoluciones de mercadería
+dañada`. The key upper-cased as Jira writes it, an em dash, then the Jira wording even if a better
+title came up in conversation — the key is how the minuta is found (`title ~ "ABC-12"`), the summary
+is how it reads from the board.
 
 - `createConfluencePage` **as soon as there is something worth saving**, then `updateConfluencePage`
   section by section as the session runs, without asking again each time — sessions get interrupted, and
   nothing gathered should depend on reaching the end. On a resumed session, update the existing page;
   never create a second one for the same task — find it first with the skill's *the one minuta of a
-  task* pattern (`label = "minuta" AND label = "<jira-key>"`, then exact title).
-- **Labels at creation**, per the skill's *Labels* table: `minuta`, the Jira key lower-cased (`abc-12`),
-  and `{{LABELS_EXTRA}}` when set; `transcript` plus the key on a `Transcript — Minuta <task summary>`
-  child. If the tool cannot set them, say so at the close. Add the page's row to the `{{CONF_PARENT}}`
-  index when that page is one the plugin may edit; otherwise name the row for Seamlex.
+  task* pattern (`title ~ "<KEY>" AND title ~ "Minuta"`, then the exact title, then the task's
+  `getJiraIssueRemoteIssueLinks`).
+- **No labels on the page** — the Atlassian MCP cannot set them and nothing depends on them; the key
+  in the title is how the page is found. Add the page's row to the `{{CONF_PARENT}}` index when that
+  page is one the plugin may edit; otherwise name the row for Seamlex.
 - **Shape**: a header table — **Tarea Jira** (key, as a link to the issue), **Sprint**, **Épica** if
   any, **Relevado con** (name, role, per person), **Fecha(s)**, **Estado** (`En progreso` /
   `Finalizado`) — followed by the body from `../skills/business-analysis/references/epic-template.md`
@@ -162,7 +166,7 @@ actually said.
   dedicated comment** on the task with `addCommentToJiraIssue`, headed `Transcript del relevamiento —
   <date>` and containing the questions and answers in order with their times.
 - If the transcript is too long for one comment (the site rejects it), create a child page of the minuta
-  titled `Transcript — Minuta <task summary>` with `createConfluencePage`, put the transcript there, and
+  titled `Transcript <KEY> — <task summary>` with `createConfluencePage`, put the transcript there, and
   leave a comment on the task with that page's URL instead. Say which of the two you did.
 - The transcript is never summarized, edited or cleaned up beyond fixing typos in its own
   questions; the customer's words stay as given.
@@ -230,8 +234,8 @@ When `{{CONFIRM_WRITES}}` is `always`, the transition to done is a separate, exp
 from approval of the summary.
 
 Close by showing what was left behind — the minuta URL, the two comment links, the pending sub-task keys,
-the task's state — and the other relevamientos still open in the sprint, from the same query as Step 1, so
-the customer can pick the next one up with `/seamlex-refinar` or `/seamlex-refinar <KEY>`.
+the task's state — and the other relevamientos still open in the sprint, from the same query as Step 1,
+so the customer can pick the next one up with `/seamlex-refinar` or `/seamlex-refinar <KEY>`.
 
 ## Failure handling
 

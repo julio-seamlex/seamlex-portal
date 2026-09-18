@@ -51,7 +51,7 @@ Confluence.
    with the `Skill` tool; if the Skill tool is not available, read
    `../skills/atlassian-how-to/SKILL.md` directly. It carries the structure of the Confluence space,
    the shape of the index page the config page follows, what a well-completed Jira task looks like,
-   the labels, and the CQL/JQL patterns to find pages and tasks — every read and write
+   the Jira labels, and the CQL/JQL patterns to find pages by title and tasks by key — every read and write
    `/seamlex-refinar` makes in Jira and Confluence follows it. Keep it in context for the session; do not
    summarise it to the customer.
 
@@ -62,10 +62,10 @@ Confluence.
 
 **The `claude-client-config` page is the configuration.** `/seamlex-refinar` and the Seamlex skills resolve
 the `{{PLACEHOLDER}}` tokens in its instructions from the page loaded in step 4 — the Jira project, the
-Confluence space and parent pages, the signed scope page, issue types and labels, the Seamlex contacts,
+Confluence space and parent pages, the signed scope page, issue types and Jira labels, the Seamlex contacts,
 the write-confirmation and detail preferences, and whatever else the page indexes. Nothing is read from
 this file: it holds no tables, no values, and no per-customer state. The page's shape — purpose, settings
-table, one row per page with its exact title, type, labels and what to take from it — is the root
+table, one row per page with its exact title, type and what to take from it — is the root
 instance of the index page the `atlassian-how-to` skill defines
 (`../skills/atlassian-how-to/references/index-page-template.md`); Seamlex maintains it, and no command
 ever edits it.

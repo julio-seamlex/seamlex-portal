@@ -1,15 +1,15 @@
 ---
 name: atlassian-how-to
-description: How Seamlex uses Jira and Confluence — the house rules every Atlassian tool call in a Seamlex session follows. The structure of a customer's Confluence space, the index page written so Claude can retrieve pages later (claude-client-config is its root instance), what a well-completed Jira task looks like — summary, description, status, comments, labels, linked to its Confluence page — the labelling convention on both sides, and the CQL/JQL retrieval patterns to find pages and tasks by label, title, ancestor, key or text. Loaded by /hi-seamlex at session start; applies to every read and write in Jira and Confluence made by any Seamlex command or skill.
+description: How Seamlex uses Jira and Confluence — the house rules every Atlassian tool call in a Seamlex session follows. The structure of a customer's Confluence space, the index page written so Claude can retrieve pages later (claude-client-config is its root instance), what a well-completed Jira task looks like — summary, description, status, comments, labels, linked to its Confluence page — the Jira labelling convention, the title convention on Confluence (every page tied to a task carries its Jira key in the title; Confluence labels are not used because the Atlassian MCP cannot set them), and the CQL/JQL retrieval patterns to find pages by title and ancestor and tasks by key, label or text. Loaded by /hi-seamlex at session start; applies to every read and write in Jira and Confluence made by any Seamlex command or skill.
 ---
 
 # What this skill is for
 
 Every Seamlex command reads and writes the same Jira project and the same Confluence space, and every
-one of them needs the same answers: where does this page go, what is it called, how is it labelled, how
-is the task it belongs to left, and how will someone — or Claude, next session — find it again. The
-commands say **what** to write and when; this skill says **where it goes, what it is called, how it is
-labelled, how it is linked and how it is found**. When a command and this skill disagree on one of
+one of them needs the same answers: where does this page go, what is it called, how is the task it
+belongs to left, and how will someone — or Claude, next session — find it again. The commands say
+**what** to write and when; this skill says **where it goes, what it is called, how it is linked and
+how it is found**. When a command and this skill disagree on one of
 those, this skill wins; when this skill is silent, the command decides.
 
 It is loaded by `/hi-seamlex` at the start of the session, after the `claude-client-config` page, and
@@ -34,8 +34,8 @@ a place this tree already has; nothing is created where the tree has no place fo
 ├── <signed scope page>  = {{CONF_SCOPE_PAGE}}     the contract: what is in, what is written as out (Seamlex)
 ├── Discovery Brief — {{PROGRAM}}                 §1–10, the project's understanding of the business (Seamlex + customer)
 ├── {{CONF_PARENT}}                               section index for relevamientos (e.g. "Relevamientos")
-│   ├── Minuta <task summary as it reads in Jira>   one per relevamiento task   (/seamlex-refinar)
-│   │   └── Transcript — Minuta <task summary>      only when the transcript did not fit a Jira comment
+│   ├── Minuta <KEY> — <task summary as in Jira>    one per relevamiento task   (/seamlex-refinar)
+│   │   └── Transcript <KEY> — <task summary>       only when the transcript did not fit a Jira comment
 │   └── …
 ├── Procesos                                      section index + one page per business process (Seamlex + customer)
 ├── Glosario                                      the customer's vocabulary, one page or one per area
@@ -56,9 +56,9 @@ own initiative.
 |---|---|
 | **Every section parent is an index page** in the shape of *The index page* below — never an empty container. | The parent is how the section is found and how Claude knows what each child is without opening it. |
 | **One page per task.** Before creating a page tied to a Jira key, search for it (*Retrieval patterns* → *pages about a task*). If it exists, update it. | A second `Minuta` for the same task splits the record; the delivery team reads the wrong one. |
-| **Titles are `<Type> <exact Jira summary>`** — `Minuta <summary>`, `Transcript — Minuta <summary>`, `Análisis funcional <KEY>`. The Jira wording, even when a better title came up. | Search is `title = "…"`; the title is how the page is found from the board. |
+| **Titles are `<Type> <KEY> — <exact Jira summary>`** — `Minuta ABC-12 — <summary>`, `Transcript ABC-12 — <summary>`, `Análisis funcional <KEY>`. The Jira key in upper case, then an em dash, then the Jira wording even when a better title came up. | The title is the only handle a page has: `title ~ "ABC-12"` finds every page of a task, the prefix tells the kinds apart, the summary keeps it readable from the board. |
 | **Every page tied to a task opens with a header table** whose first row is the Jira key **written as a link** to the issue (`https://<site>/browse/<KEY>`). | Confluence renders it as a Jira link and Jira lists the page under the issue — half of the two-way link. |
-| **Pages carry their labels** (*Labels* below) from the moment they are created. | Label search is the fastest retrieval there is; a page without labels is only findable by title. |
+| **No Confluence labels.** Nothing the plugin writes or reads depends on a page label; a page is found by title and by ancestor, never by label. | The Atlassian MCP's `createConfluencePage` / `updateConfluencePage` have no label parameter, so a convention built on labels would never hold. |
 | **Children go under their parent**: minutas under `{{CONF_PARENT}}`, transcripts under their minuta, delivery documents under *Delivery*. | `ancestor =` searches and `getConfluencePageDescendants` depend on it. |
 | **The body is in `{{LOCALE}}` and in business terms**; platform vocabulary lives only in a page's closing *Para el equipo de delivery* section, or in the *Delivery* pages. | The customer reads these pages; the `business-analysis` rule applies on the page as in the room. |
 
@@ -74,11 +74,11 @@ same shape without the settings. The full body is in `references/index-page-temp
    name it (`JIRA_PROJECT`, `CONF_PARENT`, `CONF_SCOPE_PAGE`, `TYPE_RELEVAMIENTO`, `TYPE_TASK`,
    `LABEL_REQUEST`, `LABELS_EXTRA`, `SEAMLEX_CONTACT`, `CONFIRM_WRITES`, `DETAIL`, `DRAFTS_DIR`,
    `PROGRAM`, `COMPANY`), value, and a short meaning. A missing setting is a missing row, not a blank value.
-3. **Pages** — the map. One row per page: **Title (exact)** · **Link** · **Type** · **Labels** ·
-   **What to take from it** · **Read when**. *Type* uses the fixed vocabulary of the *Labels* table;
+3. **Pages** — the map. One row per page: **Title (exact)** · **Link** · **Type** ·
+   **What to take from it** · **Read when**. *Type* uses the fixed vocabulary in the table below;
    *Read when* is one of `every session` / `when the task touches <area>` / `on demand`.
 4. **How to find what is not listed** — the two or three CQL shapes that cover this section, ready to
-   run (space, ancestor, labels filled in).
+   run (space, ancestor, title prefix filled in).
 5. **Maintained by / last updated** — who owns the page and when it last changed.
 
 What makes it retrievable, and what breaks it:
@@ -88,7 +88,6 @@ What makes it retrievable, and what breaks it:
 | Titles typed **exactly** as the page is titled — search is `title = "…"`. | A paraphrase, an abbreviation, a title with the emoji dropped. |
 | One page per row; the *What to take from it* cell says what the page settles, in one or two lines. | Prose between rows, several pages in one cell, "see below". |
 | The same *Type* words everywhere — `scope`, `discovery`, `minuta`, `proceso`, `glosario`, `referencia`, `analisis-funcional`, `hld`. | A new type invented per row. |
-| The labels listed in the row are the labels the page actually carries. | Labels promised on the index that were never set on the page. |
 | A Jira key, wherever it appears, as a link to the issue. | A bare key Confluence cannot resolve. |
 | A row for every page under this section — a page that is not listed is a page nobody will read. | Index rows for pages that no longer exist. |
 
@@ -109,7 +108,7 @@ learn what it was for, what happened, where the record is, and what is still ope
 | **Description** | What is being asked, why it matters, who it is for, and what *done* looks like — so the assignee does not have to come back to ask. Pending items take the shape of `../business-analysis/references/pendiente-template.md`. Always a link to the Confluence page it comes from, and to the section when there is one. |
 | **Status** | Read the project's real workflow with `getTransitionsForJiraIssue` — never assume names. Map it to the four states the plugin reasons in: **to do → in progress → waiting on the customer / blocked → done**. Move a task to *in progress* when the work starts, not when it ends. **Done is earned**: a relevamiento is done only when the customer approved the summary, the minuta says `Finalizado`, and no pending item *blocks* design; a pending item is done only when its answer is written back on the minuta. Never done to make the board look better. |
 | **Comments** | Every write that changes the task leaves a comment saying what changed and why — a status move, a new sub-task, an answer. Per session, one **result comment**: who ran it (the Seamlex role, Claude, with `{{USER_NAME}}`), the date, three lines of what was settled, the URL of the Confluence page, the keys created, and the state the task was left in. When there is a transcript, a **second, dedicated comment** headed `Transcript del relevamiento — <date>`, or the URL of its Confluence child page when it did not fit. A pending item that gets answered is closed **with a comment holding the answer**, not silently. |
-| **Labels** | `{{LABEL_REQUEST}}` and `{{LABELS_EXTRA}}` on everything the plugin creates, plus the kind label from the *Labels* table. Set at creation. |
+| **Labels** | `{{LABEL_REQUEST}}` and `{{LABELS_EXTRA}}` on everything the plugin creates, plus the kind label from the *Labels* table. Set at creation — `createJiraIssue` takes them in `additional_fields.labels`. |
 | **Assignee** | The owner, when `lookupJiraAccountId` resolves them; otherwise unassigned and the owner named in the first line of the description. Never assigned to whoever is signed in by default. |
 | **Linked to its Confluence page** | Two directions. **Jira → Confluence**: the page URL in the result comment (and a remote link when the server offers a tool for it — the bundled one does not; say when the comment is the only Jira-side link). **Confluence → Jira**: the Jira key in the page's header table as a link to the issue, which makes Jira list the page under the issue. After the page is saved, `getJiraIssueRemoteIssueLinks` — if the page does not appear, say so; the comment link still holds. |
 | **Dates** | Only dates that exist — a due date the customer gave, a sprint end. Never an ETA invented to fill the field. |
@@ -118,33 +117,11 @@ The copy-and-walk checklist, one block per kind — relevamiento, pending sub-ta
 `references/jira-task-checklist.md`. A command walks the block that applies **before** it calls the
 task done, and says which lines are not true rather than closing over them.
 
-# Labels — the convention
+# Labels — Jira only
 
-Labels are how a page or task is found without knowing its title. They are set **when the thing is
-created** — `createConfluencePage`, `createJiraIssue` — never retro-fitted quietly later; when a tool
-call cannot set a label, say so in the close of the command so Seamlex can add it by hand. All labels
-are lower-case, ASCII, hyphenated.
-
-**Confluence**
-
-| Label | On | Set by |
-|---|---|---|
-| `index` | every index page — `claude-client-config` and each section parent | Seamlex |
-| `config` | `claude-client-config` | Seamlex |
-| `scope` | the signed scope page | Seamlex |
-| `discovery` | the Discovery Brief | Seamlex |
-| `minuta` | every `Minuta <task>` page | `/seamlex-refinar` |
-| `transcript` | every `Transcript — Minuta <task>` page | `/seamlex-refinar` |
-| `proceso` | one page per business process | Seamlex / customer |
-| `glosario` | glossary pages | Seamlex / customer |
-| `referencia` | anything else the config lists | Seamlex |
-| `no-identificado` | `Features no identificados — {{PROGRAM}}` | `/seamlex-refinar` |
-| `analisis-funcional` | `Análisis funcional <KEY>` | seamlex-deliver-team |
-| `hld` | `High-level design <KEY>` | seamlex-deliver-team |
-| `<jira-key>` — the key lower-cased, e.g. `abc-12` | **every page tied to a task**: its minuta, transcript, analysis, design | whoever creates the page |
-| `{{LABELS_EXTRA}}` | everything the plugin creates, when the config sets it | the command |
-
-**Jira**
+Jira labels are how an issue is found without knowing its summary. The plugin sets them **when the
+issue is created** (`createJiraIssue`, `additional_fields: {"labels": [...]}`), never retro-fitted
+quietly later. All labels are lower-case, ASCII, hyphenated.
 
 | Label | On | Set by |
 |---|---|---|
@@ -154,29 +131,32 @@ are lower-case, ASCII, hyphenated.
 | `pendiente` | every `Pendiente:` sub-task | `/seamlex-refinar` |
 | `no-identificado` | any issue Seamlex raises from the unidentified-features page | Seamlex |
 
-The kind label and the key label together make the strongest query there is:
-`label = "minuta" AND label = "abc-12"` finds the one page, with no title to get wrong.
+**Confluence pages carry no labels the plugin knows about.** The Atlassian MCP cannot set them, so
+nothing is written, read, promised or checked on that side. A page is identified by its **title** —
+the `<Type> <KEY> — <summary>` convention above — and by its **place in the tree**. If a customer's
+space happens to have labels on its pages, they are ignored.
 
 # Retrieval patterns
 
-The order is always the same: **the index first, then labels, then title, then ancestor, then text.**
-The index says what exists; labels find it without a title; the title is exact and fragile; ancestor
-walks a section; text is the last resort and returns noise. Never guess a page id or an issue key.
-Never answer from what was read in an earlier turn — the board and the space move; re-query.
+The order is always the same: **the index first, then the key in the title, then the title prefix
+under an ancestor, then text.** The index says what exists; the key in the title finds a task's pages;
+the prefix (`Minuta`, `Transcript`, `Análisis funcional`) tells the kinds apart; ancestor walks a
+section; the full exact title confirms; text is the last resort and returns noise. Never guess a page
+id or an issue key. Never answer from what was read in an earlier turn — the board and the space move;
+re-query.
 
 **Confluence — `searchConfluenceUsingCql` on `{{CLOUD_ID}}`, always scoped to `space = "{{CONF_SPACE}}"`**
 
 | Looking for | CQL |
 |---|---|
-| The root index | `space = "{{CONF_SPACE}}" AND title = "claude-client-config"` — or `AND label = "config"` |
-| A section index | `space = "{{CONF_SPACE}}" AND label = "index" AND title = "<section title>"` |
-| Every page tied to a task | `space = "{{CONF_SPACE}}" AND label = "<jira-key lower-cased>"` |
-| The one minuta of a task | `space = "{{CONF_SPACE}}" AND label = "minuta" AND label = "<jira-key>"` — fall back to `title = "Minuta <exact Jira summary>"` on a space labelled before this convention |
-| The latest minutas | `space = "{{CONF_SPACE}}" AND label = "minuta" ORDER BY lastmodified DESC` — or `ancestor = <{{CONF_PARENT}} id> AND title ~ "Minuta"` |
-| All pages of one type | `space = "{{CONF_SPACE}}" AND label = "proceso"` (`glosario`, `referencia`, `analisis-funcional`, `hld`) |
+| The root index | `space = "{{CONF_SPACE}}" AND title = "claude-client-config"` |
+| A section index | `space = "{{CONF_SPACE}}" AND title = "<section title as the root index lists it>"` |
+| Every page tied to a task | `space = "{{CONF_SPACE}}" AND title ~ "<JIRA-KEY>"` — the key upper-cased as it is in the title; the prefix of each title tells minuta from transcript from analysis |
+| The one minuta of a task | `space = "{{CONF_SPACE}}" AND title ~ "<JIRA-KEY>" AND title ~ "Minuta"` — then confirm the exact title `Minuta <KEY> — <exact Jira summary>`. If that returns nothing, `getJiraIssueRemoteIssueLinks` on the task: the header-table link makes Jira list the page. Nothing there → the page does not exist; create it |
+| The latest minutas | `space = "{{CONF_SPACE}}" AND ancestor = <{{CONF_PARENT}} id> AND title ~ "Minuta" ORDER BY lastmodified DESC` |
+| All pages of one kind | the section's ancestor plus the title prefix — `ancestor = <Delivery id> AND title ~ "Análisis funcional"`, `ancestor = <Procesos id>` for the processes, `title ~ "Glosario"` for the glossary |
 | Everything under a section | `space = "{{CONF_SPACE}}" AND ancestor = <parent page id>` — or `getConfluencePageDescendants` on the parent |
-| Other meeting notes not yet labelled | `space = "{{CONF_SPACE}}" AND (title ~ "Minuta" OR title ~ "Meeting notes" OR title ~ "Acta" OR title ~ "Reunión") ORDER BY lastmodified DESC` |
-| Pages about a task by title | `space = "{{CONF_SPACE}}" AND title ~ "<JIRA-KEY>"` |
+| Other meeting notes | `space = "{{CONF_SPACE}}" AND (title ~ "Minuta" OR title ~ "Meeting notes" OR title ~ "Acta" OR title ~ "Reunión") ORDER BY lastmodified DESC` |
 | Pages about a part of the business | `space = "{{CONF_SPACE}}" AND text ~ "<the customer's own term>"` — last resort; read titles before opening anything |
 | Changed recently | `space = "{{CONF_SPACE}}" AND lastmodified >= now("-14d") ORDER BY lastmodified DESC` |
 
@@ -210,12 +190,13 @@ These hold for every read and write in a Seamlex session, whichever command is r
 **Before any write**
 
 1. **It was searched for.** The page or issue about to be created was looked for with the patterns
-   above — by label and key, then by exact title. If it exists, update it; a second copy is never the
-   answer.
+   above — by key in the title, then by exact title, then through the task's remote links. If it
+   exists, update it; a second copy is never the answer.
 2. **It has a place in the tree** — a parent the structure names and the config resolves. No place →
    ask, do not invent a section.
-3. **The title follows the convention**, the labels are in the call, the header table opens with the
-   Jira key as a link, and the body is in `{{LOCALE}}` in business terms.
+3. **The title follows the convention** — `<Type> <KEY> — <exact Jira summary>` for a page tied to a
+   task — the header table opens with the Jira key as a link, and the body is in `{{LOCALE}}` in
+   business terms. Jira labels are in the `createJiraIssue` call; a Confluence page gets none.
 4. **Its counterpart is known**: a page knows its task, a task will get the page URL in a comment. A
    write that has no counterpart is the exception, and the command says why.
 5. **`{{CONFIRM_WRITES}}`** — when `always`, the exact text is shown and approved first; a transition

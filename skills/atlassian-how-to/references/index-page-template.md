@@ -4,14 +4,13 @@
 > decide whether to open it and how to find it. Two variants of the same shape: the **root** index
 > (`claude-client-config`, which also carries the settings) and a **section** index (the parent of
 > `Minuta` pages, *Procesos*, *Referencia*, *Delivery*). Sections in the order below; none left out.
-> Labels on the page: `index`, plus `config` on the root.
+> Pages are found by exact title and by their place under a parent — never by label.
 
 ---
 
 ## Root index — `claude-client-config`
 
-**Title (exact):** `claude-client-config` · **Labels:** `index`, `config` · **Maintained by:** Seamlex.
-Never edited by the plugin.
+**Title (exact):** `claude-client-config` · **Maintained by:** Seamlex. Never edited by the plugin.
 
 ### Propósito
 
@@ -27,12 +26,12 @@ the project's knowledge for `{{PROGRAM}}` at `{{COMPANY}}` — and what it delib
 | Clave | Valor | Significado |
 |---|---|---|
 | `JIRA_PROJECT` | `ABC` | Jira project key of the engagement |
-| `CONF_PARENT` | `Relevamientos` (page id `123456`) | Parent page of every `Minuta <task>` |
+| `CONF_PARENT` | `Relevamientos` (page id `123456`) | Parent page of every `Minuta <KEY> — <task>` |
 | `CONF_SCOPE_PAGE` | `Alcance firmado — <program>` (page id `123457`) | The signed scope page |
-| `TYPE_RELEVAMIENTO` | `Relevamiento` | Issue type (or, if stated, the label) that marks a relevamiento |
+| `TYPE_RELEVAMIENTO` | `Relevamiento` | Issue type (or, if stated, the Jira label) that marks a relevamiento |
 | `TYPE_TASK` | `Subtarea` | The project's sub-task type, used for pending items |
-| `LABEL_REQUEST` | `cliente` | Label on everything the plugin creates |
-| `LABELS_EXTRA` | `fase-1` | Extra labels on everything the plugin creates (optional) |
+| `LABEL_REQUEST` | `cliente` | Jira label on every issue the plugin creates |
+| `LABELS_EXTRA` | `fase-1` | Extra Jira labels on every issue the plugin creates (optional) |
 | `SEAMLEX_CONTACT` | `<name>` | Who at Seamlex picks up pending items and unidentified features |
 | `CONFIRM_WRITES` | `always` | Show and approve every write before it happens |
 | `DETAIL` | `business` | Level of language for the customer: `business` / `technical` |
@@ -47,22 +46,22 @@ the project's knowledge for `{{PROGRAM}}` at `{{COMPANY}}` — and what it delib
 > `analisis-funcional`, `hld`. *Leer cuando* is one of `cada sesión` / `cuando la tarea toca <área>` /
 > `a demanda`.
 
-| Título (exacto) | Enlace | Tipo | Etiquetas | Qué tomar de ella | Leer cuando |
-|---|---|---|---|---|---|
-| `Alcance firmado — <program>` | <link> | `scope` | `scope` | Épicas e ítems incluidos, exclusiones escritas, supuestos, fases | cada sesión |
-| `Discovery Brief — <program>` | <link> | `discovery` | `discovery` | §3 áreas y roles, §4 procesos, §6 actores, §7 dolores, §9 alcance y restricciones | cada sesión |
-| `Relevamientos` | <link> | `index` | `index` | Índice de las minutas; las dos o tres últimas se leen completas | cada sesión |
-| `Procesos` | <link> | `index` | `index` | Índice de procesos de negocio, uno por página | cuando la tarea toca un proceso |
-| `Glosario — <company>` | <link> | `glosario` | `glosario` | El vocabulario del cliente; se usa en lugar del de la plataforma | cada sesión |
-| `Referencia` | <link> | `index` | `index` | Organigrama, muestras de documentos, políticas | a demanda |
-| `Features no identificados — <program>` | <link> | `no-identificado` | `no-identificado` | Lo ya estacionado fuera del alcance firmado, para no repetirlo | cada sesión |
-| `Delivery` | <link> | `index` | `index` | Análisis funcionales y diseños del equipo de delivery | a demanda |
+| Título (exacto) | Enlace | Tipo | Qué tomar de ella | Leer cuando |
+|---|---|---|---|---|
+| `Alcance firmado — <program>` | <link> | `scope` | Épicas e ítems incluidos, exclusiones escritas, supuestos, fases | cada sesión |
+| `Discovery Brief — <program>` | <link> | `discovery` | §3 áreas y roles, §4 procesos, §6 actores, §7 dolores, §9 alcance y restricciones | cada sesión |
+| `Relevamientos` | <link> | `index` | Índice de las minutas; las dos o tres últimas se leen completas | cada sesión |
+| `Procesos` | <link> | `index` | Índice de procesos de negocio, uno por página | cuando la tarea toca un proceso |
+| `Glosario — <company>` | <link> | `glosario` | El vocabulario del cliente; se usa en lugar del de la plataforma | cada sesión |
+| `Referencia` | <link> | `index` | Organigrama, muestras de documentos, políticas | a demanda |
+| `Features no identificados — <program>` | <link> | `no-identificado` | Lo ya estacionado fuera del alcance firmado, para no repetirlo | cada sesión |
+| `Delivery` | <link> | `index` | Análisis funcionales y diseños del equipo de delivery | a demanda |
 
 ### Cómo encontrar lo que no está listado
 
 ```
-space = "<SPACE>" AND label = "minuta" ORDER BY lastmodified DESC
-space = "<SPACE>" AND label = "<jira-key>"
+space = "<SPACE>" AND title ~ "<JIRA-KEY>"
+space = "<SPACE>" AND ancestor = <Relevamientos id> AND title ~ "Minuta" ORDER BY lastmodified DESC
 space = "<SPACE>" AND (title ~ "Minuta" OR title ~ "Acta" OR title ~ "Reunión") ORDER BY lastmodified DESC
 ```
 
@@ -77,8 +76,8 @@ space = "<SPACE>" AND (title ~ "Minuta" OR title ~ "Acta" OR title ~ "Reunión")
 
 ## Section index — e.g. `Relevamientos`
 
-**Title (exact):** the section's name as the root index lists it · **Labels:** `index` · **Maintained
-by:** whoever creates pages under it — the plugin adds a row for every page it creates here.
+**Title (exact):** the section's name as the root index lists it · **Maintained by:** whoever creates
+pages under it — the plugin adds a row for every page it creates here.
 
 ### Propósito
 
@@ -86,16 +85,16 @@ by:** whoever creates pages under it — the plugin adds a row for every page it
 
 ### Páginas
 
-| Título (exacto) | Enlace | Tipo | Etiquetas | Qué tomar de ella | Leer cuando |
-|---|---|---|---|---|---|
-| `Minuta Devoluciones de mercadería dañada` | <link> | `minuta` | `minuta`, `abc-12` | Actores y proceso de devolución hoy y después; reglas de aceptación; 3 pendientes abiertos; estado `En progreso` | cuando la tarea toca devoluciones |
-| `Minuta Alta de clientes mayoristas` | <link> | `minuta` | `minuta`, `abc-15` | Quién aprueba un alta y con qué información; sin pendientes; estado `Finalizado` | cuando la tarea toca clientes |
+| Título (exacto) | Enlace | Tipo | Qué tomar de ella | Leer cuando |
+|---|---|---|---|---|
+| `Minuta ABC-12 — Devoluciones de mercadería dañada` | <link> | `minuta` | Actores y proceso de devolución hoy y después; reglas de aceptación; 3 pendientes abiertos; estado `En progreso` | cuando la tarea toca devoluciones |
+| `Minuta ABC-15 — Alta de clientes mayoristas` | <link> | `minuta` | Quién aprueba un alta y con qué información; sin pendientes; estado `Finalizado` | cuando la tarea toca clientes |
 
 ### Cómo encontrar lo que no está listado
 
 ```
+space = "<SPACE>" AND title ~ "<JIRA-KEY>" AND title ~ "Minuta"
 space = "<SPACE>" AND ancestor = <this page's id> ORDER BY lastmodified DESC
-space = "<SPACE>" AND label = "minuta" AND label = "<jira-key>"
 ```
 
 ### Mantenimiento

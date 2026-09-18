@@ -11,11 +11,10 @@
 ## Relevamiento task (`{{TYPE_RELEVAMIENTO}}`)
 
 **Summary**
-- [ ] Reads as the task was written in Jira (it is also the title of the minuta) — not renamed during the session.
+- [ ] Reads as the task was written in Jira (it is also the second half of the minuta's title) — not renamed during the session.
 
 **Confluence page**
-- [ ] One page `Minuta <exact Jira summary>` exists under `{{CONF_PARENT}}` — and only one.
-- [ ] Labels on the page: `minuta`, `<jira-key lower-cased>`, `{{LABELS_EXTRA}}` when set.
+- [ ] One page `Minuta <KEY> — <exact Jira summary>` exists under `{{CONF_PARENT}}` — and only one (`title ~ "<KEY>" AND title ~ "Minuta"` returns exactly it).
 - [ ] Header table opens with the Jira key **as a link** to the issue; *Estado* is `En progreso` or `Finalizado`.
 - [ ] No section is blank — every gap is `⚠️ TBD — <question> — <owner>` in the *Pendientes* table.
 - [ ] *Pendientes* table carries the Jira key of every sub-task created.
@@ -27,7 +26,7 @@
 
 **Comments**
 - [ ] Result comment: who ran it (Seamlex Product Owner, Claude, with `{{USER_NAME}}`), date, three-line summary, minuta URL, sub-task keys, state left.
-- [ ] Transcript comment `Transcript del relevamiento — <date>` — or the URL of `Transcript — Minuta <summary>` when it did not fit — verbatim, with the time of each batch.
+- [ ] Transcript comment `Transcript del relevamiento — <date>` — or the URL of `Transcript <KEY> — <summary>` when it did not fit — verbatim, with the time of each batch.
 
 **Links**
 - [ ] Minuta URL in the result comment.
