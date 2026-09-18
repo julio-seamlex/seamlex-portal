@@ -3,21 +3,20 @@
 Your direct line to the Seamlex delivery team, inside Claude.
 
 Seamlex is your Salesforce implementation partner. This plugin puts the parts of that relationship you
-touch most often — framing what your business needs, raising requirements, asking questions, checking
-where work stands — into the Claude you already use. Everything it produces lands in the Jira project and
+touch most often — the *relevamiento* of each task in your sprint, in your own business language — into
+the Claude you already use. Everything it produces lands in the Jira project and
 Confluence space you share with Seamlex, so there is one record and no parallel inbox.
 
 ## What you can do
 
 | Command | What it does |
 |---|---|
-| `/hi-seamlex` | Start a session. **Run this first.** Sets the workspace up, then works out where you are in the lifecycle and loads the context for it. |
+| `/hi-seamlex` | Start a session. **Run this first.** Signs you in to Atlassian, picks your Confluence space, loads the project's `claude-client-config` page and the house rules for Jira and Confluence. |
 | `/seamlex-refinar` | Run a *relevamiento* with the Product Owner — takes a relevamiento task from the current sprint, gathers everything the client config points at, interviews you in business language only, and leaves a comment and the transcript on the task, a Confluence page "Minuta <task>", the pending items as sub-tasks of the task, and the task linked to the page. |
-| `/seamlex-status` | See what's in progress, what's waiting on you, and what's blocked — or ask the Seamlex team a question. |
 
-`/hi-seamlex` is the one to reach for when you are not sure what to run: it works out which step you are
-on — setup, scope refinement or status — pulls down just that step's context, and points you at the
-right command.
+Two commands, one workflow: `/hi-seamlex` sets the session up, `/seamlex-refinar` does the work. Status
+reports and questions to the Seamlex team are not part of this plugin — your Seamlex contact and the
+shared Jira board are where those live.
 
 ## The Product Owner
 
@@ -34,15 +33,20 @@ on the task, and the open points as sub-tasks with an owner. Anything you raise 
 in the sprint is parked as an **unidentified feature** rather than quietly absorbed — Seamlex decides
 what happens to it.
 
-`/seamlex-status` plays the **Seamlex Project Manager**. It answers "where is my request" from the live board rather than from memory, tells you
-plainly what is stale or blocked, and leads with what is waiting on you. It also handles questions:
-searching Jira and Confluence for an existing answer first, and filing a tracked question when it
-genuinely needs the team.
+## The house rules for Jira and Confluence
+
+Everything the commands read and write in Jira and Confluence follows one set of conventions — the
+plugin's `atlassian-how-to` skill, which `/hi-seamlex` loads at the start of each session. It fixes the
+structure of your Confluence space, the shape of an index page written so Claude can find things later
+(your `claude-client-config` page is the root one), what a well-completed Jira task looks like — summary,
+description, status, comments, labels, linked to its Confluence page — the labels on both sides, and the
+queries used to find pages and tasks by label, title, key or text. You do not have to know any of it;
+it is what makes a minuta from last month findable from the task it belongs to.
 
 ## Nothing happens without your approval
 
-Every command drafts locally and shows you the result before anything is written to Jira or Confluence. You
-approve the exact epic, story, comment or page — or you don't, and it stays a draft in your workspace.
+`/seamlex-refinar` drafts locally and shows you the result before anything is written to Jira or
+Confluence. You approve the exact page, comment or pending sub-task — or you don't, and it stays a draft.
 
 Your Atlassian credentials never pass through Seamlex or this plugin. You sign in to Atlassian yourself,
 in your own browser, through the official Atlassian MCP server.
@@ -61,11 +65,10 @@ comment on the Jira task, and so does the list of unidentified features.
 
 There is no configuration to fill in. The engagement settings — Jira project, issue types, the signed
 scope page, who to reach at Seamlex — live on a `claude-client-config` page in your Confluence space,
-maintained by Seamlex; `/hi-seamlex` loads it at the start of each session and every command reads its
-settings from there. Who *you* are — the language you work in — comes from the Atlassian account you sign
+maintained by Seamlex; `/hi-seamlex` loads it at the start of each session and `/seamlex-refinar` reads
+its settings from there. Who *you* are — the language you work in — comes from the Atlassian account you sign
 in with; your company and program from the config page, the signed scope page or your Discovery Brief.
-Your workspace holds only your discovery notes. Which step of the lifecycle you are on isn't recorded
-anywhere — `/hi-seamlex` works it out each session from your brief and your board.
+Your workspace holds only your discovery notes.
 
 ## Install
 

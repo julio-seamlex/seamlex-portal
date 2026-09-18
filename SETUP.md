@@ -67,7 +67,7 @@ This will:
    read from the site, the Jira project, the Confluence space — each tagged with where it came from, so
    anything wrong is obvious immediately and correctable in one line.
 3. **Check it against your site.** That the Jira project and Confluence space are visible to you, and that
-   the issue type names — Epic, Story, and whatever your project uses for questions — really exist.
+   the issue type names — the relevamiento type and the sub-task type — really exist.
    Anything that doesn't match is reported as a mismatch to take back to Seamlex, not something for you
    to patch locally.
 4. **Verify.** It runs a read-only query against your project and reports what it can see.
@@ -105,8 +105,7 @@ If your organization proxies or restricts outbound connections, your IT team may
 | | |
 |---|---|
 | First run, or not sure where the engagement got to | `/hi-seamlex` |
-| You are ready to detail the next task in the Jira plan | `/seamlex-refinar` |
-| You have a question, or want to know where things stand | `/seamlex-status` |
+| You are ready to run the relevamiento of a task in the current sprint | `/seamlex-refinar` |
 
 ## Troubleshooting
 

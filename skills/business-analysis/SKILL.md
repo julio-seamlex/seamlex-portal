@@ -76,8 +76,11 @@ every question stands on, whatever task the command hands you.
 
 The **`claude-client-config`** page that `/hi-seamlex` loaded into the session is the index of the
 project's knowledge — the signed scope page, the Discovery Brief, process and glossary pages, meeting
-notes, whatever Seamlex has listed there. Follow the index; never guess a page. If the page is not in
-context, stop and ask the customer to run `/hi-seamlex`. `{{CLOUD_ID}}` and `{{CONF_SPACE}}` are the
+notes, whatever Seamlex has listed there. Its shape — settings table, one row per page with its exact
+title, type, labels and what to take from it — is the root instance of the index page the
+`atlassian-how-to` skill defines, and the space around it follows that skill's structure. Follow the
+index; never guess a page. If the page is not in context, stop and ask the customer to run
+`/hi-seamlex`. `{{CLOUD_ID}}` and `{{CONF_SPACE}}` are the
 cloud id and space that command settled on, and every Confluence call below runs against them.
 
 ## What to read, and what to take from each
@@ -107,8 +110,10 @@ whole session.
 | Pages about this task | `space = "{{CONF_SPACE}}" AND title ~ "<JIRA-KEY>"` |
 | Pages about this part of the business | `space = "{{CONF_SPACE}}" AND text ~ "<key term>"` |
 
-`getConfluencePageDescendants` on `{{CONF_PARENT}}` lists everything the project has written under it
-when the search is thin. Read only what can bear on the session — the two or three most recent meeting
+On a space labelled the way `atlassian-how-to` says, `label = "minuta"` and `label = "<jira-key>"` find
+the same pages without a title to get wrong; the full cookbook — labels, ancestor, text, and the Jira
+side — is that skill's *Retrieval patterns*. `getConfluencePageDescendants` on `{{CONF_PARENT}}` lists
+everything the project has written under it when the search is thin. Read only what can bear on the session — the two or three most recent meeting
 notes in full, older ones by title unless one names this task or this area.
 
 ## Bring it into the room
@@ -172,7 +177,7 @@ the thing it describes; the command says *where* each one lands, the reference s
 | Reference | What it shapes |
 |---|---|
 | `references/epic-template.md` | The body of a `Minuta <task>` page — what the task delivers, the pain, actors, processes today and after, functional detail, information, visibility, reporting, scope boundaries, what was raised here but belongs elsewhere, open questions. Adapted to the task, never copied section for section. |
-| `references/question-template.md` | A pending item or a question to Seamlex — the question, why it matters, what is already believed, what it unblocks, what was already checked. Used for the `Pendiente:` sub-tasks and for `Question:` issues. |
+| `references/pendiente-template.md` | A pending item — where it was raised, the owner, needed by, whether it blocks design, what is open, why it matters, what is already believed, what was offered, when it is done. The description of every `Pendiente:` sub-task. |
 | `references/unidentified-features.md` | The `Features no identificados — {{PROGRAM}}` page, created from it the first time something is parked outside the signed scope. |
 | `references/discovery-brief.md` | The format of the Discovery Brief you read before the first question — §1–10 as *What you know before you ask* cites them. Not written by this skill; kept here so the section numbers mean the same thing everywhere. |
 | `references/user-story-template.md` | The shape of a user story with Given/When/Then acceptance criteria, for when the delivery team asks for one from a minuta. |

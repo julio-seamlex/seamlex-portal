@@ -12,6 +12,12 @@ with `AskUserQuestion`, a verbatim transcript, nothing invented — and this com
 works on** (the current sprint says which relevamientos are up) and **what it leaves behind** (the five
 outputs in Step 4). Its translation table is the rule every question here passes through.
 
+**The house rules for Jira and Confluence are the `seamlex-portal:atlassian-how-to` skill**, which
+`/hi-seamlex` loaded at the start of the session. If it is not in context, load it now with the `Skill`
+tool (or read `../skills/atlassian-how-to/SKILL.md`). Where a page goes, what it is titled, which
+labels it carries, how the task and the page link, how a task is left and how it is found later all
+come from there; Step 4 names what it writes and points at the skill for the how.
+
 Settings come from the **`claude-client-config` Confluence page** that `/hi-seamlex` loaded into the
 session. If the page is not in context, stop and ask the customer to run `/hi-seamlex`. Resolve from it
 `{{JIRA_PROJECT}}`, `{{CONF_PARENT}}`, `{{TYPE_RELEVAMIENTO}}` (the issue type — or, if the page says
@@ -117,7 +123,12 @@ conversation — the title is how the minuta is found from the board.
 - `createConfluencePage` **as soon as there is something worth saving**, then `updateConfluencePage`
   section by section as the session runs, without asking again each time — sessions get interrupted, and
   nothing gathered should depend on reaching the end. On a resumed session, update the existing page;
-  never create a second one for the same task.
+  never create a second one for the same task — find it first with the skill's *the one minuta of a
+  task* pattern (`label = "minuta" AND label = "<jira-key>"`, then exact title).
+- **Labels at creation**, per the skill's *Labels* table: `minuta`, the Jira key lower-cased (`abc-12`),
+  and `{{LABELS_EXTRA}}` when set; `transcript` plus the key on a `Transcript — Minuta <task summary>`
+  child. If the tool cannot set them, say so at the close. Add the page's row to the `{{CONF_PARENT}}`
+  index when that page is one the plugin may edit; otherwise name the row for Seamlex.
 - **Shape**: a header table — **Tarea Jira** (key, as a link to the issue), **Sprint**, **Épica** if
   any, **Relevado con** (name, role, per person), **Fecha(s)**, **Estado** (`En progreso` /
   `Finalizado`) — followed by the body from `../skills/business-analysis/references/epic-template.md`
@@ -175,11 +186,12 @@ without following a link:
   under its sub-tasks. If the project has no sub-task type at all, stop and say so before creating
   anything — the customer decides whether to add one or accept linked tasks instead. Sub-tasks inherit
   the sprint from their parent; do not set the sprint field yourself.
-- **Shape**: summary `Pendiente: <the question in one line>`, in business terms; description in the shape
-  of `../skills/business-analysis/references/question-template.md` — why it matters, what it unblocks,
-  who can answer, needed by, and a link to the minuta section it comes from. Assign to the owner when
+- **Shape**: summary `Pendiente: <the open point in one line>`, in business terms; description in the
+  shape of `../skills/business-analysis/references/pendiente-template.md` — where it was raised, the
+  owner, needed by, whether it blocks design, what is open, why it matters, what is already believed,
+  what was offered, and when it is done — with a link to the minuta section it comes from. Assign to the owner when
   `lookupJiraAccountId` resolves them; otherwise leave it unassigned and name them in the description.
-  Label `{{LABEL_REQUEST}}` plus `{{LABELS_EXTRA}}`.
+  Label `{{LABEL_REQUEST}}` plus `pendiente` plus `{{LABELS_EXTRA}}` — the skill's Jira label table.
 - **Check first** against the relevamiento's existing sub-tasks read in Step 2 — a resumed session must
   not create the same pending item twice. Close, with a comment, any existing pending sub-task the session
   answered.
@@ -200,6 +212,9 @@ The task and the minuta must point at each other:
   page by hand from Jira's *Link* menu.
 
 ### Then decide the task's state honestly
+
+Walk the *Relevamiento task* block of `../skills/atlassian-how-to/references/jira-task-checklist.md`
+from a fresh `getJiraIssue` and say which lines are not true; the task is never closed over one.
 
 - **Finalizado** — the customer approved the summary, the minuta covers what design needs (walk the
   *Ready for design* checklist at the foot of the epic template and say which lines are true), and no

@@ -5,9 +5,10 @@ allowed-tools: Read, AskUserQuestion
 
 # Start a Seamlex session
 
-Run this at the start of every session. It does four things and nothing else: makes sure you are signed
+Run this at the start of every session. It does five things and nothing else: makes sure you are signed
 in to Atlassian, settles which Confluence space this session works in, finds the `claude-client-config`
-page in that space, and keeps its content in the session for every later command to use.
+page in that space, keeps its content in the session for `/seamlex-refinar` to use, and loads the
+house rules for Jira and Confluence so every read and write that command makes follows them.
 
 Every call here is a read. This command writes nothing — not to the workspace, not to Jira, not to
 Confluence.
@@ -42,20 +43,32 @@ Confluence.
      and stop. Do not create one.
 
 4. **Download the page and keep it in the session.** Call `getConfluencePage` on that page id and read the
-   whole body. Keep it in context for the rest of the session: it is the source of truth the other Seamlex
-   commands and skills read from, so do not summarize it away or drop it. Do not list the page's contents
+   whole body. Keep it in context for the rest of the session: it is the source of truth `/seamlex-refinar` and
+   the Seamlex skills read from, so do not summarize it away or drop it. Do not list the page's contents
    back to the user.
 
-5. **Close the setup.** In two lines at most: say the setup has finished, naming the space and the config
+5. **Load the house rules for Jira and Confluence.** Load the `seamlex-portal:atlassian-how-to` skill
+   with the `Skill` tool; if the Skill tool is not available, read
+   `../skills/atlassian-how-to/SKILL.md` directly. It carries the structure of the Confluence space,
+   the shape of the index page the config page follows, what a well-completed Jira task looks like,
+   the labels, and the CQL/JQL patterns to find pages and tasks — every read and write
+   `/seamlex-refinar` makes in Jira and Confluence follows it. Keep it in context for the session; do not
+   summarise it to the customer.
+
+6. **Close the setup.** In two lines at most: say the setup has finished, naming the space and the config
    page (title and link), and welcome the customer to the Seamlex portal.
 
 ## Where the configuration lives
 
-**The `claude-client-config` page is the configuration.** Every other Seamlex command and skill resolves
+**The `claude-client-config` page is the configuration.** `/seamlex-refinar` and the Seamlex skills resolve
 the `{{PLACEHOLDER}}` tokens in its instructions from the page loaded in step 4 — the Jira project, the
 Confluence space and parent pages, the signed scope page, issue types and labels, the Seamlex contacts,
 the write-confirmation and detail preferences, and whatever else the page indexes. Nothing is read from
-this file: it holds no tables, no values, and no per-customer state.
+this file: it holds no tables, no values, and no per-customer state. The page's shape — purpose, settings
+table, one row per page with its exact title, type, labels and what to take from it — is the root
+instance of the index page the `atlassian-how-to` skill defines
+(`../skills/atlassian-how-to/references/index-page-template.md`); Seamlex maintains it, and no command
+ever edits it.
 
 Two things come from the session rather than the page: `{{CLOUD_ID}}` is the `cloudId` from step 1, and
 `{{CONF_SPACE}}` is the space chosen in step 2 — the page lives inside it. Who is signed in, and the

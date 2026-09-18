@@ -1,5 +1,55 @@
 # Changelog
 
+## 1.16.0
+
+> The plugin does one thing: the relevamiento. `/seamlex-status` and questions to Seamlex are gone, and
+> the house rules for Jira and Confluence are the `atlassian-how-to` skill, loaded by `/hi-seamlex` at
+> session start and followed by every Atlassian read and write `/seamlex-refinar` makes.
+
+- **`/seamlex-status` is removed** — no delivery status, no questions to Seamlex. The plugin is
+  `/hi-seamlex` (session setup) and `/seamlex-refinar` (the relevamiento). Status and questions live
+  with the Seamlex contact and the shared board. `TYPE_QUESTION`, `ESCALATION`, `BOARD_URL` and
+  `CADENCE` are no longer read from the config page.
+- **`question-template.md` is replaced by `pendiente-template.md`** under
+  `skills/business-analysis/references/` — the description of a `Pendiente:` sub-task, shaped for what
+  a relevamiento leaves open: where it was raised, owner, needed by, whether it blocks design, what is
+  open, why it matters, what is already believed, what was offered, when it is done. `/seamlex-refinar`
+  4d and the `business-analysis` *References* table point at it.
+- **New skill `skills/atlassian-how-to/SKILL.md`** — how Seamlex uses Jira and Confluence: the
+  **structure of a customer's Confluence space** (`claude-client-config` as root index, the signed
+  scope page, the Discovery Brief, `{{CONF_PARENT}}` with one `Minuta <task>` per relevamiento and its
+  `Transcript` child, *Procesos*, *Glosario*, *Referencia*, `Features no identificados`, *Delivery*)
+  and the rules that keep it that way — one page per task, exact-title naming, the Jira key as a link
+  in every header table, children under their parent; the **index page written for retrieval**
+  (purpose, settings table on the root, one row per page with exact title, type, labels, what to take
+  from it and when to read it, the CQL shapes at the foot) and what breaks it; **what a
+  well-completed Jira task looks like**, field by field — summary prefix, type and parent,
+  description, status honesty, the result and transcript comments, labels, assignee, the two-way link
+  to the Confluence page, dates; the **labelling convention** on both sides (Confluence: `index`,
+  `config`, `scope`, `discovery`, `minuta`, `transcript`, `proceso`, `glosario`, `referencia`,
+  `no-identificado`, `analisis-funcional`, `hld` and the Jira key lower-cased on every page tied to a
+  task; Jira: `{{LABEL_REQUEST}}`, `{{LABELS_EXTRA}}`, `relevamiento`, `pendiente`,
+  `no-identificado`); the **retrieval patterns** — index → label → title → ancestor → text — as CQL
+  and JQL cookbooks; and the **rules of interaction with the Atlassian tools**: search before any
+  write, a place in the tree, title and labels in the call, page first then Jira, re-read what landed,
+  walk the checklist before done, stop on failure.
+- **Two references under the skill**: `references/index-page-template.md` — the root
+  `claude-client-config` with its settings table and a section index, with filled example rows — and
+  `references/jira-task-checklist.md` — the *complete task* walk, one block per kind (relevamiento,
+  `Pendiente:` sub-task).
+- **`/hi-seamlex` gains a step 5**: loads the skill with the `Skill` tool (or reads the file) after the
+  config page, so it is in context for every later command. *Where the configuration lives* says the
+  config page is the root instance of the skill's index page and is never edited by a command.
+- **`/seamlex-refinar` names the skill** as required and loads it if it is not in context. 4a sets
+  `minuta` + `<jira-key>` (+ `transcript` on the child) at creation and finds an existing minuta by
+  label before title; 4d adds the `pendiente` label; the state decision walks the checklist's
+  *Relevamiento* block first.
+- `skills/business-analysis/SKILL.md` — *The map* says the config page follows the skill's index
+  template; *How to find what the index does not name* points at the label patterns and the full
+  cookbook. Nothing changes in how the interview goes.
+- README, SETUP and the plugin manifests describe two commands and one workflow; README gains *The house
+  rules for Jira and Confluence*.
+
 ## 1.15.0
 
 > The templates move under the `business-analysis` skill, as its `references/`, and are used from there.

@@ -8,8 +8,8 @@
     {
       "name": "seamlex-portal",
       "source": "./",
-      "description": "Your direct line to the Seamlex delivery team. Refine the next task in your Jira plan into a functional page and its pending items, ask questions, and check the status of your Salesforce work — from inside Claude, backed by Jira and Confluence."
+      "description": "Your direct line to the Seamlex delivery team. Run the relevamiento of each task in your sprint into a Confluence minuta and its pending items — from inside Claude, backed by Jira and Confluence."
     }
   ],
-  "description": "Plugins from Seamlex, your Salesforce implementation partner — customer-facing tools for scope refinement, questions and delivery status."
+  "description": "Plugins from Seamlex, your Salesforce implementation partner — customer-facing tools for the relevamiento of your Salesforce work."
 }
