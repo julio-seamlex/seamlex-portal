@@ -16,8 +16,8 @@
 **Confluence page**
 - [ ] One page `Minuta <KEY> — <exact Jira summary>` exists under `{{CONF_PARENT}}` — and only one (`title ~ "<KEY>" AND title ~ "Minuta"` returns exactly it).
 - [ ] Header table opens with the Jira key **as a link** to the issue; *Estado* is `En progreso` or `Finalizado`.
-- [ ] No section is blank — every gap is `⚠️ TBD — <question> — <owner>` in the *Pendientes* table.
-- [ ] *Pendientes* table carries the Jira key of every sub-task created.
+- [ ] No section is blank — every gap is `⚠️ TBD — <question> — <owner>`, either in a requirement's own open-questions cell or in the *Scope & open questions* table.
+- [ ] Every open item carries the Jira key of the sub-task created for it, in whichever table it came from.
 - [ ] The row for this page exists on the section index, or the close names the row for Seamlex to add.
 
 **Sub-tasks**

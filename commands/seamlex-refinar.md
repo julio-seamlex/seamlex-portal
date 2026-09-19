@@ -132,15 +132,19 @@ is how it reads from the board.
 - **Shape**: a header table — **Tarea Jira** (key, as a link to the issue), **Sprint**, **Épica** if
   any, **Relevado con** (name, role, per person), **Fecha(s)**, **Estado** (`En progreso` /
   `Finalizado`) — followed by the body from `../skills/business-analysis/references/minuta-template.md`
-  adapted to the task: what this task delivers, the pain it resolves, the actors, the processes today and
-  after, the functional detail with its rules and exceptions, the information involved, who sees what,
-  what will be measured, what is explicitly out, what was raised here but belongs elsewhere, and a
-  **Pendientes** table (question, owner, Jira key once created). Everything in `{{LOCALE}}` and in
-  business terms.
+  adapted to the task: what this task delivers, the pain it resolves and the success measure; the actors;
+  the **Requirements** table at its core — one row per discrete requirement with REQ-ID, capability,
+  actor, statement, source, MoSCoW, complexity (1–10) and its own in/out-of-scope call and open
+  questions; process context only where a process's shape actually changes; cross-cutting details (data,
+  visibility, reporting, integrations); a **Scope & open questions** section with assumptions and a
+  session-level table (question, owner, needed by, Jira key once created) for anything that doesn't
+  belong to a single requirement row; what was raised here but belongs elsewhere; and the closing
+  *Para el equipo de delivery* section. Everything in `{{LOCALE}}` and in business terms.
 - The only place platform vocabulary may appear is a short closing section **Para el equipo de
   delivery**, and only where the delivery team genuinely needs the mapping.
-- **Never leave a section blank.** What was not answered is `⚠️ TBD — <the question> — <owner>` in the
-  *Pendientes* table, and each of those becomes a task in 4d.
+- **Never leave a section blank.** What was not answered is `⚠️ TBD — <the question> — <owner>`, either
+  in a requirement's own open-questions cell or in the *Scope & open questions* table, and each of those
+  becomes a task in 4d.
 - **Link the page to the Jira task from the page side**: the Jira key in the header must be written as a
   link to the issue (`https://<site>/browse/<KEY>`), so Confluence renders it as a Jira link and Jira lists
   the page under the issue's Confluence content. This is half of the link in 4e.
@@ -196,8 +200,9 @@ without following a link:
   not create the same pending item twice. Close, with a comment, any existing pending sub-task the session
   answered.
 - Show the full list — new, still open, closed today — get the approval, then `createJiraIssue` each one
-  under the relevamiento and write the keys back into the minuta's *Pendientes* table and into the
-  comment from 4b.
+  under the relevamiento and write the keys back into whichever table the open item came from — a
+  requirement's *Open questions* cell, or the *Scope & open questions* table's *Jira key* column — and
+  into the comment from 4b.
 
 ### 4e. The Jira task linked to the Confluence page
 
