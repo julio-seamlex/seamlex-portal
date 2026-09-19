@@ -18,10 +18,9 @@ tool (or read `../skills/atlassian-how-to/SKILL.md`). Where a page goes, what it
 Jira labels a task carries, how the task and the page link, how a task is left and how it is found
 later all come from there; Step 4 names what it writes and points at the skill for the how.
 
-Settings come from the **`claude-client-config` Confluence page** that `/hi-seamlex` loaded into the
+Settings come from the **`seamlex-portal-memory` Confluence page** that `/hi-seamlex` loaded into the
 session. If the page is not in context, stop and ask the customer to run `/hi-seamlex`. Resolve from it
-`{{JIRA_PROJECT}}`, `{{CONF_PARENT}}`, `{{TYPE_RELEVAMIENTO}}` (the issue type — or, if the page says
-so, the label — that marks a relevamiento; default `Relevamiento`), `{{TYPE_TASK}}` (the project's
+`{{JIRA_PROJECT}}`, `{{CONF_PARENT}}`, `{{TYPE_TASK}}` (the project's
 sub-task type, used for pending items; default whatever the project calls it — `Subtarea`, `Sub-task`),
 `{{LABEL_REQUEST}}`, `{{LABELS_EXTRA}}`, `{{SEAMLEX_CONTACT}}`, `{{CONFIRM_WRITES}}`, `{{DETAIL}}`,
 `{{DRAFTS_DIR}}`, and `{{PROGRAM}}` and `{{COMPANY}}` when it names them. `{{CLOUD_ID}}` and `{{CONF_SPACE}}` are the cloud id and space `/hi-seamlex` settled on;
@@ -41,13 +40,10 @@ vocabulary appears in exactly one place, the minuta's closing *Para el equipo de
 1. `searchJiraIssuesUsingJql` on `{{CLOUD_ID}}`:
    ```
    project = {{JIRA_PROJECT}} AND sprint in openSprints()
-   AND issuetype = "{{TYPE_RELEVAMIENTO}}" AND statusCategory != Done
+   AND labels = "relevamiento" AND statusCategory != Done
    ORDER BY Rank ASC
    ```
-   If the config marks relevamientos by **label** rather than type, use `labels = "{{TYPE_RELEVAMIENTO}}"`
-   instead of `issuetype`. If the site rejects the type name, read the project's types once with
-   `getJiraProjectIssueTypesMetadata`, match by name case-insensitively, and say which one you used. Ask
-   for summary, status, issuetype, sprint, parent, assignee, labels, duedate.
+   Ask for summary, status, issuetype, sprint, parent, assignee, labels, duedate.
 2. Show the result as a numbered list — key, summary, status, parent, due date. Then:
    - **One task** → say it is the only relevamiento in the sprint and take it.
    - **Several** → ask with `AskUserQuestion` (header `Relevamiento`) which one to run, defaulting to the
@@ -56,12 +52,12 @@ vocabulary appears in exactly one place, the minuta's closing *Para el equipo de
      you searched, and stop. If there is no open sprint at all, say that instead.
 
 `$ARGUMENTS` may name a task directly — a Jira key, or words from its summary — in which case go
-straight to it, still checking it is a `{{TYPE_RELEVAMIENTO}}`; if it is not, say so and ask whether to
-go on anyway.
+straight to it, still checking it carries the `relevamiento` label; if it does not, say so and ask
+whether to go on anyway.
 
 ## Step 2 — Gather everything the config points at, before asking anything
 
-The `claude-client-config` page is an **index of the project's knowledge** — the signed scope page, the
+The `seamlex-portal-memory` page is an **index of the project's knowledge** — the signed scope page, the
 Discovery Brief, process documents, previous minutas, glossaries, whatever Seamlex has listed there. Use
 it as the map: the relevamiento must open already knowing what the project knows, and the customer must
 never be asked something a page already answers. **How** Confluence is read — which pages, what to take
@@ -135,7 +131,7 @@ is how it reads from the board.
   page is one the plugin may edit; otherwise name the row for Seamlex.
 - **Shape**: a header table — **Tarea Jira** (key, as a link to the issue), **Sprint**, **Épica** if
   any, **Relevado con** (name, role, per person), **Fecha(s)**, **Estado** (`En progreso` /
-  `Finalizado`) — followed by the body from `../skills/business-analysis/references/epic-template.md`
+  `Finalizado`) — followed by the body from `../skills/business-analysis/references/minuta-template.md`
   adapted to the task: what this task delivers, the pain it resolves, the actors, the processes today and
   after, the functional detail with its rules and exceptions, the information involved, who sees what,
   what will be measured, what is explicitly out, what was raised here but belongs elsewhere, and a
@@ -221,7 +217,7 @@ Walk the *Relevamiento task* block of `../skills/atlassian-how-to/references/jir
 from a fresh `getJiraIssue` and say which lines are not true; the task is never closed over one.
 
 - **Finalizado** — the customer approved the summary, the minuta covers what design needs (walk the
-  *Ready for design* checklist at the foot of the epic template and say which lines are true), and no
+  *Ready for design* checklist at the foot of the minuta template and say which lines are true), and no
   pending task **blocks** design. Set the minuta's *Estado* to `Finalizado` and transition the task to its
   done state (`getTransitionsForJiraIssue`, then `transitionJiraIssue`; the name is whatever the project
   uses — `Done`, `Finalizada`, `Listo`). Pending tasks that are informational — an example to send, a

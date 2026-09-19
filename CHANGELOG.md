@@ -1,5 +1,39 @@
 # Changelog
 
+## 1.18.0
+
+> A relevamiento used to be identified by a configurable Jira issue type or custom field
+> (`{{TYPE_RELEVAMIENTO}}`, default `Relevamiento`), with a label-based fallback already documented for
+> customers who preferred it. That fallback is now the only way: a relevamiento is a task carrying the
+> `relevamiento` Jira label, full stop — no issue type to configure, no custom field, no per-customer
+> setting.
+
+- **`TYPE_RELEVAMIENTO` is gone** from the `seamlex-portal-memory` settings table, the placeholder list
+  in `atlassian-how-to`, and every command that resolved it. `{{TYPE_TASK}}` (the sub-task type for
+  pending items) is unaffected — it stays a real, configurable issue type.
+- **Every JQL query that found relevamientos by type now finds them by label**: `labels =
+  "relevamiento"` replaces `issuetype = "{{TYPE_RELEVAMIENTO}}"` in `/seamlex-refinar` Step 1 and in the
+  `atlassian-how-to` JQL cookbook — unconditionally, since there is no longer a type-vs-label branch to
+  choose between. The `getJiraProjectIssueTypesMetadata` fallback that validated a customer's issue-type
+  name against their project is dropped with it; a label needs no such lookup.
+- **The *Labels — Jira only* table's `relevamiento` row** drops its "when the config marks them by
+  label" qualifier — it is now Seamlex's unconditional convention, alongside `pendiente` and
+  `no-identificado`.
+- `SETUP.md` and the `jira-task-checklist.md` heading are reworded to describe a relevamiento by its
+  label rather than a type that no longer exists to check.
+- **No fallback for existing engagements**: customers whose relevamiento tickets don't yet carry the
+  `relevamiento` label need Seamlex to add it; `/seamlex-refinar` finds nothing for a sprint until they
+  do.
+- **`epic-template.md` is renamed `minuta-template.md`** and rewritten to drop the contract-epic framing
+  it has kept since 1.12.0 removed epic/story generation — it now plainly describes what it has actually
+  shaped since then, the `Minuta <KEY> — <task>` page body, including its *Ready for design* checklist
+  used by `/seamlex-refinar`'s closing step. The vestigial epic header table (Program, Contract epic,
+  Signed scope page…) and the unused *Key user stories* section are gone. `SKILL.md` and
+  `/seamlex-refinar` point at the new name.
+- **`user-story-template.md` is removed.** The plugin has offered no way to produce a standalone
+  Given/When/Then user story since 1.12.0; this drops the last dangling reference and the file itself.
+  `SKILL.md`'s references table loses its row.
+
 ## 1.17.0
 
 > The Atlassian MCP server cannot set labels on a Confluence page — `createConfluencePage` and
@@ -24,7 +58,7 @@
   title, then the task's `getJiraIssueRemoteIssueLinks`. Same order in `/seamlex-refinar` step 3
   (resumed-session detection) and 4a.
 - `references/jira-task-checklist.md` — the *Confluence page* block asks for the keyed title and
-  drops the labels line. `references/index-page-template.md` — keyed example titles, no label
+  drops the labels line. `references/memory-template.md` — keyed example titles, no label
   column, title/ancestor CQL only. README and SETUP explain the limitation in one paragraph and one
   troubleshooting entry.
 - **For the delivery team**: `seamlex-deliver-team` (`/gate-funcional`, `/high-level-design`) finds
@@ -46,7 +80,7 @@
   open, why it matters, what is already believed, what was offered, when it is done. `/seamlex-refinar`
   4d and the `business-analysis` *References* table point at it.
 - **New skill `skills/atlassian-how-to/SKILL.md`** — how Seamlex uses Jira and Confluence: the
-  **structure of a customer's Confluence space** (`claude-client-config` as root index, the signed
+  **structure of a customer's Confluence space** (`seamlex-portal-memory` as root index, the signed
   scope page, the Discovery Brief, `{{CONF_PARENT}}` with one `Minuta <task>` per relevamiento and its
   `Transcript` child, *Procesos*, *Glosario*, *Referencia*, `Features no identificados`, *Delivery*)
   and the rules that keep it that way — one page per task, exact-title naming, the Jira key as a link
@@ -63,8 +97,8 @@
   and JQL cookbooks; and the **rules of interaction with the Atlassian tools**: search before any
   write, a place in the tree, title and labels in the call, page first then Jira, re-read what landed,
   walk the checklist before done, stop on failure.
-- **Two references under the skill**: `references/index-page-template.md` — the root
-  `claude-client-config` with its settings table and a section index, with filled example rows — and
+- **Two references under the skill**: `references/memory-template.md` — the root
+  `seamlex-portal-memory` with its settings table and a section index, with filled example rows — and
   `references/jira-task-checklist.md` — the *complete task* walk, one block per kind (relevamiento,
   `Pendiente:` sub-task).
 - **`/hi-seamlex` gains a step 5**: loads the skill with the `Skill` tool (or reads the file) after the
@@ -100,7 +134,7 @@
 > already holding the project, its scope and out of scope, and what the last meetings settled.
 
 - **New section *What you know before you ask — Confluence* in `skills/business-analysis/SKILL.md`**:
-  the `claude-client-config` page as the map of the project's knowledge; a table of what to read and what
+  the `seamlex-portal-memory` page as the map of the project's knowledge; a table of what to read and what
   to take from each — the signed scope page (what is in, what is written as excluded, assumptions, phase
   boundaries), the Discovery Brief (§1–10, with §9 scope, constraints and non-negotiables), the **last two
   or three meeting notes** (the `Minuta` pages under `{{CONF_PARENT}}` and any meeting-notes page the
@@ -176,7 +210,7 @@
   type, trigger, LWC, integration, data model — none of it reaches the customer; the translation table
   grows and applies even at `{{DETAIL}}` = `technical`. Platform vocabulary is allowed only in the
   minuta's *Para el equipo de delivery* section.
-- **The `claude-client-config` page is used as the index of the project's knowledge**: before the first
+- **The `seamlex-portal-memory` page is used as the index of the project's knowledge**: before the first
   question the agent reads the task and its epic, every page the config links (scope, Discovery Brief,
   process and reference pages), searches Confluence and Jira for related material, and reflects it back in
   business terms. The interview aims at the functional understanding of the business around the task.
@@ -191,15 +225,15 @@
 ## 1.10.0
 
 > The configuration moves out of the plugin and into Confluence. `/hi-seamlex` loads the customer's
-> `claude-client-config` page, and every command and agent reads its settings from that page.
+> `seamlex-portal-memory` page, and every command and agent reads its settings from that page.
 
 - **`/hi-seamlex` is now a five-step session start**: authenticate to Atlassian, choose the Confluence
-  space (asking only when more than one is visible), find the `claude-client-config` page in it, load the
+  space (asking only when more than one is visible), find the `seamlex-portal-memory` page in it, load the
   page into the session, and close with a two-line "setup finished, welcome to the Seamlex portal". It
   writes nothing, creates nothing, and no longer echoes the page's contents back.
 - **The Configuration section of `commands/hi-seamlex.md` is gone.** The tables that shipped with the
   plugin — Atlassian workspace, issue types, Seamlex contacts, agent behaviour — and the *Who you are*
-  rows all live on the customer's `claude-client-config` page now. Changing a setting is an edit to the
+  rows all live on the customer's `seamlex-portal-memory` page now. Changing a setting is an edit to the
   page, not a plugin release.
 - **Every agent and command resolves its `{{PLACEHOLDER}}` tokens from the loaded page** and stops with
   "run `/hi-seamlex` first" when the page is not in the session. `{{CLOUD_ID}}` and `{{CONF_SPACE}}` come
@@ -208,7 +242,7 @@
   otherwise from the signed scope page title and the Discovery Brief. `{{MY_ROLE}}` is removed.
 - `/hi-seamlex setup` no longer exists as a separate mode; every reference now points at `/hi-seamlex`.
 - README, SETUP and the discovery-brief template describe the Confluence page as the source of settings;
-  SETUP's troubleshooting covers a missing `claude-client-config` page.
+  SETUP's troubleshooting covers a missing `seamlex-portal-memory` page.
 
 ## 1.8.0
 

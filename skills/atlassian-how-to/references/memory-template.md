@@ -2,21 +2,20 @@
 
 > An index page is a table of pages with, for each one, enough for a reader — human or Claude — to
 > decide whether to open it and how to find it. Two variants of the same shape: the **root** index
-> (`claude-client-config`, which also carries the settings) and a **section** index (the parent of
-> `Minuta` pages, *Procesos*, *Referencia*, *Delivery*). Sections in the order below; none left out.
+> (`seamlex-portal-memory`, which also carries the settings) and a **section** index (the parent of
+> `Minuta` pages). Sections in the order below; none left out.
 > Pages are found by exact title and by their place under a parent — never by label.
 
 ---
 
-## Root index — `claude-client-config`
+## Root index — `seamlex-portal-memory`
 
-**Title (exact):** `claude-client-config` · **Maintained by:** Seamlex. Never edited by the plugin.
+**Title (exact):** `seamlex-portal-memory` · **Maintained by:** Seamlex. Never edited by the plugin.
 
 ### Propósito
 
 <One paragraph. What this page indexes — the settings the Seamlex commands read and the pages that hold
-the project's knowledge for `{{PROGRAM}}` at `{{COMPANY}}` — and what it deliberately does not cover
-(e.g. "the delivery team's technical documents are indexed on the *Delivery* page").>
+the project's knowledge for `{{PROGRAM}}` at `{{COMPANY}}`.>
 
 ### Configuración
 
@@ -28,7 +27,6 @@ the project's knowledge for `{{PROGRAM}}` at `{{COMPANY}}` — and what it delib
 | `JIRA_PROJECT` | `ABC` | Jira project key of the engagement |
 | `CONF_PARENT` | `Relevamientos` (page id `123456`) | Parent page of every `Minuta <KEY> — <task>` |
 | `CONF_SCOPE_PAGE` | `Alcance firmado — <program>` (page id `123457`) | The signed scope page |
-| `TYPE_RELEVAMIENTO` | `Relevamiento` | Issue type (or, if stated, the Jira label) that marks a relevamiento |
 | `TYPE_TASK` | `Subtarea` | The project's sub-task type, used for pending items |
 | `LABEL_REQUEST` | `cliente` | Jira label on every issue the plugin creates |
 | `LABELS_EXTRA` | `fase-1` | Extra Jira labels on every issue the plugin creates (optional) |
@@ -42,20 +40,16 @@ the project's knowledge for `{{PROGRAM}}` at `{{COMPANY}}` — and what it delib
 ### Páginas
 
 > One row per page. Title exactly as the page is titled. *Tipo* from the fixed vocabulary — `scope`,
-> `discovery`, `index`, `minuta`, `proceso`, `glosario`, `referencia`, `no-identificado`,
-> `analisis-funcional`, `hld`. *Leer cuando* is one of `cada sesión` / `cuando la tarea toca <área>` /
-> `a demanda`.
+> `discovery`, `index`, `minuta`, `glosario`, `no-identificado`. *Leer cuando* is one of `cada sesión` /
+> `cuando la tarea toca <área>` / `a demanda`.
 
 | Título (exacto) | Enlace | Tipo | Qué tomar de ella | Leer cuando |
 |---|---|---|---|---|
 | `Alcance firmado — <program>` | <link> | `scope` | Épicas e ítems incluidos, exclusiones escritas, supuestos, fases | cada sesión |
 | `Discovery Brief — <program>` | <link> | `discovery` | §3 áreas y roles, §4 procesos, §6 actores, §7 dolores, §9 alcance y restricciones | cada sesión |
 | `Relevamientos` | <link> | `index` | Índice de las minutas; las dos o tres últimas se leen completas | cada sesión |
-| `Procesos` | <link> | `index` | Índice de procesos de negocio, uno por página | cuando la tarea toca un proceso |
 | `Glosario — <company>` | <link> | `glosario` | El vocabulario del cliente; se usa en lugar del de la plataforma | cada sesión |
-| `Referencia` | <link> | `index` | Organigrama, muestras de documentos, políticas | a demanda |
 | `Features no identificados — <program>` | <link> | `no-identificado` | Lo ya estacionado fuera del alcance firmado, para no repetirlo | cada sesión |
-| `Delivery` | <link> | `index` | Análisis funcionales y diseños del equipo de delivery | a demanda |
 
 ### Cómo encontrar lo que no está listado
 

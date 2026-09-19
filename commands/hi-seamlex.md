@@ -1,12 +1,12 @@
 ---
-description: Start a Seamlex session — signs you in to Atlassian, picks the Confluence space, and loads the project's claude-client-config page into the session.
+description: Start a Seamlex session — signs you in to Atlassian, picks the Confluence space, and loads the project's seamlex-portal-memory page into the session.
 allowed-tools: Read, AskUserQuestion
 ---
 
 # Start a Seamlex session
 
 Run this at the start of every session. It does five things and nothing else: makes sure you are signed
-in to Atlassian, settles which Confluence space this session works in, finds the `claude-client-config`
+in to Atlassian, settles which Confluence space this session works in, finds the `seamlex-portal-memory`
 page in that space, keeps its content in the session for `/seamlex-refinar` to use, and loads the
 house rules for Jira and Confluence so every read and write that command makes follows them.
 
@@ -33,13 +33,13 @@ Confluence.
      use the one they pick.
    - None → tell the user their Atlassian account has no Confluence space visible and stop.
 
-3. **Find the `claude-client-config` page in that space.** Call `searchConfluenceUsingCql` with
-   `space = "<space key>" AND title = "claude-client-config"`. This page is the index of the project's key
+3. **Find the `seamlex-portal-memory` page in that space.** Call `searchConfluenceUsingCql` with
+   `space = "<space key>" AND title = "seamlex-portal-memory"`. This page is the index of the project's key
    files and aspects — the things to keep in session memory.
    - One hit → take its page id.
    - Several hits → prefer the one whose title matches exactly; if still ambiguous, ask with
      `AskUserQuestion` (header `Config page`), showing each page's title and parent.
-   - No hit → tell the user the space has no `claude-client-config` page yet, name the space you searched,
+   - No hit → tell the user the space has no `seamlex-portal-memory` page yet, name the space you searched,
      and stop. Do not create one.
 
 4. **Download the page and keep it in the session.** Call `getConfluencePage` on that page id and read the
@@ -60,14 +60,14 @@ Confluence.
 
 ## Where the configuration lives
 
-**The `claude-client-config` page is the configuration.** `/seamlex-refinar` and the Seamlex skills resolve
+**The `seamlex-portal-memory` page is the configuration.** `/seamlex-refinar` and the Seamlex skills resolve
 the `{{PLACEHOLDER}}` tokens in its instructions from the page loaded in step 4 — the Jira project, the
 Confluence space and parent pages, the signed scope page, issue types and Jira labels, the Seamlex contacts,
 the write-confirmation and detail preferences, and whatever else the page indexes. Nothing is read from
 this file: it holds no tables, no values, and no per-customer state. The page's shape — purpose, settings
 table, one row per page with its exact title, type and what to take from it — is the root
 instance of the index page the `atlassian-how-to` skill defines
-(`../skills/atlassian-how-to/references/index-page-template.md`); Seamlex maintains it, and no command
+(`../skills/atlassian-how-to/references/memory-template.md`); Seamlex maintains it, and no command
 ever edits it.
 
 Two things come from the session rather than the page: `{{CLOUD_ID}}` is the `cloudId` from step 1, and
@@ -76,7 +76,7 @@ language to answer in, come from `atlassianUserInfo`; the company, program and i
 signed scope page and the Discovery Brief when the config page does not name them.
 
 No state is kept per-workspace. Discovery notes live under `seamlex/`, and never come back into this file.
-To change how the plugin behaves for a customer, edit their `claude-client-config` page in Confluence —
+To change how the plugin behaves for a customer, edit their `seamlex-portal-memory` page in Confluence —
 there is no plugin release involved.
 
 Safe to commit — it holds no secrets. Authentication to Jira and Confluence happens through the Atlassian

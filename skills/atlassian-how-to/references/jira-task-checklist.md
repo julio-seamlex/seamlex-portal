@@ -8,7 +8,7 @@
 
 ---
 
-## Relevamiento task (`{{TYPE_RELEVAMIENTO}}`)
+## Relevamiento task (label `relevamiento`)
 
 **Summary**
 - [ ] Reads as the task was written in Jira (it is also the second half of the minuta's title) — not renamed during the session.

@@ -11,7 +11,7 @@ Confluence space you share with Seamlex, so there is one record and no parallel 
 
 | Command | What it does |
 |---|---|
-| `/hi-seamlex` | Start a session. **Run this first.** Signs you in to Atlassian, picks your Confluence space, loads the project's `claude-client-config` page and the house rules for Jira and Confluence. |
+| `/hi-seamlex` | Start a session. **Run this first.** Signs you in to Atlassian, picks your Confluence space, loads the project's `seamlex-portal-memory` page and the house rules for Jira and Confluence. |
 | `/seamlex-refinar` | Run a *relevamiento* with the Product Owner — takes a relevamiento task from the current sprint, gathers everything the client config points at, interviews you in business language only, and leaves a comment and the transcript on the task, a Confluence page "Minuta <KEY> — <task>", the pending items as sub-tasks of the task, and the task linked to the page. |
 
 Two commands, one workflow: `/hi-seamlex` sets the session up, `/seamlex-refinar` does the work. Status
@@ -38,7 +38,7 @@ what happens to it.
 Everything the commands read and write in Jira and Confluence follows one set of conventions — the
 plugin's `atlassian-how-to` skill, which `/hi-seamlex` loads at the start of each session. It fixes the
 structure of your Confluence space, the shape of an index page written so Claude can find things later
-(your `claude-client-config` page is the root one), what a well-completed Jira task looks like — summary,
+(your `seamlex-portal-memory` page is the root one), what a well-completed Jira task looks like — summary,
 description, status, comments, labels, linked to its Confluence page — the Jira labels, and the queries
 used to find pages by title and tasks by key. You do not have to know any of it; it is what makes a
 minuta from last month findable from the task it belongs to.
@@ -69,7 +69,7 @@ first session, updated as you go, marked `Finalizado` when you approve it — pl
 comment on the Jira task, and so does the list of unidentified features.
 
 There is no configuration to fill in. The engagement settings — Jira project, issue types, the signed
-scope page, who to reach at Seamlex — live on a `claude-client-config` page in your Confluence space,
+scope page, who to reach at Seamlex — live on a `seamlex-portal-memory` page in your Confluence space,
 maintained by Seamlex; `/hi-seamlex` loads it at the start of each session and `/seamlex-refinar` reads
 its settings from there. Who *you* are — the language you work in — comes from the Atlassian account you sign
 in with; your company and program from the config page, the signed scope page or your Discovery Brief.

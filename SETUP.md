@@ -50,7 +50,7 @@ Run:
 `/hi-seamlex` is the only command you need to start with: run it at the start of every session.
 
 **There is nothing to fill in.** Your engagement's settings — Jira project, issue type names, Seamlex
-contacts, the signed scope page — live on a Confluence page called `claude-client-config` in your space,
+contacts, the signed scope page — live on a Confluence page called `seamlex-portal-memory` in your space,
 maintained by Seamlex. `/hi-seamlex` finds that page and loads it into the session, and every other command
 reads its settings from there. Your language and who you are come from the Atlassian account you sign in
 with; your company and program come from the signed scope page and your Discovery Brief when the config
@@ -66,10 +66,10 @@ This will:
 2. **Show you what the session is running on** — who you are signed in as, your company and program as
    read from the site, the Jira project, the Confluence space — each tagged with where it came from, so
    anything wrong is obvious immediately and correctable in one line.
-3. **Check it against your site.** That the Jira project and Confluence space are visible to you, and that
-   the issue type names — the relevamiento type and the sub-task type — really exist.
-   Anything that doesn't match is reported as a mismatch to take back to Seamlex, not something for you
-   to patch locally.
+3. **Check it against your site.** That the Jira project and Confluence space are visible to you, that
+   the sub-task type really exists, and that relevamiento tasks in your project carry the
+   `relevamiento` label. Anything that doesn't match is reported as a mismatch to take back to Seamlex,
+   not something for you to patch locally.
 4. **Verify.** It runs a read-only query against your project and reports what it can see.
 5. **Create your working folder** — `seamlex/discovery/` for your discovery notes. Scope refinement drafts live in Confluence, not in your workspace.
 
@@ -109,11 +109,11 @@ If your organization proxies or restricts outbound connections, your IT team may
 
 ## Troubleshooting
 
-**"No `claude-client-config` page"** — `/hi-seamlex` searched your space and found no page with that
+**"No `seamlex-portal-memory` page"** — `/hi-seamlex` searched your space and found no page with that
 title. Seamlex creates and maintains it; tell your Seamlex contact which space you were in.
 
 **A setting is wrong or missing** — the wrong Jira project, an issue type that doesn't exist in your
-project, a blank entry a command asks about. These live on the `claude-client-config` page in Confluence,
+project, a blank entry a command asks about. These live on the `seamlex-portal-memory` page in Confluence,
 not in your workspace or the plugin — send the entry to your Seamlex contact and they fix the page; the
 next `/hi-seamlex` picks it up.
 
@@ -130,7 +130,7 @@ say so, or name the step yourself: `/hi-seamlex refinement`.
 Brief is prepared with your Seamlex consultant; it makes scope refinement sharper but isn't a hard
 prerequisite.
 
-**Wrong issue type when raising an epic or story** — the issue types on the `claude-client-config` page do
+**Wrong issue type when raising an epic or story** — the issue types on the `seamlex-portal-memory` page do
 not match your project. Send the name that is off to your Seamlex contact for a fix on the page.
 
 **The minuta has no labels in Confluence** — expected. The Atlassian MCP server cannot set labels on a

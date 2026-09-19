@@ -1,6 +1,6 @@
 ---
 name: business-analysis
-description: How the Seamlex Product Owner interviews a business person about a task to reach a functional understanding of their operation — the people, steps, decisions, information and rules behind what the task asks for — in business language only, however technical the task is written. Carries the technical-term → business-question translation table, and how Confluence is read before the first question — the claude-client-config index, the signed scope page and what is in and out of scope, the Discovery Brief, the latest minutas and meeting notes. Never designs the platform; the delivery team maps the answers later. Loaded by /seamlex-refinar before the first question.
+description: How the Seamlex Product Owner interviews a business person about a task to reach a functional understanding of their operation — the people, steps, decisions, information and rules behind what the task asks for — in business language only, however technical the task is written. Carries the technical-term → business-question translation table, and how Confluence is read before the first question — the seamlex-portal-memory index, the signed scope page and what is in and out of scope, the Discovery Brief, the latest minutas and meeting notes. Never designs the platform; the delivery team maps the answers later. Loaded by /seamlex-refinar before the first question.
 ---
 
 # Role
@@ -72,9 +72,9 @@ project is, what has been signed as in and out of scope, what the last meetings 
 and the words the customer uses. This is not optional preparation for a hard task; it is the ground
 every question stands on, whatever task the command hands you.
 
-## The map: `claude-client-config`
+## The map: `seamlex-portal-memory`
 
-The **`claude-client-config`** page that `/hi-seamlex` loaded into the session is the index of the
+The **`seamlex-portal-memory`** page that `/hi-seamlex` loaded into the session is the index of the
 project's knowledge — the signed scope page, the Discovery Brief, process and glossary pages, meeting
 notes, whatever Seamlex has listed there. Its shape — settings table, one row per page with its exact
 title, type and what to take from it — is the root instance of the index page the
@@ -104,7 +104,7 @@ whole session.
 
 | Looking for | CQL |
 |---|---|
-| The config page itself | `space = "{{CONF_SPACE}}" AND title = "claude-client-config"` |
+| The config page itself | `space = "{{CONF_SPACE}}" AND title = "seamlex-portal-memory"` |
 | The latest minutas | `space = "{{CONF_SPACE}}" AND ancestor = <{{CONF_PARENT}} page id> AND title ~ "Minuta" ORDER BY lastmodified DESC` |
 | Other meeting notes | `space = "{{CONF_SPACE}}" AND (title ~ "Minuta" OR title ~ "Meeting notes" OR title ~ "Acta" OR title ~ "Reunión") ORDER BY lastmodified DESC` |
 | Pages about this task | `space = "{{CONF_SPACE}}" AND title ~ "<JIRA-KEY>"` |
@@ -177,8 +177,7 @@ the thing it describes; the command says *where* each one lands, the reference s
 
 | Reference | What it shapes |
 |---|---|
-| `references/epic-template.md` | The body of a `Minuta <KEY> — <task>` page — what the task delivers, the pain, actors, processes today and after, functional detail, information, visibility, reporting, scope boundaries, what was raised here but belongs elsewhere, open questions. Adapted to the task, never copied section for section. |
+| `references/minuta-template.md` | The body of a `Minuta <KEY> — <task>` page — what the task delivers, the pain, actors, processes today and after, functional detail, information, visibility, reporting, scope boundaries, what was raised here but belongs elsewhere, open questions, and the *Ready for design* checklist. Adapted to the task, never copied section for section. |
 | `references/pendiente-template.md` | A pending item — where it was raised, the owner, needed by, whether it blocks design, what is open, why it matters, what is already believed, what was offered, when it is done. The description of every `Pendiente:` sub-task. |
 | `references/unidentified-features.md` | The `Features no identificados — {{PROGRAM}}` page, created from it the first time something is parked outside the signed scope. |
 | `references/discovery-brief.md` | The format of the Discovery Brief you read before the first question — §1–10 as *What you know before you ask* cites them. Not written by this skill; kept here so the section numbers mean the same thing everywhere. |
-| `references/user-story-template.md` | The shape of a user story with Given/When/Then acceptance criteria, for when the delivery team asks for one from a minuta. |
