@@ -1,5 +1,34 @@
 # Changelog
 
+## 1.18.1
+
+> The minuta template's 13 thin, prose-heavy sections are replaced by 7 sections centered on a
+> **Requirements** table — every discrete ask gets a stable ID and a traceable source instead of loose
+> "Functional detail" subsections.
+
+- **`minuta-template.md` is remade around a Requirements table** (REQ-ID, capability, actor, statement,
+  source, MoSCoW, complexity 1–10, in/out of scope, open questions), now the document's core. *The pain
+  it resolves* and *Success measure* fold into *What this task delivers*; *Processes in scope* becomes
+  *Process context*, kept only for a process whose shape actually changes; *Functional detail*, *Data*,
+  *Visibility and permissions*, *Reporting* and *Integrations and dependencies* fold into one
+  *Cross-cutting details* section; *Scope boundaries* and *Open questions* merge into *Scope & open
+  questions* (assumptions plus a session-level table, now with a *Jira key* column).
+- **New *Para el equipo de delivery* closing section** — `SKILL.md` and `/seamlex-refinar` already
+  described it as the one place platform vocabulary may appear, but the template never actually had it;
+  it does now.
+- **The *Ready for design* checklist is rewritten** to walk the Requirements table (every row has a
+  REQ-ID, a real actor, a testable statement, a source, a MoSCoW and an in/out-of-scope call) and
+  *Cross-cutting details*, instead of the old per-section checks.
+- `commands/seamlex-refinar.md` §4a and `skills/business-analysis/SKILL.md`'s references table are
+  reworded to describe the new shape; `skills/atlassian-how-to/references/jira-task-checklist.md`'s
+  stale "the epic template" wording is fixed to "the minuta template".
+- Also fixed in this pass, found by a project-wide consistency check: `{{CONF_SCOPE_PAGE}}` was used by
+  `/seamlex-refinar` but missing from its own placeholder resolve-list; the undefined `{{INDUSTRY}}`
+  token is dropped from `discovery-brief.md`; the *Type* vocabulary in `atlassian-how-to/SKILL.md` is
+  now the full, correct 6-value list everywhere it's given; `/hi-seamlex`'s `allowed-tools` now lists
+  the Atlassian and `Skill` tools its own steps call; and a stray "epic" reference in
+  `unidentified-features.md`'s example row is reworded for the current task-based relevamiento flow.
+
 ## 1.18.0
 
 > A relevamiento used to be identified by a configurable Jira issue type or custom field

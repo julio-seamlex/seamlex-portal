@@ -69,8 +69,10 @@ same shape without the settings. The full body is in `references/memory-template
    `LABEL_REQUEST`, `LABELS_EXTRA`, `SEAMLEX_CONTACT`, `CONFIRM_WRITES`, `DETAIL`, `DRAFTS_DIR`,
    `PROGRAM`, `COMPANY`), value, and a short meaning. A missing setting is a missing row, not a blank value.
 3. **Pages** — the map. One row per page: **Title (exact)** · **Link** · **Type** ·
-   **What to take from it** · **Read when**. *Type* uses the fixed vocabulary in the table below;
-   *Read when* is one of `every session` / `when the task touches <area>` / `on demand`.
+   **What to take from it** · **Read when**. *Type* uses the fixed vocabulary — `scope`, `discovery`,
+   `index`, `minuta`, `glosario`, `no-identificado` — spelled out in full in
+   `references/memory-template.md`; *Read when* is one of `every session` / `when the task touches
+   <area>` / `on demand`.
 4. **How to find what is not listed** — the two or three CQL shapes that cover this section, ready to
    run (space, ancestor, title prefix filled in).
 5. **Maintained by / last updated** — who owns the page and when it last changed.
@@ -81,7 +83,7 @@ What makes it retrievable, and what breaks it:
 |---|---|
 | Titles typed **exactly** as the page is titled — search is `title = "…"`. | A paraphrase, an abbreviation, a title with the emoji dropped. |
 | One page per row; the *What to take from it* cell says what the page settles, in one or two lines. | Prose between rows, several pages in one cell, "see below". |
-| The same *Type* words everywhere — `scope`, `discovery`, `minuta`, `glosario`. | A new type invented per row. |
+| The same *Type* words everywhere — `scope`, `discovery`, `index`, `minuta`, `glosario`, `no-identificado`. | A new type invented per row. |
 | A Jira key, wherever it appears, as a link to the issue. | A bare key Confluence cannot resolve. |
 | A row for every page under this section — a page that is not listed is a page nobody will read. | Index rows for pages that no longer exist. |
 

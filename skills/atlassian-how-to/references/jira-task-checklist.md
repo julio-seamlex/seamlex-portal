@@ -34,7 +34,7 @@
 
 **Status**
 - [ ] Moved to *in progress* when the session started.
-- [ ] `Done` only if: the customer said yes to the closing summary, the minuta says `Finalizado`, the *Ready for design* lines at the foot of the epic template were walked and named, and no open sub-task **blocks** design. Otherwise left *in progress* with what has to happen next listed in the result comment.
+- [ ] `Done` only if: the customer said yes to the closing summary, the minuta says `Finalizado`, the *Ready for design* lines at the foot of the minuta template were walked and named, and no open sub-task **blocks** design. Otherwise left *in progress* with what has to happen next listed in the result comment.
 - [ ] The transition to done was its own explicit yes when `{{CONFIRM_WRITES}}` is `always`.
 
 ---

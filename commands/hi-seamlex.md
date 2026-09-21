@@ -1,6 +1,6 @@
 ---
 description: Start a Seamlex session — signs you in to Atlassian, picks the Confluence space, and loads the project's seamlex-portal-memory page into the session.
-allowed-tools: Read, AskUserQuestion
+allowed-tools: Read, AskUserQuestion, Skill, mcp__atlassian__getAccessibleAtlassianResources, mcp__atlassian__getConfluenceSpaces, mcp__atlassian__searchConfluenceUsingCql, mcp__atlassian__getConfluencePage
 ---
 
 # Start a Seamlex session
@@ -72,7 +72,7 @@ ever edits it.
 
 Two things come from the session rather than the page: `{{CLOUD_ID}}` is the `cloudId` from step 1, and
 `{{CONF_SPACE}}` is the space chosen in step 2 — the page lives inside it. Who is signed in, and the
-language to answer in, come from `atlassianUserInfo`; the company, program and industry come from the
+language to answer in, come from `atlassianUserInfo`; the company and program come from the
 signed scope page and the Discovery Brief when the config page does not name them.
 
 No state is kept per-workspace. Discovery notes live under `seamlex/`, and never come back into this file.

@@ -20,7 +20,7 @@ later all come from there; Step 4 names what it writes and points at the skill f
 
 Settings come from the **`seamlex-portal-memory` Confluence page** that `/hi-seamlex` loaded into the
 session. If the page is not in context, stop and ask the customer to run `/hi-seamlex`. Resolve from it
-`{{JIRA_PROJECT}}`, `{{CONF_PARENT}}`, `{{TYPE_TASK}}` (the project's
+`{{JIRA_PROJECT}}`, `{{CONF_PARENT}}`, `{{CONF_SCOPE_PAGE}}`, `{{TYPE_TASK}}` (the project's
 sub-task type, used for pending items; default whatever the project calls it — `Subtarea`, `Sub-task`),
 `{{LABEL_REQUEST}}`, `{{LABELS_EXTRA}}`, `{{SEAMLEX_CONTACT}}`, `{{CONFIRM_WRITES}}`, `{{DETAIL}}`,
 `{{DRAFTS_DIR}}`, and `{{PROGRAM}}` and `{{COMPANY}}` when it names them. `{{CLOUD_ID}}` and `{{CONF_SPACE}}` are the cloud id and space `/hi-seamlex` settled on;

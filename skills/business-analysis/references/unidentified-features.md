@@ -6,7 +6,7 @@
 
 | # | What they asked for | Raised by | When | Raised during | Why it fits no epic | Business impact if left out | Status |
 |---|---|---|---|---|---|---|---|
-| 1 | | | <YYYY-MM-DD> | <epic being refined at the time> | | | Parked / Sent to Seamlex / Accepted into scope / Declined |
+| 1 | | | <YYYY-MM-DD> | <relevamiento task being worked at the time> | | | Parked / Sent to Seamlex / Accepted into scope / Declined |
 
 ## Detail
 
