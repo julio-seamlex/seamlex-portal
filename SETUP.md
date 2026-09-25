@@ -11,7 +11,7 @@ In Claude, add the Seamlex marketplace and install the plugin:
 /plugin install seamlex-portal@seamlex
 ```
 
-Then restart Claude so the plugin's commands, skills and Atlassian connection load.
+Then restart Claude so the plugin's commands, skills and Atlassian and GitHub connections load.
 
 ### Where to run this
 
@@ -39,7 +39,7 @@ The plugin works from both the **Chat** and the **Cowork** tab — nothing in it
 > granted access. Claude uses your existing GitHub credentials to fetch the plugin — from the machine
 > running Claude, so check `gh auth status` there and not on some other laptop.
 
-## 2. Connect Atlassian
+## 2. Connect Atlassian and GitHub
 
 Run:
 
@@ -50,12 +50,12 @@ Run:
 `/hi-seamlex` is the only command you need to start with: run it at the start of every session.
 
 **There is nothing to fill in.** Your engagement's settings — Jira project, issue type names, Seamlex
-contacts, the signed scope page — live on a Confluence page called `seamlex-portal-memory` in your space,
-maintained by Seamlex. `/hi-seamlex` finds that page and loads it into the session, and every other command
-reads its settings from there. Your language and who you are come from the Atlassian account you sign in
-with; your company and program come from the signed scope page and your Discovery Brief when the config
-page does not name them (the first time, before a brief exists, you are asked for your company name once).
-Nothing is written to your workspace.
+contacts, the signed scope file — live in `README.md` and `config.yml` in your GitHub documentation repo,
+maintained by Seamlex. `/hi-seamlex` finds that repo and loads both files into the session, and every
+other command reads its settings from there. Your language and who you are come from the Atlassian
+account you sign in with; your company and program come from `config.yml` and your Discovery Brief when
+the config does not name them (the first time, before a brief exists, you are asked for your company name
+once). Nothing is written to your workspace.
 
 This will:
 
@@ -63,15 +63,17 @@ This will:
    opens your browser to sign in to Atlassian. You are signing in to *your own* Atlassian account —
    Seamlex never sees your credentials, and the plugin never stores them. You can revoke access any time
    from your Atlassian account settings.
-2. **Show you what the session is running on** — who you are signed in as, your company and program as
-   read from the site, the Jira project, the Confluence space — each tagged with where it came from, so
+2. **Check the GitHub connection.** The plugin needs a personal access token set as `GITHUB_PAT` — see
+   "Connecting GitHub" below if this is your first run.
+3. **Show you what the session is running on** — who you are signed in as, your company and program as
+   read from the repo, the Jira project, the documentation repo — each tagged with where it came from, so
    anything wrong is obvious immediately and correctable in one line.
-3. **Check it against your site.** That the Jira project and Confluence space are visible to you, that
-   the sub-task type really exists, and that relevamiento tasks in your project carry the
+4. **Check it against your site.** That the Jira project is visible to you and the documentation repo is
+   reachable, that the sub-task type really exists, and that relevamiento tasks in your project carry the
    `relevamiento` label. Anything that doesn't match is reported as a mismatch to take back to Seamlex,
    not something for you to patch locally.
-4. **Verify.** It runs a read-only query against your project and reports what it can see.
-5. **Create your working folder** — `seamlex/discovery/` for your discovery notes. Scope refinement drafts live in Confluence, not in your workspace.
+5. **Verify.** It runs a read-only query against your project and reports what it can see.
+6. **Create your working folder** — `seamlex/discovery/` for your discovery notes. Scope refinement drafts live in GitHub, not in your workspace.
 
 Everything written to your workspace is your own work: drafts, and nothing else. No settings, no state, no
 secrets, safe to commit.
@@ -91,11 +93,29 @@ Atlassian tools are unavailable:
   this plugin. If you declined, re-enable it in your MCP settings.
 - **Check you're signed in.** The connection uses a browser OAuth flow. If it expired, running
   `/hi-seamlex` again will prompt you to sign in.
-- **Check your access.** You need access to the Jira project and Confluence space Seamlex shares with
+- **Check your access.** You need access to the Jira project Seamlex shares with
   you. If the setup checks see no projects, ask your Seamlex contact to confirm your invitation.
 
 If your organization proxies or restricts outbound connections, your IT team may need to allow
 `mcp.atlassian.com`.
+
+## Connecting GitHub
+
+The plugin ships with the official GitHub MCP server configured, authenticating with a personal access
+token in the `GITHUB_PAT` environment variable. If `/hi-seamlex` reports that GitHub tools are
+unavailable:
+
+- **Create a token.** In GitHub, go to Settings → Developer settings → Personal access tokens, and
+  create one scoped to `repo` (read/write access to the documentation repo Seamlex shares with you).
+- **Set it as `GITHUB_PAT`.** Export it in your shell before starting Claude:
+  ```
+  export GITHUB_PAT="<your token>"
+  ```
+  Add that line to your shell profile (`~/.zshrc`, `~/.bashrc`) so it persists across sessions.
+- **Restart Claude.** MCP servers load at startup; the token will not be picked up until you do.
+- **Check your access.** You need read/write access to the documentation repo Seamlex shares with you.
+  If the setup checks can't reach it, ask your Seamlex contact to confirm you were added as a
+  collaborator.
 
 > **On command names:** Claude also lists these fully qualified, as
 > `/seamlex-portal:hi-seamlex`. Both forms work — type the short one.
@@ -109,18 +129,20 @@ If your organization proxies or restricts outbound connections, your IT team may
 
 ## Troubleshooting
 
-**"No `seamlex-portal-memory` page"** — `/hi-seamlex` searched your space and found no page with that
-title. Seamlex creates and maintains it; tell your Seamlex contact which space you were in.
+**"No documentation repo found" / "No `README.md`/`config.yml`"** — `/hi-seamlex` searched for a
+`seamlex-docs-` repo in the Seamlex org and found none, or found the repo but not those two files.
+Seamlex creates and maintains both; tell your Seamlex contact which account you were signed in as.
 
 **A setting is wrong or missing** — the wrong Jira project, an issue type that doesn't exist in your
-project, a blank entry a command asks about. These live on the `seamlex-portal-memory` page in Confluence,
-not in your workspace or the plugin — send the entry to your Seamlex contact and they fix the page; the
+project, a blank entry a command asks about. These live in `config.yml` in your GitHub repo,
+not in your workspace or the plugin — send the entry to your Seamlex contact and they fix the file; the
 next `/hi-seamlex` picks it up.
 
-**The company, program or language is wrong** — these are read live, not shipped. The program is the
-title of the signed scope page, the language is your Atlassian profile's locale, the company comes from
-your Discovery Brief. Fix the source (rename the page, change your Atlassian language, correct the brief
-header) and the next session picks it up — or just tell the command in one line for the current session.
+**The company, program or language is wrong** — these are read live, not shipped. The program is named
+in `scope.md` or `config.yml`, the language is your Atlassian profile's locale, the company comes from
+your Discovery Brief. Fix the source (rename it in the file, change your Atlassian language, correct the
+brief header) and the next session picks it up — or just tell the command in one line for the current
+session.
 
 **"Which step am I on?"** — nothing records it. `/hi-seamlex` works it out each session from your
 workspace, your Discovery Brief and your board, and tells you which signals it read. If it lands wrong,
@@ -130,12 +152,12 @@ say so, or name the step yourself: `/hi-seamlex refinement`.
 Brief is prepared with your Seamlex consultant; it makes scope refinement sharper but isn't a hard
 prerequisite.
 
-**Wrong issue type when raising an epic or story** — the issue types on the `seamlex-portal-memory` page do
-not match your project. Send the name that is off to your Seamlex contact for a fix on the page.
+**Wrong issue type when raising an epic or story** — the issue types in `config.yml` do
+not match your project. Send the name that is off to your Seamlex contact for a fix on the file.
 
-**The minuta has no labels in Confluence** — expected. The Atlassian MCP server cannot set labels on a
-page, so the plugin does not use them; the page is found by the Jira key in its title
-(`Minuta ABC-12 — …`). Nothing to fix.
+**The minuta has no labels or topics on GitHub** — expected. The plugin does not use them at all; the
+file is found by its path (`relevamientos/ABC-12.md`) and by the Jira key in its front matter. Nothing
+to fix.
 
 **A write to Jira half-succeeded** — the command will tell you exactly which issues were created and which
 weren't, and stop rather than retrying. Give that list to your Seamlex contact.

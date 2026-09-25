@@ -6,7 +6,7 @@
 
 | | |
 |---|---|
-| **Raised during** | <Jira key of the relevamiento, as a link> — `Minuta <KEY> — <task summary>` (as a link), section *<section>* |
+| **Raised during** | <Jira key of the relevamiento, as a link> — `relevamientos/<KEY>.md` (as a link to the GitHub file), section *<section>* |
 | **Raised by** | <name, role> on <YYYY-MM-DD> |
 | **Owner** | <name, role — who can answer it> |
 | **Needed by** | <date, or "before the next session", or "no fixed date"> |

@@ -1,6 +1,12 @@
-# Minuta body — <task summary as it reads in Jira>
+---
+jira_key: <KEY>
+jira_url: https://<site>/browse/<KEY>
+type: minuta
+---
 
-> The body of a `Minuta <KEY> — <task>` Confluence page, placed under the header table
+# Minuta — <task summary as it reads in Jira>
+
+> The body of `relevamientos/<KEY>.md`, placed under the front matter above and the header table
 > `seamlex-refinar.md` §4a builds (**Tarea Jira**, **Sprint**, **Épica**, **Relevado con**,
 > **Fecha(s)**, **Estado**). Adapted to the task, never copied section for section — a small task will
 > leave several sections short or explicitly marked not applicable. The **Requirements** table is the
@@ -107,7 +113,7 @@ is not.>
 `seamlex-refinar.md`'s closing step walks this list from a fresh read of the page before marking the
 relevamiento `Finalizado`. Any line not true keeps the task `En progreso`.
 
-- [ ] The title is `Minuta <KEY> — <task summary>`, and the Jira key in the header links to the issue.
+- [ ] The file is at `relevamientos/<KEY>.md`, the front matter's `jira_key` is set, and the Jira key in the header table links to the issue.
 - [ ] What it delivers, the pain and the success measure are filled — no invented numbers.
 - [ ] Every actor is a real role from discovery §3, not "a user".
 - [ ] Every requirement has a REQ-ID, a real actor, a testable statement, a source, a MoSCoW and an

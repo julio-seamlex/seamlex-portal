@@ -1,5 +1,5 @@
 ---
-description: Run a "relevamiento" from the current sprint with the Product Owner — finds the relevamiento tasks in the open sprint, gathers everything the client config points at, interviews the customer in business language only, and leaves a comment and the transcript on the task, one Confluence page "Minuta <KEY> — <task>", the pending items as sub-tasks of the task, and the task linked to the page.
+description: Run a "relevamiento" from the current sprint with the Product Owner — finds the relevamiento tasks in the open sprint, gathers everything the client config points at, interviews the customer in business language only, and leaves a comment and the transcript on the task, one GitHub file "relevamientos/<KEY>.md", the pending items as sub-tasks of the task, and the task linked to the file.
 ---
 
 # Relevamiento of a sprint task
@@ -12,21 +12,21 @@ with `AskUserQuestion`, a verbatim transcript, nothing invented — and this com
 works on** (the current sprint says which relevamientos are up) and **what it leaves behind** (the five
 outputs in Step 4). Its translation table is the rule every question here passes through.
 
-**The house rules for Jira and Confluence are the `seamlex-portal:atlassian-how-to` skill**, which
+**The house rules for Jira and GitHub are the `seamlex-portal:delivery-how-to` skill**, which
 `/hi-seamlex` loaded at the start of the session. If it is not in context, load it now with the `Skill`
-tool (or read `../skills/atlassian-how-to/SKILL.md`). Where a page goes, what it is titled, which
-Jira labels a task carries, how the task and the page link, how a task is left and how it is found
+tool (or read `../skills/delivery-how-to/SKILL.md`). Where a file goes, what it is called, which
+Jira labels a task carries, how the task and the file link, how a task is left and how it is found
 later all come from there; Step 4 names what it writes and points at the skill for the how.
 
-Settings come from the **`seamlex-portal-memory` Confluence page** that `/hi-seamlex` loaded into the
-session. If the page is not in context, stop and ask the customer to run `/hi-seamlex`. Resolve from it
-`{{JIRA_PROJECT}}`, `{{CONF_PARENT}}`, `{{CONF_SCOPE_PAGE}}`, `{{TYPE_TASK}}` (the project's
+Settings come from **`config.yml` in the customer's GitHub repo** that `/hi-seamlex` loaded into the
+session. If it is not in context, stop and ask the customer to run `/hi-seamlex`. Resolve from it
+`{{JIRA_PROJECT}}`, `{{TYPE_TASK}}` (the project's
 sub-task type, used for pending items; default whatever the project calls it — `Subtarea`, `Sub-task`),
 `{{LABEL_REQUEST}}`, `{{LABELS_EXTRA}}`, `{{SEAMLEX_CONTACT}}`, `{{CONFIRM_WRITES}}`, `{{DETAIL}}`,
-`{{DRAFTS_DIR}}`, and `{{PROGRAM}}` and `{{COMPANY}}` when it names them. `{{CLOUD_ID}}` and `{{CONF_SPACE}}` are the cloud id and space `/hi-seamlex` settled on;
-`{{LOCALE}}` and `{{USER_NAME}}` come from `atlassianUserInfo`. If the Atlassian tools are not available,
-say so and stop — the sprint, the task and every output live in Jira and Confluence, and there is nothing
-local to fall back on.
+`{{DRAFTS_DIR}}`, and `{{PROGRAM}}` and `{{COMPANY}}` when it names them. `{{CLOUD_ID}}`, `{{GITHUB_ORG}}` and `{{GITHUB_REPO}}` are the cloud id, org and repo `/hi-seamlex` settled on;
+`{{LOCALE}}` and `{{USER_NAME}}` come from `atlassianUserInfo`. If the Atlassian or GitHub tools are not
+available, say which one and stop — the sprint and the task live in Jira, every output's home is GitHub,
+and there is nothing local to fall back on.
 
 ## Business language is the skill's rule, not this command's option
 
@@ -57,31 +57,28 @@ whether to go on anyway.
 
 ## Step 2 — Gather everything the config points at, before asking anything
 
-The `seamlex-portal-memory` page is an **index of the project's knowledge** — the signed scope page, the
-Discovery Brief, process documents, previous minutas, glossaries, whatever Seamlex has listed there. Use
-it as the map: the relevamiento must open already knowing what the project knows, and the customer must
-never be asked something a page already answers. **How** Confluence is read — which pages, what to take
-from each, including what is in and out of scope, the last meeting notes, the CQL shapes — is the
-skill's *What you know before you ask*; this step keeps only what is specific to the task.
+`README.md` is an **index of the project's knowledge** — the signed scope file, the Discovery Brief,
+glossaries, whatever Seamlex has listed in its Map table. Use it as the map: the relevamiento must open
+already knowing what the project knows, and the customer must never be asked something a file already
+answers. **How** the GitHub repo is read — which files, what to take from each, including what is in
+and out of scope, the last minutas — is the skill's *What you know before you ask*; this step keeps
+only what is specific to the task.
 
 1. **Read the task**: `getJiraIssue` with description, comments, sub-tasks, issue links, attachments list
    and parent; `getJiraIssueRemoteIssueLinks` for pages already attached. If it hangs off an epic, read
    the epic — that is usually where the contract wording lives.
-2. **Walk the config page** the way the skill says — `getConfluencePage` on `{{CONF_SCOPE_PAGE}}`, the
-   Discovery Brief page (or the local `{{DRAFTS_DIR}}/discovery/discovery-brief.md` if it exists), any
-   process, glossary or reference page it lists, the `Features no identificados` page, and the **last
-   two or three meeting notes** — the `Minuta` pages under `{{CONF_PARENT}}` and any meeting-notes page
-   the config names — most recent first.
-3. **Search for what the config does not list by name**: `searchConfluenceUsingCql` in `{{CONF_SPACE}}`
-   with the task's key and its key terms (`title ~ "<KEY>"`, `text ~ "<term>"`) and the skill's
-   meeting-notes shapes, and `searchJiraIssuesUsingJql` with
+2. **Walk the repo** the way the skill says — `get_file_contents` on `scope.md`, the Discovery Brief
+   file (or the local `{{DRAFTS_DIR}}/discovery/discovery-brief.md` if it exists), `glosario.md` and any
+   other reference file `README.md` lists, `features-no-identificados.md`, and the **last two or three
+   minutas** — the files under `relevamientos/` — most recent first.
+3. **Search for what the index does not list by name**: `search_code` in `{{GITHUB_ORG}}/{{GITHUB_REPO}}`
+   with the task's key terms, and `searchJiraIssuesUsingJql` with
    `project = {{JIRA_PROJECT}} AND text ~ "<key terms>"` for related tasks, earlier relevamientos and
-   open questions. A page titled `Minuta <KEY> — <this task's summary>` already in the space (the
-   skill's *the one minuta of a task* pattern: `title ~ "<KEY>" AND title ~ "Minuta"`, then the task's
-   remote links) means this is a **resumed session** — read it and continue from its open items rather
-   than starting over.
+   open questions. A file already at `relevamientos/<KEY>.md` for this task (the
+   skill's *this task's file* pattern: `get_file_contents` on the fixed path directly) means this is a
+   **resumed session** — read it and continue from its open items rather than starting over.
 4. **Reflect it back in five to eight lines, in business terms, before the first question**: what the
-   task asks for as the customer would say it, what the project already knows (from the config's pages,
+   task asks for as the customer would say it, what the project already knows (from the repo's files,
    the brief, earlier comments), what is still open, and the two or three things the session will spend
    its time on. Ask them to correct you. A relevamiento that opens with generic questions on a task the
    project half-documents wastes the customer's time and shows nobody read the material.
@@ -98,7 +95,7 @@ around it:
 - Options for each `AskUserQuestion` batch come from the discovery brief and the material gathered in
   Step 2. An unknown with an owner becomes a pending sub-task in 4d.
 - Something that belongs to another task in the sprint or the plan is noted against that key. Something
-  that belongs to no task goes to the `Features no identificados — {{PROGRAM}}` page in `{{CONF_SPACE}}`,
+  that belongs to no task goes to `features-no-identificados.md` in `{{GITHUB_ORG}}/{{GITHUB_REPO}}`,
   created from `../skills/business-analysis/references/unidentified-features.md` if needed, and is
   routed to `{{SEAMLEX_CONTACT}}`.
 - The verbatim transcript the skill keeps — question, answer, time of each batch — is what 4c attaches to
@@ -108,30 +105,28 @@ around it:
 
 ## Step 4 — Leave five things behind
 
-Every session ends with exactly these outputs, in Jira and Confluence. Show the whole set for one approval
-when `{{CONFIRM_WRITES}}` is `always`, then write in this order — the page first, because everything else
+Every session ends with exactly these outputs, in Jira and GitHub. Show the whole set for one approval
+when `{{CONFIRM_WRITES}}` is `always`, then write in this order — the file first, because everything else
 points at it.
 
-### 4a. The Confluence page `Minuta <KEY> — <task summary>`
+### 4a. The GitHub file `relevamientos/<KEY>.md`
 
-One page per relevamiento, in `{{CONF_SPACE}}` under `{{CONF_PARENT}}`, titled exactly
-`Minuta <KEY> — <task summary as it reads in Jira>` — e.g. `Minuta ABC-12 — Devoluciones de mercadería
-dañada`. The key upper-cased as Jira writes it, an em dash, then the Jira wording even if a better
-title came up in conversation — the key is how the minuta is found (`title ~ "ABC-12"`), the summary
-is how it reads from the board.
+One file per relevamiento, in `{{GITHUB_ORG}}/{{GITHUB_REPO}}` at `relevamientos/<KEY>.md` — the key
+upper-cased as Jira writes it, nothing else in the path. The path is how the minuta is found — no
+search needed — and the file's own header repeats the task summary for a human reading it on GitHub.
 
-- `createConfluencePage` **as soon as there is something worth saving**, then `updateConfluencePage`
-  section by section as the session runs, without asking again each time — sessions get interrupted, and
-  nothing gathered should depend on reaching the end. On a resumed session, update the existing page;
-  never create a second one for the same task — find it first with the skill's *the one minuta of a
-  task* pattern (`title ~ "<KEY>" AND title ~ "Minuta"`, then the exact title, then the task's
-  `getJiraIssueRemoteIssueLinks`).
-- **No labels on the page** — the Atlassian MCP cannot set them and nothing depends on them; the key
-  in the title is how the page is found. Add the page's row to the `{{CONF_PARENT}}` index when that
-  page is one the plugin may edit; otherwise name the row for Seamlex.
-- **Shape**: a header table — **Tarea Jira** (key, as a link to the issue), **Sprint**, **Épica** if
+- `create_or_update_file` **as soon as there is something worth saving**, committing again section by
+  section as the session runs, without asking again each time — sessions get interrupted, and nothing
+  gathered should depend on reaching the end. On a resumed session, update the existing file; never
+  create a second one for the same task — find it first with the skill's *this task's file* pattern
+  (`get_file_contents` on `relevamientos/<KEY>.md` directly).
+- **No labels or topics on the file** — nothing depends on them; the path is how the file is found.
+  If this is the first file under a top-level path `README.md`'s Map table does not mention, name that
+  for Seamlex to add; otherwise nothing else needs updating.
+- **Shape**: YAML front matter (`jira_key`, `jira_url`, `type: minuta`) followed by a header table —
+  **Tarea Jira** (key, as a link to the issue), **Sprint**, **Épica** if
   any, **Relevado con** (name, role, per person), **Fecha(s)**, **Estado** (`En progreso` /
-  `Finalizado`) — followed by the body from `../skills/business-analysis/references/minuta-template.md`
+  `Finalizado`) — then the body from `../skills/business-analysis/references/minuta-template.md`
   adapted to the task: what this task delivers, the pain it resolves and the success measure; the actors;
   the **Requirements** table at its core — one row per discrete requirement with REQ-ID, capability,
   actor, statement, source, MoSCoW, complexity (1–10) and its own in/out-of-scope call and open
@@ -145,29 +140,31 @@ is how it reads from the board.
 - **Never leave a section blank.** What was not answered is `⚠️ TBD — <the question> — <owner>`, either
   in a requirement's own open-questions cell or in the *Scope & open questions* table, and each of those
   becomes a task in 4d.
-- **Link the page to the Jira task from the page side**: the Jira key in the header must be written as a
-  link to the issue (`https://<site>/browse/<KEY>`), so Confluence renders it as a Jira link and Jira lists
-  the page under the issue's Confluence content. This is half of the link in 4e.
+- **Link the file to the Jira task from the file side**: `jira_key` and `jira_url` in the front matter,
+  and the Jira key in the header table written as a link to the issue
+  (`https://<site>/browse/<KEY>`). GitHub does not list the task under the file the way Confluence
+  sometimes listed a page under an issue — this is a readable, greppable link, not a live backlink; say
+  so plainly rather than implying otherwise. This is half of the link in 4e.
 
 ### 4b. A comment on the task saying the relevamiento was run
 
 `addCommentToJiraIssue`, one comment, in `{{LOCALE}}`, that says: the relevamiento was run by the Seamlex
 Product Owner (Claude) with `{{USER_NAME}}` on `<date>`; a three-line summary of what was settled; the URL
-of the minuta; the keys of the pending tasks created (fill after 4d); and whether the task was left
+of the minuta file; the keys of the pending tasks created (fill after 4d); and whether the task was left
 `Finalizado` or `En progreso`. Anyone opening the task in Jira finds the whole result from that one
 comment.
 
-### 4c. The conversation transcript, attached to the task
+### 4c. The conversation transcript, committed alongside the minuta
 
-The verbatim transcript kept in Step 3 goes on the task, so the minuta can be checked against what was
-actually said.
+The verbatim transcript kept in Step 3 is always written as its own file, so the minuta can be checked
+against what was actually said.
 
-- The Atlassian MCP server has no file-upload tool, so the transcript is attached as a **second,
-  dedicated comment** on the task with `addCommentToJiraIssue`, headed `Transcript del relevamiento —
-  <date>` and containing the questions and answers in order with their times.
-- If the transcript is too long for one comment (the site rejects it), create a child page of the minuta
-  titled `Transcript <KEY> — <task summary>` with `createConfluencePage`, put the transcript there, and
-  leave a comment on the task with that page's URL instead. Say which of the two you did.
+- `create_or_update_file` on `relevamientos/<KEY>-transcript.md`, containing the questions and answers
+  in order with their times, verbatim — no length limit to work around, unlike a Jira comment, so this
+  is the only path, not a fallback.
+- Leave a **second, dedicated comment** on the task with `addCommentToJiraIssue`, headed
+  `Transcript del relevamiento — <date>`, holding only the transcript file's URL — never the transcript
+  text itself, since the file already holds it.
 - The transcript is never summarized, edited or cleaned up beyond fixing typos in its own
   questions; the customer's words stay as given.
 
@@ -180,7 +177,7 @@ without following a link:
 - **What becomes a task**: every `⚠️ TBD` in the minuta; every decision the customer deferred to someone
   else; every document or example they offered to send; every point that needs a Seamlex decision (a
   parked feature, a conflict with another task). Not the things that were answered — those live on the
-  page.
+  file.
 - **Type and parent**: always a **sub-task** with the relevamiento task as `parent` — never a standalone
   issue linked with `relates to`. Read the project's types once with `getJiraProjectIssueTypesMetadata`
   and use `{{TYPE_TASK}}` from the config, or, if the config does not name one, the type the project
@@ -204,21 +201,21 @@ without following a link:
   requirement's *Open questions* cell, or the *Scope & open questions* table's *Jira key* column — and
   into the comment from 4b.
 
-### 4e. The Jira task linked to the Confluence page
+### 4e. The Jira task linked to the GitHub file
 
 The task and the minuta must point at each other:
 
-- **Jira → Confluence**: the minuta URL is in the comment from 4b. If the server exposes a tool to add a
-  remote link to an issue, use it too so the page shows under the issue's *Links*; the MCP server bundled
-  with the plugin does not, so say when the comment is the only Jira-side link.
-- **Confluence → Jira**: the Jira key in the minuta header is a link to the issue (4a), which makes Jira
-  list the page under the issue. Confirm with `getJiraIssueRemoteIssueLinks` after the page is saved;
-  if the page does not show up, say so — the comment link still holds, and the customer can attach the
-  page by hand from Jira's *Link* menu.
+- **Jira → GitHub**: the minuta file's blob URL is in the comment from 4b. If the server exposes a tool
+  to add a remote link to an issue, use it too so the file shows under the issue's *Links*; the MCP
+  server bundled with the plugin does not, so say when the comment is the only Jira-side link.
+- **GitHub → Jira**: the Jira key is in the minuta's front matter (`jira_key`) and its header (4a) as a
+  link to the issue. Unlike Confluence, GitHub has no mechanism to list the task under the file — this
+  direction is readable and greppable from the file itself, not a live backlink, and the command says
+  so rather than implying parity with the old behaviour.
 
 ### Then decide the task's state honestly
 
-Walk the *Relevamiento task* block of `../skills/atlassian-how-to/references/jira-task-checklist.md`
+Walk the *Relevamiento task* block of `../skills/delivery-how-to/references/jira-task-checklist.md`
 from a fresh `getJiraIssue` and say which lines are not true; the task is never closed over one.
 
 - **Finalizado** — the customer approved the summary, the minuta covers what design needs (walk the
@@ -234,18 +231,20 @@ from a fresh `getJiraIssue` and say which lines are not true; the task is never 
 When `{{CONFIRM_WRITES}}` is `always`, the transition to done is a separate, explicit yes; never infer it
 from approval of the summary.
 
-Close by showing what was left behind — the minuta URL, the two comment links, the pending sub-task keys,
-the task's state — and the other relevamientos still open in the sprint, from the same query as Step 1,
-so the customer can pick the next one up with `/seamlex-refinar` or `/seamlex-refinar <KEY>`.
+Close by showing what was left behind — the minuta file URL, the two comment links, the pending sub-task
+keys, the task's state — and the other relevamientos still open in the sprint, from the same query as
+Step 1, so the customer can pick the next one up with `/seamlex-refinar` or `/seamlex-refinar <KEY>`.
 
 ## Failure handling
 
 If any write fails, stop, report exactly what succeeded and what did not, and do not retry blindly — a
-minuta without its pending sub-tasks is recoverable; a task marked done with nothing behind it is not. If the
-Atlassian tools drop out mid-session, stop the relevamiento and show the customer everything gathered
-since the last successful save — the transcript included — so they can keep it themselves, then point
-them at `/hi-seamlex`.
+minuta without its pending sub-tasks is recoverable; a task marked done with nothing behind it is not. If
+the Atlassian or GitHub tools drop out mid-session, stop the relevamiento and show the customer everything
+gathered since the last successful save — the transcript included — so they can keep it themselves, then
+point them at `/hi-seamlex`.
 
 > Atlassian tools come from the MCP server bundled with this plugin and are namespaced by it —
-> `mcp__plugin_seamlex-portal_atlassian__searchJiraIssuesUsingJql`. Match on the base name after the last
-> `__`; the prefix changes if the server is configured elsewhere, and either one works.
+> `mcp__plugin_seamlex-portal_atlassian__searchJiraIssuesUsingJql`. GitHub tools come from the GitHub
+> MCP server bundled the same way — `mcp__plugin_seamlex-portal_github__create_or_update_file`. Match on
+> the base name after the last `__` for either; the prefix changes if a server is configured elsewhere,
+> and either one works.

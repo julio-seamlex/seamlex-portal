@@ -1,5 +1,39 @@
 # Changelog
 
+## 2.0.0
+
+> Documentation moves off Confluence and onto GitHub. Jira stays exactly as it was — this is a
+> documentation-store swap, not a move off Atlassian. **Breaking**: `/hi-seamlex` now signs in to a
+> GitHub-bundled MCP server (a `GITHUB_PAT` personal access token) and resolves settings from
+> `config.yml` in the customer's GitHub repo instead of a `seamlex-portal-memory` Confluence page.
+
+- **`skills/atlassian-how-to/` is renamed `skills/delivery-how-to/`** and rewritten: the Confluence
+  space tree, title convention and CQL cookbook become a GitHub repo tree
+  (`README.md`, `config.yml`, `scope.md`, `discovery/`, `relevamientos/<KEY>.md`, `glosario.md`,
+  `features-no-identificados.md`), a fixed-path convention, and path/search/commit-history lookups.
+  The Jira sections (labels, JQL cookbook, "a well-completed Jira task") are unchanged beyond
+  repointing "linked to its Confluence page" at GitHub.
+- **The single `seamlex-portal-memory` config page becomes two files**: `README.md` (purpose + map,
+  human-readable) and `config.yml` (settings, machine-readable) in the customer's own GitHub repo.
+  `CONF_PARENT` and `CONF_SCOPE_PAGE` settings are dropped — paths are now fixed by the repo layout.
+- **`commands/hi-seamlex.md`** now checks the `github` MCP server alongside `atlassian`, resolves the
+  customer's `seamlex-docs-<slug>` repo instead of a Confluence space, and reads `README.md`/`config.yml`
+  from it.
+- **`commands/seamlex-refinar.md`** §4a commits `relevamientos/<KEY>.md` via `create_or_update_file`
+  instead of `createConfluencePage`/`updateConfluencePage`. §4c always writes the transcript as its own
+  committed file (`relevamientos/<KEY>-transcript.md`) — the old length-based fallback to a Confluence
+  child page is gone, since GitHub has no comment-length limit to work around. §4e's two-way link is
+  now a GitHub blob URL in the Jira comment, and a `jira_key`/`jira_url` front-matter pair in the file
+  — said plainly as a readable link, not a live backlink the way Confluence sometimes offered.
+- **`minuta-template.md`** gains YAML front matter (`jira_key`, `jira_url`, `type: minuta`) ahead of its
+  existing header table.
+- **`.mcp.json`** bundles a `github` HTTP MCP server (`https://api.githubcopilot.com/mcp/`,
+  PAT-authenticated) alongside the existing `atlassian` SSE server.
+- `README.md` and `SETUP.md` are rewritten for the GitHub workflow; `SETUP.md` gains a "Connecting
+  GitHub" section (token creation, `GITHUB_PAT`, restart) alongside "Connecting Atlassian".
+- **Follow-up, not in this release**: the sibling `seamlex-deliver-team` plugin still reads Confluence
+  pages this plugin no longer writes and needs matching changes in its own repo.
+
 ## 1.18.1
 
 > The minuta template's 13 thin, prose-heavy sections are replaced by 7 sections centered on a

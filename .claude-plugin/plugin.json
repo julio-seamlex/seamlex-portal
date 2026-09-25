@@ -1,11 +1,11 @@
 {
   "name": "seamlex-portal",
-  "version": "1.18.1",
-  "description": "Customer-facing front door to Seamlex, your Salesforce delivery partner. Run the relevamientos of your sprint with the Product Owner into a Confluence minuta and its pending sub-tasks, following the Seamlex house rules for Jira and Confluence. Everything lands in the shared Jira project and Confluence space via the Atlassian MCP server.",
+  "version": "2.0.0",
+  "description": "Customer-facing front door to Seamlex, your Salesforce delivery partner. Run the relevamientos of your sprint with the Product Owner into a GitHub minuta file and its pending sub-tasks, following the Seamlex house rules for Jira and GitHub. Everything lands in the shared Jira project and your GitHub documentation repo via the Atlassian and GitHub MCP servers.",
   "author": {
     "name": "Seamlex"
   },
   "homepage": "https://github.com/julio-seamlex/seamlex-portal",
   "repository": "https://github.com/julio-seamlex/seamlex-portal",
-  "keywords": ["salesforce", "seamlex", "scope", "requirements", "jira", "confluence", "delivery"]
+  "keywords": ["salesforce", "seamlex", "scope", "requirements", "jira", "github", "delivery"]
 }
