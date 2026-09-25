@@ -1,5 +1,19 @@
 # Changelog
 
+## 2.0.4
+
+> `2.0.3`'s sketch was plain Markdown posted into the chat, so the customer had to scroll back through the
+> conversation to find the latest version. In Cowork it can be a live page instead — the same content, but
+> updated in place rather than re-read from the log.
+
+- **`skills/business-analysis/SKILL.md`**'s *"Show it, don't just say it"* sub-section now publishes the
+  sketch as a Claude Artifact — a `.md` file, which this section explicitly licenses since the `Artifact`
+  tool defaults every page to `.html` otherwise — titled after the task's Jira key, opened once for the
+  customer right after the first publish. Later redraws call `Artifact` again with the same `file_path`,
+  redeploying the same page rather than creating a new one. This narrows the feature to Cowork/claude.ai;
+  no fallback is defined for Claude Code CLI/VSCode/JetBrains sessions, where the `Artifact` tool doesn't
+  exist.
+
 ## 2.0.3
 
 > A relevamiento's customer only had a closing paragraph to check the session against — fine for a short

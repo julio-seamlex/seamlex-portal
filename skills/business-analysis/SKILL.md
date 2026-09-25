@@ -155,17 +155,24 @@ this task; and the two or three things the session will spend its time on. Ask t
 
 ## Show it, don't just say it
 
-As the interview advances, keep a short, structured sketch alongside the transcript — the actors, the
-process as it takes shape, the decisions and rules settled so far, the entities involved — that the
-customer can look at instead of listening to a paragraph. A table, a list grouped by actor or step, or a
-simple diagram sketched in Markdown all work; pick whatever shape fits what just got settled. It lives in
-the conversation itself, not in the minuta file — the GitHub file `/seamlex-refinar` writes stays the
-system of record and is unaffected by this.
+As the interview advances, keep a short, structured sketch — the actors, the process as it takes shape,
+the decisions and rules settled so far, the entities involved — that the customer can look at instead of
+listening to a paragraph. A table, a list grouped by actor or step, or a simple diagram sketched in
+Markdown all work; pick whatever shape fits what just got settled.
+
+Publish it as a live Artifact the customer watches update in Cowork, not as chat text. Load the
+`artifact-design` skill once before the first publish, write the sketch to a local Markdown file, and
+call the `Artifact` tool on it as a `.md` file — this section is what licenses the `.md` format, since
+the tool defaults every page to `.html` otherwise. Title it after the task (its Jira key) so it is
+recognizable among the customer's other artifacts, and `open` it right after that first publish so they
+see it without having to ask. It is still not the minuta — the GitHub file `/seamlex-refinar` writes
+stays the system of record and is unaffected by this.
 
 Redraw it in reasonable increments, not after every single answer. Update it when a batch closes a topic
 or the picture actually changes — a new actor, a step added, a rule settled, an entity that turns out to
 matter — not on each individual answer; redrawing it too often turns a following aid into noise the
-customer has to sit through.
+customer has to sit through. Every redraw calls `Artifact` again with the same `file_path`, which
+redeploys the same page in place — never a new file or a new link.
 
 # Closing the conversation
 
