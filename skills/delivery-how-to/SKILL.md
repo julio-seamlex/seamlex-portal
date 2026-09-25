@@ -203,11 +203,14 @@ behind it is not. If the tools drop out mid-session, show the customer everythin
 last successful save so they keep it themselves, and point them at `/hi-seamlex`.
 
 **Naming of the tools.** Jira tools come from the Atlassian MCP server bundled with the plugin,
-namespaced by it — `mcp__plugin_seamlex-portal_atlassian__searchJiraIssuesUsingJql`. GitHub tools come
-from the GitHub MCP server bundled the same way — `mcp__plugin_seamlex-portal_github__get_file_contents`.
-Match on the base name after the last `__` for either; the prefix differs if the customer has a server
-configured elsewhere, and either one works. If a server is not available at all, say plainly which one
-(Jira or GitHub) cannot be reached rather than answering from guesswork, and stop.
+namespaced by it — `mcp__plugin_seamlex-portal_atlassian__searchJiraIssuesUsingJql`. GitHub tools are
+different: the plugin cannot bundle a working GitHub connection (a personal access token can't be
+substituted into a shared config file), so each person adds their own `github` MCP server themselves —
+its namespace prefix is whatever they named it, typically `mcp__github__get_file_contents` for the
+server name `SETUP.md` has them use. Match on the base name after the last `__` for either kind — the
+prefix always varies for GitHub and sometimes varies for Jira if the customer has a server configured
+elsewhere, and either one works. If a server is not available at all, say plainly which one (Jira or
+GitHub) cannot be reached rather than answering from guesswork, and stop.
 
 # References
 

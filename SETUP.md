@@ -11,7 +11,9 @@ In Claude, add the Seamlex marketplace and install the plugin:
 /plugin install seamlex-portal@seamlex
 ```
 
-Then restart Claude so the plugin's commands, skills and Atlassian and GitHub connections load.
+Then restart Claude so the plugin's commands, skills and Atlassian connection load. GitHub is a
+separate, one-time step — see "Connecting GitHub" below — since it needs your own personal access
+token, not something the plugin can bundle for you.
 
 ### Where to run this
 
@@ -63,7 +65,7 @@ This will:
    opens your browser to sign in to Atlassian. You are signing in to *your own* Atlassian account —
    Seamlex never sees your credentials, and the plugin never stores them. You can revoke access any time
    from your Atlassian account settings.
-2. **Check the GitHub connection.** The plugin needs a personal access token set as `GITHUB_PAT` — see
+2. **Check the GitHub connection.** You need your own `github` MCP server added — see
    "Connecting GitHub" below if this is your first run.
 3. **Show you what the session is running on** — who you are signed in as, your company and program as
    read from the repo, the Jira project, the documentation repo — each tagged with where it came from, so
@@ -101,21 +103,30 @@ If your organization proxies or restricts outbound connections, your IT team may
 
 ## Connecting GitHub
 
-The plugin ships with the official GitHub MCP server configured, authenticating with a personal access
-token in the `GITHUB_PAT` environment variable. If `/hi-seamlex` reports that GitHub tools are
-unavailable:
+Unlike Atlassian, the plugin does **not** ship the GitHub connection for you — GitHub's remote MCP
+server needs a personal access token, and Claude Code cannot safely substitute a token from an
+environment variable into a *shared* config file (that would mean a plugin could ask Claude to hand
+your secret to a server it names, so it's blocked). You add your own `github` MCP server once, with
+your own token, and it stays in your personal Claude config — never in this repo, never shared with
+anyone else who uses the plugin.
+
+If `/hi-seamlex` reports that GitHub tools are unavailable:
 
 - **Create a token.** In GitHub, go to Settings → Developer settings → Personal access tokens, and
   create one scoped to `repo` (read/write access to the documentation repo Seamlex shares with you).
-- **Set it as `GITHUB_PAT`.** Export it in your shell before starting Claude:
+- **Add the server**, once, at **user** scope so it's available wherever you run Claude:
   ```
-  export GITHUB_PAT="<your token>"
+  claude mcp add --transport http github https://api.githubcopilot.com/mcp/ \
+    --header "Authorization: Bearer <your token>" --scope user
   ```
-  Add that line to your shell profile (`~/.zshrc`, `~/.bashrc`) so it persists across sessions.
-- **Restart Claude.** MCP servers load at startup; the token will not be picked up until you do.
+  **Never use `--scope project`** for this — that would write your token into a file shared with
+  everyone who uses this plugin.
+- **Restart Claude.** MCP servers load at startup; the new server will not be live until you do.
 - **Check your access.** You need read/write access to the documentation repo Seamlex shares with you.
   If the setup checks can't reach it, ask your Seamlex contact to confirm you were added as a
   collaborator.
+- **`claude mcp list`** shows every server you've added and which scope it's in, if you want to confirm
+  `github` landed at `user` scope rather than `local` or `project`.
 
 > **On command names:** Claude also lists these fully qualified, as
 > `/seamlex-portal:hi-seamlex`. Both forms work — type the short one.

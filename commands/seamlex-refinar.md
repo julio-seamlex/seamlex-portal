@@ -244,7 +244,7 @@ gathered since the last successful save — the transcript included — so they 
 point them at `/hi-seamlex`.
 
 > Atlassian tools come from the MCP server bundled with this plugin and are namespaced by it —
-> `mcp__plugin_seamlex-portal_atlassian__searchJiraIssuesUsingJql`. GitHub tools come from the GitHub
-> MCP server bundled the same way — `mcp__plugin_seamlex-portal_github__create_or_update_file`. Match on
-> the base name after the last `__` for either; the prefix changes if a server is configured elsewhere,
-> and either one works.
+> `mcp__plugin_seamlex-portal_atlassian__searchJiraIssuesUsingJql`. GitHub tools come from a `github`
+> MCP server each person adds themselves (per `SETUP.md`, since a token can't be bundled) — typically
+> `mcp__github__create_or_update_file`. Match on the base name after the last `__` for either; the
+> prefix varies by how the server was added, and any of them works.

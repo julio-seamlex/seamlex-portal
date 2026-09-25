@@ -11,7 +11,7 @@ your engagement's GitHub documentation repo, so there is one record and no paral
 
 | Command | What it does |
 |---|---|
-| `/hi-seamlex` | Start a session. **Run this first.** Signs you in to Atlassian and GitHub, picks your documentation repo, loads its `README.md`/`config.yml` and the house rules for Jira and GitHub. |
+| `/hi-seamlex` | Start a session. **Run this first.** Signs you in to Atlassian, checks your GitHub connection, picks your documentation repo, loads its `README.md`/`config.yml` and the house rules for Jira and GitHub. |
 | `/seamlex-refinar` | Run a *relevamiento* with the Product Owner — takes a relevamiento task from the current sprint, gathers everything the client config points at, interviews you in business language only, and leaves a comment and the transcript on the task, a GitHub file `relevamientos/<KEY>.md`, the pending items as sub-tasks of the task, and the task linked to the file. |
 
 Two commands, one workflow: `/hi-seamlex` sets the session up, `/seamlex-refinar` does the work. Status

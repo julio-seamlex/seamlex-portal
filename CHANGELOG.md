@@ -1,5 +1,27 @@
 # Changelog
 
+## 2.0.1
+
+> `2.0.0`'s GitHub connection didn't actually work: Claude Code does not substitute `${VAR}` env-var
+> placeholders into an HTTP MCP server's `headers` (confirmed by several open `anthropics/claude-code`
+> issues — #6204, #51581, #7290) — the literal string was sent, so `Authorization: Bearer ${GITHUB_PAT}`
+> never carried a real token, no matter how the variable was set. Separately, Claude Code intentionally
+> reads certain credential-style env vars as empty inside a *plugin-shipped* remote server's `headers`,
+> so a token could never have been bundled that way even if the substitution bug were fixed. This
+> release drops the bundling attempt and moves GitHub auth to a one-time step each person runs
+> themselves. Nothing about the documentation layout or write flow from `2.0.0` changes.
+
+- **`.mcp.json`** no longer declares a `github` server — only `atlassian` stays, which authenticates via
+  browser OAuth and was never affected by this.
+- **`SETUP.md`**'s "Connecting GitHub" now has people run
+  `claude mcp add --transport http github https://api.githubcopilot.com/mcp/ --header "Authorization:
+  Bearer <token>" --scope user` themselves, once — `--scope user` keeps the token in their own personal
+  Claude config, never in this shared repo. `--scope project` is called out as the one thing never to
+  use here.
+- **`commands/hi-seamlex.md`**'s GitHub auth check and **`skills/delivery-how-to/SKILL.md`**'s tool-naming
+  section are reworded: GitHub tools are no longer "bundled the same way" as Jira's — they come from
+  whichever server name the person chose when adding their own.
+
 ## 2.0.0
 
 > Documentation moves off Confluence and onto GitHub. Jira stays exactly as it was — this is a

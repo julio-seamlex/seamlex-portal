@@ -30,14 +30,18 @@ GitHub.
    Keep the `cloudId` from the result; every later Jira call needs it.
 
 2. **Check the GitHub connection.** Call `get_file_contents` on any known path (or `search_repositories`
-   with no query) to confirm the `github` MCP server answers. Its full name is namespaced the same way —
-   `mcp__plugin_seamlex-portal_github__get_file_contents`.
+   with no query) to confirm a `github` MCP tool answers. Unlike Atlassian, this server is **not**
+   bundled by the plugin — each person adds their own, so the tool's namespace prefix is whatever they
+   named it when adding it (typically `mcp__github__get_file_contents`); match on the base name after
+   the last `__`.
    - If it answers, move on without announcing anything.
-   - If it fails with an authorization error, or the tool is not available at all, the bundled `github`
-     server has no working token. Tell the user once, plainly: documentation now lives on GitHub and
-     needs a personal access token. Point at "Connecting GitHub" in
-     [`SETUP.md`](${CLAUDE_PLUGIN_ROOT}/SETUP.md) (create a token with `repo` scope, export it as
-     `GITHUB_PAT`, restart Claude) and stop — nothing below works without it. Do not repeat this check's
+   - If no GitHub tool is available at all, or it fails with an authorization error, the person hasn't
+     added their own `github` MCP server yet (or it has no working token). Tell them once, plainly:
+     documentation lives on GitHub and needs their own personal access token — a plugin can't safely
+     hand out a token from a shared config file, so this is a one-time step they run themselves. Point
+     at "Connecting GitHub" in [`SETUP.md`](${CLAUDE_PLUGIN_ROOT}/SETUP.md) (`claude mcp add --transport
+     http github https://api.githubcopilot.com/mcp/ --header "Authorization: Bearer <token>" --scope
+     user`, then restart Claude) and stop — nothing below works without it. Do not repeat this check's
      explanation every session once it is set; if it is already working, say nothing about it.
 
 3. **Settle which GitHub repo this session works in.** Seamlex documentation repos follow the pattern
