@@ -50,19 +50,17 @@ new top-level folder on your own initiative.
 | Rule | Why |
 |---|---|
 | **One file per task.** Before creating a file tied to a Jira key, check whether it already exists (`get_file_contents` on the exact path). If it exists, update it. | A second minuta file for the same task splits the record; the delivery team reads the wrong one. |
-| **Paths are `relevamientos/<KEY>.md`** — the Jira key upper-cased, exactly as Jira writes it, no summary in the filename. | The path *is* the identity: no title search, no ambiguity, no risk of the filename drifting from the Jira summary as it would with a Confluence-style title. |
-| **Every file tied to a task opens with YAML front matter** naming `jira_key`, `jira_url` and `type` (`minuta` / `transcript`), followed by the same header table the file used to open with in Confluence (**Tarea Jira**, **Sprint**, **Épica**, **Relevado con**, **Fecha(s)**, **Estado**). | Front matter is what a script or a future Claude session greps for; the header table is what a human reads first when they open the file on GitHub. |
-| **No GitHub labels or topics.** Nothing the plugin writes or reads depends on a repo label or topic; a file is found by its path, never by metadata GitHub's UI happens to offer. | Keeps one convention (path) instead of two half-maintained ones (path and label), the same reasoning that dropped Confluence labels for the same files. |
+| **Paths are `relevamientos/<KEY>.md`** — the Jira key upper-cased, exactly as Jira writes it, no summary in the filename. | The path *is* the identity: no title search, no ambiguity, no risk of the filename drifting from the Jira summary. |
+| **Every file tied to a task opens with YAML front matter** naming `jira_key`, `jira_url` and `type` (`minuta` / `transcript`), followed by a header table (**Tarea Jira**, **Sprint**, **Épica**, **Relevado con**, **Fecha(s)**, **Estado**). | Front matter is what a script or a future Claude session greps for; the header table is what a human reads first when they open the file on GitHub. |
+| **No GitHub labels or topics.** Nothing the plugin writes or reads depends on a repo label or topic; a file is found by its path, never by metadata GitHub's UI happens to offer. | Keeps one convention (path) instead of two half-maintained ones (path and label). |
 | **Children go under their folder**: minutas and transcripts under `relevamientos/`. | Anyone — human or Claude — can list the folder and see every relevamiento the project has. |
 | **The body is in `{{LOCALE}}` and in business terms**; platform vocabulary lives only in a file's closing *Para el equipo de delivery* section. | The customer reads these files; the `business-analysis` rule applies on the file as in the room. |
 
 # The index files — written so Claude can retrieve from them
 
-`README.md` plus `config.yml` together play the role the single `seamlex-portal-memory` Confluence
-page used to: `README.md` is the **purpose and map**, human-readable; `config.yml` is the **settings**,
-machine-readable. Splitting them is a GitHub-native move — a settings file that used to be a table on
-a wiki page is now just a file a command can parse directly, no CQL involved. The full templates are
-in `references/memory-template.md`.
+`README.md` plus `config.yml` together are the project's root index: `README.md` is the **purpose and
+map**, human-readable; `config.yml` is the **settings**, machine-readable, a file a command can parse
+directly. The full templates are in `references/memory-template.md`.
 
 `README.md`:
 
@@ -76,12 +74,12 @@ in `references/memory-template.md`.
 `TYPE_TASK`, `LABEL_REQUEST`, `LABELS_EXTRA`, `CONFIRM_WRITES`, `DETAIL`,
 `DRAFTS_DIR`, `PROGRAM`, `COMPANY`). A setting that does not apply is a missing key, not a blank
 value. No plugin release is needed to change it — an edit to the customer's own `config.yml` is
-enough, exactly as an edit to `seamlex-portal-memory` used to be.
+enough.
 
 Claude reads `README.md` and `config.yml` before searching, and the repo's own file tree before
-inventing a search. When Claude creates a file, it did not need to add itself to an index the way a
-Confluence page did — the file tree *is* the index — but a `README.md` whose Map table has gone stale
-(a new top-level path with no row) should be flagged, not silently left wrong.
+inventing a search. When Claude creates a file, it does not need to add itself to an index — the file
+tree *is* the index — but a `README.md` whose Map table has gone stale (a new top-level path with no
+row) should be flagged, not silently left wrong.
 
 # A well-completed Jira task
 
@@ -97,7 +95,7 @@ learn what it was for, what happened, where the record is, and what is still ope
 | **Comments** | Every write that changes the task leaves a comment saying what changed and why — a status move, a new sub-task, an answer. Per session, one **result comment**: who ran it (the Seamlex role, Claude, with `{{USER_NAME}}`), the date, three lines of what was settled, the URL of the GitHub file, the keys created, and the state the task was left in. When there is a transcript, a **second, dedicated comment** headed `Transcript del relevamiento — <date>` with the URL of the transcript file — never the transcript text itself, since the file already holds it. A pending item that gets answered is closed **with a comment holding the answer**, not silently. |
 | **Labels** | `{{LABEL_REQUEST}}` and `{{LABELS_EXTRA}}` on everything the plugin creates, plus the kind label from the *Labels* table. Set at creation — `createJiraIssue` takes them in `additional_fields.labels`. |
 | **Assignee** | The owner, when `lookupJiraAccountId` resolves them; otherwise unassigned and the owner named in the first line of the description. Never assigned to whoever is signed in by default. |
-| **Linked to its GitHub file** | Two directions, both weaker than a native cross-link and said plainly rather than implied. **Jira → GitHub**: the file's blob URL in the result comment (and a remote link when the server offers a tool for it — the bundled one does not; say when the comment is the only Jira-side link). **GitHub → Jira**: the Jira key in the file's front matter (`jira_key:`) and in its header table as a link to the issue — GitHub cannot list the task under the file the way Confluence used to list a page under an issue, so this direction is readable and greppable, not a live backlink. |
+| **Linked to its GitHub file** | Two directions, both weaker than a native cross-link and said plainly rather than implied. **Jira → GitHub**: the file's blob URL in the result comment (and a remote link when the server offers a tool for it — the bundled one does not; say when the comment is the only Jira-side link). **GitHub → Jira**: the Jira key in the file's front matter (`jira_key:`) and in its header table as a link to the issue — GitHub has no mechanism to list the task under the file, so this direction is readable and greppable, not a live backlink. |
 | **Dates** | Only dates that exist — a due date the customer gave, a sprint end. Never an ETA invented to fill the field. |
 
 The copy-and-walk checklist, one block per kind — relevamiento, pending sub-task — is in
@@ -145,8 +143,7 @@ labels, sprint, duedate, updated` — rather than re-fetching one issue at a tim
 
 The order is always the same: **`README.md`/`config.yml` first, then the fixed path, then search,
 then commit history.** The index says what exists; the fixed path finds a task's file directly — no
-fuzzy matching needed, unlike Confluence's title search — and search and history are for what the
-fixed paths do not cover.
+fuzzy matching needed — and search and history are for what the fixed paths do not cover.
 
 | Looking for | How |
 |---|---|
@@ -161,8 +158,8 @@ fixed paths do not cover.
 
 Never guess a path. Never answer from what was read in an earlier turn — the board and the repo move;
 re-query. `getJiraIssue` with description, comments, sub-tasks, links and parent; `getJiraIssueRemoteIssueLinks`
-for anything already attached to it, understanding that a GitHub file will not show up there the way a
-Confluence page sometimes did — the result comment is the source of truth for that link now.
+for anything already attached to it, understanding that a GitHub file will not show up there — the
+result comment is the source of truth for that link.
 
 # Rules of interaction with the Jira and GitHub tools
 

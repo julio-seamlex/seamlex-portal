@@ -107,9 +107,9 @@ Always scoped to `{{GITHUB_ORG}}/{{GITHUB_REPO}}`:
 | Files about this part of the business | `search_code` scoped to the repo, with the customer's own term |
 
 *This task's file* is the lookup to trust — every file tied to a task lives at a fixed path
-(`relevamientos/<KEY>.md`), so there is nothing to disambiguate the way a Confluence title search
-sometimes needed. The full cookbook — fixed path, folder listing, search, commit history, and the
-Jira side — is the `delivery-how-to` skill's *Retrieval patterns*. `get_file_contents` on
+(`relevamientos/<KEY>.md`), so there is nothing to disambiguate. The full cookbook — fixed path,
+folder listing, search, commit history, and the Jira side — is the `delivery-how-to` skill's
+*Retrieval patterns*. `get_file_contents` on
 `relevamientos/` lists everything the project has written there when a specific key is not the
 question. Read only what can bear on the session — the two or three most recent minutas in full, older
 ones by filename unless one names this task or this area.

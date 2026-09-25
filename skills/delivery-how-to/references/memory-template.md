@@ -1,9 +1,8 @@
 # Root index — template
 
 > `README.md` plus `config.yml` together are the root index of the customer's GitHub documentation
-> repo — the same role `seamlex-portal-memory` used to play as a single Confluence page, split into a
-> human-readable map and a machine-readable settings file because GitHub makes that split free. Files
-> are found by their fixed path under the tree `delivery-how-to/SKILL.md` defines — never by a label.
+> repo, split into a human-readable map and a machine-readable settings file. Files are found by their
+> fixed path under the tree `delivery-how-to/SKILL.md` defines — never by a label.
 
 ---
 
@@ -55,15 +54,15 @@ PROGRAM: <program name>        # the program's name as the customer says it
 COMPANY: <company name>        # the customer
 ```
 
-No plugin release is needed to change either file — an edit to the customer's own repo is enough, the
-same way an edit to `seamlex-portal-memory` used to be. Seamlex maintains both; the plugin never edits
-`config.yml` and edits `README.md`'s Map table only to flag it as stale, never to rewrite it silently.
+No plugin release is needed to change either file — an edit to the customer's own repo is enough.
+Seamlex maintains both; the plugin never edits `config.yml` and edits `README.md`'s Map table only to
+flag it as stale, never to rewrite it silently.
 
 ---
 
 ## Section folder — e.g. `relevamientos/`
 
-No separate index file is needed for a folder the way a Confluence section needed an index page:
-GitHub's own directory listing (`get_file_contents` on `relevamientos/`) already shows every file in
-it, sorted by name — which, because filenames are Jira keys, sorts usefully on its own. `README.md`'s
-Map table says what the folder is *for*; the folder itself says what is *in* it.
+No separate index file is needed for a folder: GitHub's own directory listing (`get_file_contents` on
+`relevamientos/`) already shows every file in it, sorted by name — which, because filenames are Jira
+keys, sorts usefully on its own. `README.md`'s Map table says what the folder is *for*; the folder
+itself says what is *in* it.

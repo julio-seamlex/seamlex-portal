@@ -141,9 +141,9 @@ search needed — and the file's own header repeats the task summary for a human
   becomes a task in 4d.
 - **Link the file to the Jira task from the file side**: `jira_key` and `jira_url` in the front matter,
   and the Jira key in the header table written as a link to the issue
-  (`https://<site>/browse/<KEY>`). GitHub does not list the task under the file the way Confluence
-  sometimes listed a page under an issue — this is a readable, greppable link, not a live backlink; say
-  so plainly rather than implying otherwise. This is half of the link in 4e.
+  (`https://<site>/browse/<KEY>`). GitHub has no mechanism to list the task under the file — this is a
+  readable, greppable link, not a live backlink; say so plainly rather than implying otherwise. This is
+  half of the link in 4e.
 
 ### 4b. A comment on the task saying the relevamiento was run
 
@@ -208,9 +208,9 @@ The task and the minuta must point at each other:
   to add a remote link to an issue, use it too so the file shows under the issue's *Links*; the MCP
   server bundled with the plugin does not, so say when the comment is the only Jira-side link.
 - **GitHub → Jira**: the Jira key is in the minuta's front matter (`jira_key`) and its header (4a) as a
-  link to the issue. Unlike Confluence, GitHub has no mechanism to list the task under the file — this
-  direction is readable and greppable from the file itself, not a live backlink, and the command says
-  so rather than implying parity with the old behaviour.
+  link to the issue. GitHub has no mechanism to list the task under the file — this direction is
+  readable and greppable from the file itself, not a live backlink, and the command says so rather than
+  implying otherwise.
 
 ### Then decide the task's state honestly
 

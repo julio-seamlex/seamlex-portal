@@ -30,7 +30,7 @@
 
 **Links**
 - [ ] Minuta file URL in the result comment.
-- [ ] The file's front matter carries `jira_url` pointing back at the issue — GitHub will not list the task the way Confluence sometimes did, so the comment is the only live Jira-side link and the close says so.
+- [ ] The file's front matter carries `jira_url` pointing back at the issue — GitHub has no mechanism to list the task under the file, so the comment is the only live Jira-side link and the close says so.
 
 **Status**
 - [ ] Moved to *in progress* when the session started.
