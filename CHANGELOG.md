@@ -1,5 +1,19 @@
 # Changelog
 
+## 2.0.3
+
+> A relevamiento's customer only had a closing paragraph to check the session against — fine for a short
+> conversation, harder to follow once several actors, steps and decisions have piled up. A structured
+> sketch built up as the conversation goes gives them something to point at and correct instead of just
+> words.
+
+- **`skills/business-analysis/SKILL.md`** gains a **"Show it, don't just say it"** sub-section under
+  *How you interview*: alongside the verbatim transcript, keep a short structured sketch (a table, a
+  list grouped by actor or step, or a simple Markdown diagram) of the actors, process, decisions and
+  entities as they're settled, redrawn at reasonable increments — when a batch closes a topic or the
+  picture actually changes — not after every single answer. It's a chat-only aid; the minuta file
+  `/seamlex-refinar` writes stays the system of record and is unaffected.
+
 ## 2.0.2
 
 > `{{SEAMLEX_CONTACT}}` named who at Seamlex picks up a pending item or an unidentified feature, but
