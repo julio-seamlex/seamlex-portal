@@ -1,6 +1,6 @@
 {
   "name": "seamlex-portal",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Customer-facing front door to Seamlex, your Salesforce delivery partner. Run the relevamientos of your sprint with the Product Owner into a GitHub minuta file and its pending sub-tasks, following the Seamlex house rules for Jira and GitHub. Everything lands in the shared Jira project via the bundled Atlassian MCP server, and your GitHub documentation repo via a GitHub MCP server you connect yourself.",
   "author": {
     "name": "Seamlex"

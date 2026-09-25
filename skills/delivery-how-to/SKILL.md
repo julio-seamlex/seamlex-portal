@@ -17,7 +17,7 @@ stays in context for every later command. If a command finds it is not in contex
 (`Skill` tool, `seamlex-portal:delivery-how-to`, or this file directly).
 
 Every `{{PLACEHOLDER}}` below resolves from `config.yml` in the customer's GitHub repo —
-`{{JIRA_PROJECT}}`, `{{LABEL_REQUEST}}`, `{{LABELS_EXTRA}}`, `{{TYPE_TASK}}`, `{{SEAMLEX_CONTACT}}`,
+`{{JIRA_PROJECT}}`, `{{LABEL_REQUEST}}`, `{{LABELS_EXTRA}}`, `{{TYPE_TASK}}`,
 `{{CONFIRM_WRITES}}`, `{{DETAIL}}`, `{{DRAFTS_DIR}}`, `{{PROGRAM}}`, `{{COMPANY}}` — or from the
 session: `{{CLOUD_ID}}`, `{{GITHUB_ORG}}` and `{{GITHUB_REPO}}` from `/hi-seamlex`, `{{LOCALE}}` and
 `{{USER_NAME}}` from `atlassianUserInfo`. If `config.yml` is not in context, stop and ask the customer
@@ -73,7 +73,7 @@ in `references/memory-template.md`.
 3. **Maintained by / last updated** — who owns the repo and when it last changed.
 
 `config.yml` — one key per setting, spelled exactly as the commands name it (`JIRA_PROJECT`,
-`TYPE_TASK`, `LABEL_REQUEST`, `LABELS_EXTRA`, `SEAMLEX_CONTACT`, `CONFIRM_WRITES`, `DETAIL`,
+`TYPE_TASK`, `LABEL_REQUEST`, `LABELS_EXTRA`, `CONFIRM_WRITES`, `DETAIL`,
 `DRAFTS_DIR`, `PROGRAM`, `COMPANY`). A setting that does not apply is a missing key, not a blank
 value. No plugin release is needed to change it — an edit to the customer's own `config.yml` is
 enough, exactly as an edit to `seamlex-portal-memory` used to be.

@@ -1,5 +1,16 @@
 # Changelog
 
+## 2.0.2
+
+> `{{SEAMLEX_CONTACT}}` named who at Seamlex picks up a pending item or an unidentified feature, but
+> nothing ever reads it beyond the sentence saying so — no task, comment or file is actually routed to
+> anyone. Dropped as dead configuration rather than left for someone to fill in and wonder about.
+
+- **`config.yml`'s `SEAMLEX_CONTACT` setting is removed**, along with every place that named it:
+  `commands/seamlex-refinar.md`, `skills/business-analysis/SKILL.md`, `skills/delivery-how-to/SKILL.md`
+  and its `references/memory-template.md`. Pending sub-tasks and `features-no-identificados.md` entries
+  are unaffected — they were never actually routed by this setting.
+
 ## 2.0.1
 
 > `2.0.0`'s GitHub connection didn't actually work: Claude Code does not substitute `${VAR}` env-var

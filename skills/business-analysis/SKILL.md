@@ -147,8 +147,8 @@ this task; and the two or three things the session will spend its time on. Ask t
 - **Say what you don't know.** Anything unresolved is `⚠️ TBD — <the question> — <owner>`, never a guess.
 - **Park what is not this task.** Something that belongs to another task in the sprint or the plan is
   noted against that key and left there. Something that belongs to no task at all goes to the
-  `features-no-identificados.md` file, is told plainly to sit outside the signed scope, and is
-  routed to `{{SEAMLEX_CONTACT}}`. Never folded in to be helpful, never dropped.
+  `features-no-identificados.md` file, is told plainly to sit outside the signed scope. Never folded
+  in to be helpful, never dropped.
 - **Keep the transcript as you go.** Every question asked and every answer given, in order, with the time
   of each batch — verbatim, not summarized. It is what lets someone who was not in the room trust the
   minuta.

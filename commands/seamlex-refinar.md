@@ -22,7 +22,7 @@ Settings come from **`config.yml` in the customer's GitHub repo** that `/hi-seam
 session. If it is not in context, stop and ask the customer to run `/hi-seamlex`. Resolve from it
 `{{JIRA_PROJECT}}`, `{{TYPE_TASK}}` (the project's
 sub-task type, used for pending items; default whatever the project calls it — `Subtarea`, `Sub-task`),
-`{{LABEL_REQUEST}}`, `{{LABELS_EXTRA}}`, `{{SEAMLEX_CONTACT}}`, `{{CONFIRM_WRITES}}`, `{{DETAIL}}`,
+`{{LABEL_REQUEST}}`, `{{LABELS_EXTRA}}`, `{{CONFIRM_WRITES}}`, `{{DETAIL}}`,
 `{{DRAFTS_DIR}}`, and `{{PROGRAM}}` and `{{COMPANY}}` when it names them. `{{CLOUD_ID}}`, `{{GITHUB_ORG}}` and `{{GITHUB_REPO}}` are the cloud id, org and repo `/hi-seamlex` settled on;
 `{{LOCALE}}` and `{{USER_NAME}}` come from `atlassianUserInfo`. If the Atlassian or GitHub tools are not
 available, say which one and stop — the sprint and the task live in Jira, every output's home is GitHub,
@@ -96,8 +96,7 @@ around it:
   Step 2. An unknown with an owner becomes a pending sub-task in 4d.
 - Something that belongs to another task in the sprint or the plan is noted against that key. Something
   that belongs to no task goes to `features-no-identificados.md` in `{{GITHUB_ORG}}/{{GITHUB_REPO}}`,
-  created from `../skills/business-analysis/references/unidentified-features.md` if needed, and is
-  routed to `{{SEAMLEX_CONTACT}}`.
+  created from `../skills/business-analysis/references/unidentified-features.md` if needed.
 - The verbatim transcript the skill keeps — question, answer, time of each batch — is what 4c attaches to
   the task.
 - The interview ends with the skill's closing summary and the customer's explicit yes. Step 4 does not

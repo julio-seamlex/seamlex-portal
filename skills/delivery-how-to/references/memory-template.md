@@ -48,7 +48,6 @@ JIRA_PROJECT: ABC              # Jira project key of the engagement
 TYPE_TASK: Subtarea            # the project's sub-task type, used for pending items
 LABEL_REQUEST: cliente         # Jira label on every issue the plugin creates
 LABELS_EXTRA: fase-1           # extra Jira labels on every issue the plugin creates (optional)
-SEAMLEX_CONTACT: <name>        # who at Seamlex picks up pending items and unidentified features
 CONFIRM_WRITES: always         # show and approve every write before it happens
 DETAIL: business               # level of language for the customer: business / technical
 DRAFTS_DIR: seamlex            # local workspace folder for discovery notes
