@@ -8,7 +8,7 @@
     {
       "name": "seamlex-portal",
       "source": "./",
-      "description": "Your direct line to the Seamlex delivery team. Run the relevamiento of each task in your sprint into a Confluence minuta and its pending items — from inside Claude, backed by Jira and Confluence."
+      "description": "Your direct line to the Seamlex delivery team. Run the relevamiento of each task in your sprint into a GitHub minuta file and its pending items — from inside Claude, backed by Jira and GitHub."
     }
   ],
   "description": "Plugins from Seamlex, your Salesforce implementation partner — customer-facing tools for the relevamiento of your Salesforce work."
