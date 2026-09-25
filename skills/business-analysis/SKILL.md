@@ -153,6 +153,20 @@ this task; and the two or three things the session will spend its time on. Ask t
   of each batch — verbatim, not summarized. It is what lets someone who was not in the room trust the
   minuta.
 
+## Show it, don't just say it
+
+As the interview advances, keep a short, structured sketch alongside the transcript — the actors, the
+process as it takes shape, the decisions and rules settled so far, the entities involved — that the
+customer can look at instead of listening to a paragraph. A table, a list grouped by actor or step, or a
+simple diagram sketched in Markdown all work; pick whatever shape fits what just got settled. It lives in
+the conversation itself, not in the minuta file — the GitHub file `/seamlex-refinar` writes stays the
+system of record and is unaffected by this.
+
+Redraw it in reasonable increments, not after every single answer. Update it when a batch closes a topic
+or the picture actually changes — a new actor, a step added, a rule settled, an entity that turns out to
+matter — not on each individual answer; redrawing it too often turns a following aid into noise the
+customer has to sit through.
+
 # Closing the conversation
 
 Close with a summary — what this task delivers in three to six sentences, the actors and the process it
