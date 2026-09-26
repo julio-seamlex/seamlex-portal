@@ -155,24 +155,30 @@ this task; and the two or three things the session will spend its time on. Ask t
 
 ## Show it, don't just say it
 
-As the interview advances, keep a short, structured sketch — the actors, the process as it takes shape,
-the decisions and rules settled so far, the entities involved — that the customer can look at instead of
-listening to a paragraph. A table, a list grouped by actor or step, or a simple diagram sketched in
-Markdown all work; pick whatever shape fits what just got settled.
+**Every relevamiento publishes a live Artifact.** This is not a nice-to-have to fit in if there's time
+and not something the customer has to ask for — a session that ends without one skipped a required step,
+the same as a session that skips the transcript. As the interview advances, keep a short, structured
+sketch — the actors, the process as it takes shape, the decisions and rules settled so far, the entities
+involved — that the customer can look at instead of listening to a paragraph. A table, a list grouped by
+actor or step, or a simple diagram sketched in Markdown all work; pick whatever shape fits what just got
+settled.
 
-Publish it as a live Artifact the customer watches update in Cowork, not as chat text. Load the
-`artifact-design` skill once before the first publish, write the sketch to a local Markdown file, and
-call the `Artifact` tool on it as a `.md` file — this section is what licenses the `.md` format, since
-the tool defaults every page to `.html` otherwise. Title it after the task (its Jira key) so it is
-recognizable among the customer's other artifacts, and `open` it right after that first publish so they
-see it without having to ask. It is still not the minuta — the GitHub file `/seamlex-refinar` writes
-stays the system of record and is unaffected by this.
+Publish it as a live Artifact the customer watches update in Cowork, not as chat text.
+**Publish the first version before — or together with — the very first `AskUserQuestion` batch**, even
+if at that point it holds nothing but the task name and the actors already known from Step 2's reading.
+Do not wait for "enough" to have happened; an artifact with three lines on it at minute one is the point,
+not a placeholder to feel bad about. Load the `artifact-design` skill once before that first publish,
+write the sketch to a local Markdown file, and call the `Artifact` tool on it as a `.md` file — this
+section is what licenses the `.md` format, since the tool defaults every page to `.html` otherwise. Title
+it after the task (its Jira key) so it is recognizable among the customer's other artifacts, and `open`
+it right after that first publish so they see it without having to ask. It is still not the minuta — the
+GitHub file `/seamlex-refinar` writes stays the system of record and is unaffected by this.
 
-Redraw it in reasonable increments, not after every single answer. Update it when a batch closes a topic
-or the picture actually changes — a new actor, a step added, a rule settled, an entity that turns out to
-matter — not on each individual answer; redrawing it too often turns a following aid into noise the
-customer has to sit through. Every redraw calls `Artifact` again with the same `file_path`, which
-redeploys the same page in place — never a new file or a new link.
+**Redraw it after every interaction with the customer** — every time an `AskUserQuestion` batch comes
+back answered, right after the opening reflection lands, and again at the closing summary. The artifact
+tracks the conversation turn by turn; it never sits several answers behind what the customer just told
+you. Every redraw calls `Artifact` again with the same `file_path`, which redeploys the same page in
+place — never a new file or a new link.
 
 # Closing the conversation
 

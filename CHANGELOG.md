@@ -1,5 +1,18 @@
 # Changelog
 
+## 2.0.5
+
+> `2.0.4` made the sketch a live Artifact, but the instruction to publish and redraw it read as a
+> nice-to-have and the redraw cadence ("reasonable increments") was vague enough to leave long gaps —
+> in practice the artifact wasn't reliably showing up during sessions.
+
+- **`skills/business-analysis/SKILL.md`**'s *"Show it, don't just say it"* sub-section now states the
+  live Artifact as a required step, not optional style guidance, and pins the first publish to before
+  or alongside the very first `AskUserQuestion` batch — even with just the task name and known actors
+  on it — instead of waiting for "enough" to have happened. The redraw cadence changes from "reasonable
+  increments" to after every interaction with the customer: every `AskUserQuestion` batch that comes
+  back answered, the opening reflection, and the closing summary.
+
 ## 2.0.4
 
 > `2.0.3`'s sketch was plain Markdown posted into the chat, so the customer had to scroll back through the
