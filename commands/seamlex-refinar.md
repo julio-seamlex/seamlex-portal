@@ -125,7 +125,7 @@ search needed — and the file's own header repeats the task summary for a human
 - **Shape**: YAML front matter (`jira_key`, `jira_url`, `type: minuta`) followed by a header table —
   **Tarea Jira** (key, as a link to the issue), **Sprint**, **Épica** if
   any, **Relevado con** (name, role, per person), **Fecha(s)**, **Estado** (`En progreso` /
-  `Finalizado`) — then the body from `../skills/business-analysis/references/minuta-template.md`
+  `Finalizado`) — then the body from `../skills/business-analysis/references/business-req-template.md`
   adapted to the task: what this task delivers, the pain it resolves and the success measure; the actors;
   the **Requirements** table at its core — one row per discrete requirement with REQ-ID, capability,
   actor, statement, source, MoSCoW, complexity (1–10) and its own in/out-of-scope call and open
