@@ -1,5 +1,16 @@
 # Changelog
 
+## 2.2.0
+
+> Customers had no quick way to ask how their implementation works. A new command answers from the
+> docs and escalates to Jira what it cannot resolve.
+
+- **`commands/seamlex-support.md`** (new) answers a question from the customer's docs repo, cited by file.
+  If the customer is still unsatisfied, it drafts a Jira task with the point they did not understand and
+  creates it after approval. Never writes to GitHub.
+- **`skills/delivery-how-to/SKILL.md`** adds the `soporte` label.
+- **`README.md`** and **`CHEATSHEET.md`** list the fourth command.
+
 ## 2.1.0
 
 > There was no single place to see where a project stands: the sprint lives in Jira and the documents in

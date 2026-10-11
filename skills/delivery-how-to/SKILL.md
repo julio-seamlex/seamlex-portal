@@ -114,6 +114,7 @@ quietly later. All labels are lower-case, ASCII, hyphenated.
 | `{{LABELS_EXTRA}}` | the same, when the config sets it | the command |
 | `relevamiento` | every relevamiento task — it is how the plugin finds them, not the issue type | Seamlex |
 | `pendiente` | every `Pendiente:` sub-task | `/seamlex-refinar` |
+| `soporte` | every task raised by a support question the docs could not resolve | `/seamlex-support` |
 | `no-identificado` | any issue Seamlex raises from the unidentified-features file | Seamlex |
 
 **GitHub files carry no labels or topics the plugin knows about.** A file is identified by its

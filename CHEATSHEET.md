@@ -6,7 +6,7 @@ Claude plugin that runs a customer's **relevamientos** (requirements interviews)
 
 | | |
 |---|---|
-| Commands | `/hi-seamlex` (start session, run first) · `/seamlex-refinar [KEY]` (run a relevamiento) · `/seamlex-project-status` (live sprint + docs status) |
+| Commands | `/hi-seamlex` (start session, run first) · `/seamlex-refinar [KEY]` (run a relevamiento) · `/seamlex-project-status` (live sprint + docs status) · `/seamlex-support` (ask how it works; unresolved → Jira task) |
 | Skills | `delivery-how-to` (Jira/GitHub house rules) · `business-analysis` (interview method) |
 | MCP | Atlassian (bundled, browser OAuth) · GitHub (you add it, own token) |
 | Source of truth | Customer's GitHub docs repo `seamlex-docs-<customer>` → `README.md` + `config.yml` |
