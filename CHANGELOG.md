@@ -1,5 +1,20 @@
 # Changelog
 
+## 2.1.0
+
+> There was no single place to see where a project stands: the sprint lives in Jira and the documents in
+> GitHub. A new read-only command pulls both together into one live page.
+
+- **`commands/seamlex-project-status.md`** (new) reads the open sprint and the docs repo and publishes the
+  result as a live Artifact. It never writes to Jira or GitHub.
+- **`skills/project-status/SKILL.md`** (new) defines what counts as a key missing task, a warning and a
+  dependency (each row cites a Jira key or a GitHub path), and the Seamlex look: the seamlex.co colors
+  and the Manrope font, nothing else.
+- **`skills/project-status/references/project-status-template.md`** (new) is the `.md` template the
+  Artifact renders: sprint status and remaining tasks, GitHub docs status, missing tasks, warnings,
+  dependencies.
+- **`README.md`** and **`CHEATSHEET.md`** list the third command.
+
 ## 2.0.7
 
 > The requirements template described processes only in prose, and let a task skip the section when

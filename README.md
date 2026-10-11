@@ -12,11 +12,12 @@ your engagement's GitHub documentation repo, so there is one record and no paral
 | Command | What it does |
 |---|---|
 | `/hi-seamlex` | Start a session. **Run this first.** Signs you in to Atlassian, checks your GitHub connection, picks your documentation repo, loads its `README.md`/`config.yml` and the house rules for Jira and GitHub. |
+| `/seamlex-project-status` | Show where the project stands as a live page — the open Jira sprint and remaining tasks, the state of your GitHub documentation, and the key missing tasks, warnings and dependencies. Read-only. |
 | `/seamlex-refinar` | Run a *relevamiento* with the Product Owner — takes a relevamiento task from the current sprint, gathers everything the client config points at, interviews you in business language only, and leaves a comment and the transcript on the task, a GitHub file `relevamientos/<KEY>.md`, the pending items as sub-tasks of the task, and the task linked to the file. |
 
-Two commands, one workflow: `/hi-seamlex` sets the session up, `/seamlex-refinar` does the work. Status
-reports and questions to the Seamlex team are not part of this plugin — your Seamlex contact and the
-shared Jira board are where those live.
+Three commands, one workflow: `/hi-seamlex` sets the session up, `/seamlex-refinar` does the work and
+`/seamlex-project-status` shows where things stand. Questions to the Seamlex team are not part of this
+plugin — your Seamlex contact and the shared Jira board are where those live.
 
 ## The Product Owner
 
