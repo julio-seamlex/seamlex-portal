@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.0.7
+
+> The requirements template described processes only in prose, and let a task skip the section when
+> nothing seemed to change. A flow is far easier for the customer to read and correct as a picture.
+
+- **`skills/business-analysis/references/business-req-template.md`**'s *Process context* section now
+  requires a Mermaid process diagram for every process: swimlanes per actor, decisions labelled on each
+  branch, REQ-IDs on the steps they drive, `⚠️ TBD` on steps nobody could describe. A new capability still
+  gets a diagram of its "After delivery" flow. The *Ready for design* checklist gained a matching line.
+
 ## 2.0.6
 
 > The artifact from `2.0.5` was a free-form sketch, separate from the document the interview is meant to

@@ -63,15 +63,42 @@ customer where it lands). No Salesforce terms.>
 
 ## Process context
 
-> Only for a process whose shape actually changes — today versus after delivery, in enough detail that
-> the requirements above make sense in context. Skip entirely, or say "no process changes, only new
-> capability," when nothing here would add information beyond the Requirements table.
+> Every process the task touches, today versus after delivery, in enough detail that the requirements
+> above make sense in context. **Each process carries a diagram** — a Mermaid flowchart the customer can
+> read and correct. Even a brand-new capability gets one diagram of the "After delivery" flow (leave
+> "Today" as "does not exist today"). Business language only in the labels: roles and steps the customer
+> named, no Salesforce terms.
 
 ### <process name>
 - **Today:** <how it runs now>
 - **After delivery:** <what changes, referencing the REQ-IDs that drive it>
 - **Volume and frequency:**
 - **Exceptions:**
+
+**Process diagram**
+
+> Swimlanes by actor (one `subgraph` per role from the **Actors** table), steps as boxes, decisions as
+> diamonds with the answer on each branch, start/end as rounded nodes. Tag steps with the REQ-ID that
+> asks for them. Mark a step nobody could describe as `⚠️ TBD` rather than guessing. Draw "Today" too
+> when the flow changes and the difference is the point.
+
+```mermaid
+flowchart TD
+    start([Trigger — what starts the process]) --> a1
+
+    subgraph A[Actor A — role]
+        a1[Step — R1] --> d1{Decision?}
+    end
+
+    subgraph B[Actor B — role]
+        b1[Step — R2]
+    end
+
+    d1 -- Yes --> b1
+    d1 -- No --> a2[Alternative step — R3]
+    b1 --> fin([Outcome — what is true at the end])
+    a2 --> fin
+```
 
 ## Cross-cutting details
 
@@ -118,6 +145,7 @@ relevamiento `Finalizado`. Any line not true keeps the task `En progreso`.
 - [ ] Every actor is a real role from discovery §3, not "a user".
 - [ ] Every requirement has a REQ-ID, a real actor, a testable statement, a source, a MoSCoW and an
       in/out-of-scope call — a missing complexity number is fine only when marked `⚠️` with a reason.
+- [ ] Every process in Process context has a diagram with actor swimlanes, decisions labelled on each branch, and REQ-IDs on the steps that come from requirements.
 - [ ] Cross-cutting details are answered or explicitly marked not applicable.
 - [ ] No `⚠️ TBD` remains — in the Requirements table or in Scope & open questions — that would block
       design; any that stay have an owner and a date.
