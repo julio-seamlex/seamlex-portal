@@ -1,5 +1,17 @@
 # Changelog
 
+## 2.0.6
+
+> The artifact from `2.0.5` was a free-form sketch, separate from the document the interview is meant to
+> produce. It is now the document itself, so the customer watches the requirements template fill in.
+
+- **`skills/business-analysis/SKILL.md`**'s *"Show it, don't just say it"* sub-section now renders
+  `references/business-req-template.md` as the live Artifact, filled in as the interview advances: each
+  answer lands in its section (actors, Requirements rows, open questions), unfilled sections stay visible
+  as `⏳ pending`, and unknowns carry their `⚠️ TBD`. It is re-rendered after every interaction — answered
+  batches, free-text corrections, the opening reflection and the closing summary — before the next
+  question is asked. The GitHub file remains the system of record.
+
 ## 2.0.5
 
 > `2.0.4` made the sketch a live Artifact, but the instruction to publish and redraw it read as a
